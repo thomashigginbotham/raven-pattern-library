@@ -1,0 +1,76 @@
+/* -- Global Styles -- */
+
+:root {
+  /* Layout */
+  --page-max-width: 1120px;
+  --page-min-width: 320px;
+  --page-desktop-width: 1024px;
+  --page-gutter: 2rem;
+  --page-padding: 1.4rem;
+
+  /* Colors */
+  --color-brand-primary: #363669;
+  --color-brand-primary-60: #5c5c99;
+
+  --color-neutral-05: #111;
+  --color-neutral-45: #777;
+  --color-neutral-80: #ccc;
+  --color-neutral-85: #ddd;
+  --color-neutral-95: #eee;
+  --color-neutral-100: #fff;
+
+  /* Color Aliases */
+  --color-black: var(--color-neutral-05);
+  --color-white: var(--color-neutral-100);
+
+  /* Fonts */
+  --font-family-body: 'Hind Guntur';
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --font-family-header: 'Catamaran';
+  --font-weight-header-bold: 800;
+
+  --font-size-x-small: 12px;
+  --font-size-small: 14px;
+  --font-size-normal: 16px;
+  --font-size-increased: 20px;
+  --font-size-large: 24px;
+  --font-size-x-large: 32px;
+
+  --font-line-height-x-small: 20px;
+  --font-line-height-small: 20px;
+  --font-line-height-normal: 24px;
+  --font-line-height-increased: 32px;
+  --font-line-height-large: 33px;
+  --font-line-height-x-large: 40px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font: var(--font-size-normal)/var(--font-line-height-normal) var(--font-family-body);
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-header);
+}
+
+h2 {
+  font-size: var(--font-size-x-large);
+  line-height: var(--font-line-height-x-large);
+}
+
+/* Main Content */
+.main-content__wrapper {
+  margin: 0 auto;
+  padding: var(--page-gutter) var(--page-gutter) 0;
+  max-width: var(--page-max-width);
+}

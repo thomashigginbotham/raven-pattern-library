@@ -1,0 +1,252 @@
+// Returns a value for the width property of a column.
+//
+// $column-width  - The width of the column.
+// $column-count  - The total number of columns in the row.
+// $column-gutter - The space between columns.
+// $layout        - Use "float" or "flexbox" for layout.
+@function get-column-width($column-width, $column-count, $column-gutter: map-get($raven, gutters), $layout: map-get($raven, layout)) {
+	@if unit($column-width) == '%' {
+		// Percentage width column
+		@if $column-gutter > 0 {
+			@return calc(#{$column-width} - #{$column-gutter * (1 - $column-width / 100%)} - .1px);
+		} @else {
+			@return $column-width;
+		}
+	} @elseif $layout == flexbox {
+		// Fixed-width column with Flexbox
+		@return $column-width;
+	} @else {
+		// Cannot use floats with non-percentage width values
+		@return auto;
+	}
+}
+
+// Provides syntactic sugar for getting the global gutter setting.
+@function get-gutter() {
+	@return map-get($raven, gutters);
+}
+
+// Returns true if the provided list has only percentage values.
+//
+// $list - The list of values to check.
+@function has-only-percents($list) {
+	@each $item in $list {
+		@if unit($item) != '%' {
+			@return false;
+		}
+	}
+
+	@return true;
+}
+
+// Clears floats by adding ::before and/or ::after pseudo-selectors
+//
+// $before - Clear floats before the current element.
+// $after  - Clear floats after the current element.
+//
+// Compatible with Chrome, Firefox, Safari, IE 9+
+@mixin clear-floats($before: true, $after: true) {
+	@if $before {
+		&::before {
+			content: '';
+			display: table;
+			line-height: 0;
+			clear: both;
+		}
+	}
+
+	@if $after {
+		&::after {
+			content: '';
+			display: table;
+			line-height: 0;
+			clear: both;
+		}
+	}
+}
+
+// Creates a row of columns with the specified widths.
+//
+// $column-spans  - A list of column widths (e.g., 25% 65% 20rem).
+// $column-gutter - The space between columns.
+// $layout        - Use "float" or "flexbox" for layout. Only percentage values
+//                  can be used for float layouts.
+//
+// Compatibility unknown.
+@mixin row($column-spans, $column-gutter: map-get($raven, gutters), $layout: map-get($raven, layout)) {
+	// Force flexbox layout if column-spans are not given in percentages
+	@if not(has-only-percents($column-spans)) {
+		$layout: flexbox;
+	}
+
+	box-sizing: border-box;
+
+	> * {
+		box-sizing: border-box;
+		margin-right: $column-gutter;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	@if $layout == flexbox {
+		display: flex;
+	} @else {
+		@include clear-floats;
+		display: block;
+
+		> * {
+			float: left;
+
+			&:last-child {
+				float: right;
+			}
+
+			&:first-child:last-child {
+				float: left;
+			}
+		}
+	}
+
+	@for $i from 1 through length($column-spans) {
+		> :nth-child(#{$i}) {
+			@if $layout == flexbox {
+				@if (unit(nth($column-spans, $i)) == '%') {
+					flex-grow: 1;
+					flex-shrink: 1;
+				} @else {
+					flex-grow: 0;
+					flex-shrink: 0;
+				}
+
+				flex-basis: get-column-width(nth($column-spans, $i), length($column-spans), $column-gutter, $layout);
+			} @else {
+				width: get-column-width(nth($column-spans, $i), length($column-spans), $column-gutter, $layout);
+			}
+		}
+	}
+}
+
+// Reorders the display of columns within a row (flexbox only).
+//
+// $order - A list of child orders (e.g., 2 3 1).
+// $column-gutter - The space between columns.
+//
+// Compatibility unknown.
+@mixin column-order($order, $column-gutter: map-get($raven, gutters)) {
+	justify-content: space-between;
+
+	@for $i from 1 through length($order) {
+		> :nth-child(#{nth($order, $i)}) {
+			order: $i;
+
+			@if $i < length($order) {
+				margin-right: $column-gutter;
+			} @else {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+// Displays immediate child elements in rows and columns.
+//
+// $column-count  - The number of columns in the gallery.
+// $column-gutter - The space between columns.
+// $layout        - Use "float" or "flexbox".
+//
+// Compatibility unknown.
+@mixin gallery($column-count, $column-gutter: map-get($raven, gutters), $layout: map-get($raven, layout)) {
+	$first-column-cell: #{$column-count}n-#{$column-count - 1};
+	$last-column-cell: #{$column-count}n;
+	$last-row: unquote('-n + #{$column-count}');
+
+	box-sizing: border-box;
+	list-style: none;
+
+	> * {
+		// Each cell should have bottom margin...
+		&:nth-child(1n) {
+			margin-bottom: $column-gutter;
+		}
+
+		// ...except for cells in the last row.
+		&:nth-last-child(#{$last-row}) {
+			margin-bottom: 0;
+		}
+	}
+
+	@if $layout == flexbox {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+
+		> * {
+			box-sizing: border-box;
+			flex: 0 0 get-column-width(1 / $column-count * 100%, $column-count, $column-gutter, $layout);
+
+		}
+	} @else {
+		@include clear-floats;
+		display: block;
+
+		> * {
+			box-sizing: border-box;
+			width: get-column-width(1 / $column-count * 100%, $column-count, $column-gutter, $layout);
+
+			&:nth-child(1n) {
+				clear: none;
+				float: left;
+				margin-right: $column-gutter;
+			}
+
+			// First cell of each row should clear the cells above it
+			&:nth-child(#{$first-column-cell}) {
+				clear: both;
+			}
+
+			// Last cell in each row should float right
+			&:nth-child(#{$last-column-cell}) {
+				float: right;
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+// Displays all child elements in a single row with equal width.
+//
+// $column-gutter - The space between columns.
+//
+// Compatibility unknown.
+@mixin equal-columns($column-gutter: map-get($raven, gutters), $layout: map-get($raven, layout)) {
+	box-sizing: border-box;
+	list-style: none;
+
+	@if $layout == flexbox {
+		display: flex;
+		width: 100%;
+
+		> * {
+			margin-right: $column-gutter;
+			flex-basis: 100%;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	} @else {
+		display: table;
+		table-layout: fixed;
+		border-spacing: $column-gutter 0;
+		margin-left: -$column-gutter;
+		width: calc(100% + #{2 * $column-gutter});
+
+		> * {
+			display: table-cell;
+			width: 2%;
+		}
+	}
+}

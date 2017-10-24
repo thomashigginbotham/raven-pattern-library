@@ -1,0 +1,27 @@
+<nav [ngClass]="navCssClasses" (window:resize)="onResize($event)">
+  <div class="app-nav__wrapper">
+    <header class="app-nav__header" (click)="toggleNav()">
+      <h2>
+        <div class="app-nav__trigger">
+          <div class="hamburger-icon">Menu</div>
+        </div>
+
+        <span class="app-nav__heading">Navigation</span>
+      </h2>
+    </header>
+
+    <ul class="app-nav__links">
+      <li *ngFor="let navItem of navData" routerLinkActive="active">
+        <a [routerLink]="[navItem.uri]"
+          (click)="closeNavIfLargeViewport()">{{navItem.title}}</a>
+
+        <ul *ngIf="navItem.children" class="app-nav__sublinks">
+          <li *ngFor="let navChild of navItem.children" routerLinkActive="active">
+            <a [routerLink]="[navChild.uri]"
+              (click)="closeNavIfLargeViewport()">{{navChild.title}}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

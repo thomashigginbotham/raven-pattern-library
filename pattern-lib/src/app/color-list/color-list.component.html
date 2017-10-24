@@ -1,0 +1,103 @@
+<!-- Brand Colors -->
+<div *ngIf="brandColors && brandColors.length"
+  class="color-list color-list-brand">
+  <h3>Brand</h3>
+
+  <div class="color-list__wrapper">
+    <div *ngFor="let color of brandColors" class="color-item">
+      <div class="color-item__swatch"
+        [style.backgroundColor]="color.hex">
+        <ng-container *ngIf="color.variants && color.variants.length">
+          <span *ngFor="let variant of color.variants"
+            class="color-item__variant"
+            [title]="variant.sassVar"
+            [style.backgroundColor]="variant.hex"></span>
+        </ng-container>
+      </div>
+
+      <div class="color-item__details">
+        <h4 class="color-item__heading">{{color.name}}</h4>
+        <span class="color-item__var">{{color.sassVar}}</span>
+        <span class="color-item__hex">{{color.hex}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Accent Colors -->
+<div *ngIf="accentColors && accentColors.length"
+  class="color-list color-list-accent">
+  <h3>Accent</h3>
+
+  <div class="color-list__wrapper">
+    <div *ngFor="let color of accentColors" class="color-item">
+      <div class="color-item__swatch"
+        [style.backgroundColor]="color.hex">
+        <ng-container *ngIf="color.variants && color.variants.length">
+          <span *ngFor="let variant of color.variants"
+            class="color-item__variant"
+            [title]="variant.sassVar"
+            [style.backgroundColor]="variant.hex"></span>
+        </ng-container>
+      </div>
+
+      <div class="color-item__details">
+        <h4 class="color-item__heading">{{color.name}}</h4>
+        <span class="color-item__var">{{color.sassVar}}</span>
+        <span class="color-item__hex">{{color.hex}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Utility Colors -->
+<div *ngIf="utilityColors && utilityColors.length"
+  class="color-list color-list-accent">
+  <h3>Utility</h3>
+
+  <div class="color-list__wrapper">
+    <div *ngFor="let color of utilityColors" class="color-item">
+      <div class="color-item__swatch"
+        [style.backgroundColor]="color.hex">
+        <ng-container *ngIf="color.variants && color.variants.length">
+            <span *ngFor="let variant of color.variants"
+              class="color-item__variant"
+              [title]="variant.sassVar"
+              [style.backgroundColor]="variant.hex"></span>
+          </ng-container>
+      </div>
+
+      <div class="color-item__details">
+        <h4 class="color-item__heading">{{color.name}}</h4>
+        <span class="color-item__var">{{color.sassVar}}</span>
+        <span class="color-item__hex">{{color.hex}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Neutral Colors -->
+<div *ngIf="neutralColors && neutralColors.length"
+  class="color-list color-list-accent">
+  <h3>Neutral</h3>
+
+  <div class="color-list__wrapper">
+    <div *ngFor="let color of neutralColors" class="color-item">
+      <div class="color-item__swatch"
+        [style.backgroundColor]="color.hex">
+        <ng-container *ngIf="color.variants && color.variants.length">
+            <span *ngFor="let variant of color.variants"
+              class="color-item__variant"
+              [title]="variant.sassVar"
+              [style.backgroundColor]="variant.hex"></span>
+          </ng-container>
+      </div>
+
+      <div class="color-item__details">
+        <h4 class="color-item__heading">{{color.name}}</h4>
+        <span class="color-item__var">{{color.sassVar}}</span>
+        <span class="color-item__hex">{{color.hex}}</span>
+      </div>
+    </div>
+  </div>
+</div>

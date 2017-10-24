@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Raven Framework Starter Page</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+	<div class="page-wrapper">
+		<nav class="page-nav">
+			<div class="content-wrapper">
+				<h2>Menu</h2>
+
+				<ul>
+					<li><a href="#intro">Introduction</a></li>
+					<li><a href="#about">About Raven</a></li>
+					<li><a href="#config">Configuration</a></li>
+					<li>
+						<a href="#grids">Grids</a>
+
+						<ul>
+							<li><a href="#nested-rows">Nested Rows</a></li>
+							<li><a href="#centered-columns">Centered Columns</a></li>
+							<li><a href="#column-reordering">Column Reordering</a></li>
+							<li><a href="#gallery-layout">Gallery Layout</a></li>
+							<li><a href="#equal-columns">Equal Columns</a></li>
+						</ul>
+					</li>
+					<li><a href="#build-systems">Build Systems</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<main>
+			<h1>Raven Framework Starter Page</h1>
+
+			<section id="intro" class="intro">
+				<h2>Introduction</h2>
+				<p>This simple starter page provides some basic information and examples for working with Raven. When you’re ready to start building, just follow these quick steps:</p>
+
+				<ol>
+					<li>Delete the file at <strong>scss/vendor/_demo.scss</strong> and the reference to it in <strong>scss/main.scss</strong>.</li>
+					<li>Remove the content of this HTML file or create a new one.</li>
+					<li>Write your HTML and Sass.</li>
+				</ol>
+			</section>
+
+			<section id="about" class="about-raven">
+				<h2>About Raven</h2>
+				<p>Still here? Let me tell you about some of the cool things Raven provides and how you can get the most out of it.</p>
+				<p>At its core, Raven is just a CSS grid system that uses Sass. If that’s all you need, no problem, we won’t be pushy. But just so you’re aware, Raven is an extensible framework with much more to offer.</p>
+
+				<ul>
+					<li><strong><a href="https://github.com/thomashigginbotham/raven-dev-env">Raven Dev Environment</a></strong> — Work in real-time with Sass auto-compilation and LiveReload. Then build optimized code for production environments.</li>
+					<li><strong>Raven Pattern Library*</strong> — Add a style guide and auto-updated documentation to your project, based on the principles of atomic design.</li>
+					<li><strong>Raven UI*</strong> — Take advantage of common interfaces such as carousels, accordions, off-canvas menus, and more.</li>
+					<li><strong>Raven Forms*</strong> — Improve your form layouts and styles.</li>
+					<li><strong>Raven RequireJS*</strong> — Create AMD-compliant JavaScript modules and keep your code organized.</li>
+					<li><strong>Raven Unit Tests*</strong> — Write unit tests with Karma and Jasmine. Then automate them with Grunt or Gulp using the PhantomJS headless browser.</li>
+					<li><strong><a href="https://github.com/thomashigginbotham/raven-code-collab">Raven Code Collab</a></strong> — Specify EditorConfig rules and common linting configurations for your team.</li>
+					<li><strong>Raven High-DPI Sprites*</strong> — Use the Compass sprite map generator to create separate sprite maps for low- and high-DPI images.</li>
+				</ul>
+
+				<p>* These components are currently in development.</p>
+			</section>
+
+			<section id="config" class="config">
+				<h2>Configuration</h2>
+				<p>Raven is very light-weight. Basically, you get this file, a few Sass files, and sample Grunt and Gulp configuration files. If you don’t use Grunt or Gulp, not to worry — you can delete those files and forget you ever saw them. All you need to know is how to work with Sass.</p>
+
+				<div class="message-info">
+					<p>See the <a href="#build-systems">Build Systems</a> section at the bottom of this page for more details about using Grunt and Gulp.</p>
+				</div>
+
+				<h3>File Structure</h3>
+				<p>The Sass file structure is as follows:</p>
+
+				<pre>▾ scss
+  ▾ modules
+      _config.scss
+      _grids.scss
+  ▾ partials
+  ▾ vendor
+      _demo.scss
+    main.scss</pre>
+
+				<p>The <strong>modules</strong> directory contains functions, mixins, and any file that doesn’t output any CSS. Style definitions for headers, footers, and other components should be placed in the <strong>partials</strong> directory. Finally, the <strong>vendor</strong> directory is for third-party style sheets.</p>
+
+				<p>The <strong>main.scss</strong> file should only contain imports to other Sass files. Remember to update it every time you want to include a new Sass file.</p>
+
+				<h3>Settings</h3>
+				<p>Raven currently provides only two settings: gutters and layout. Be assured, if there were more settings that we deemed useful, they’d be here. Some frameworks provide a ton of configuration options, but most of them just complicate things with no real benefit. Memorizing numerous options on the off-chance you need one doesn’t seem like a beneficial use of time.</p>
+
+				<p>To change Raven’s settings, open the <strong>scss/modules/_config.scss</strong> file and update the values. Change the space between columns by editing the <strong>gutters</strong> value, and change the <strong>layout</strong> method value to either <strong>float</strong> or <strong>flexbox</strong>. Flexbox is the preferred layout method, but if you need to support older browsers, you should leave it set to <strong>float</strong>.</p>
+			</section>
+
+			<section id="grids" class="general-grids">
+				<h2>Grid Layouts</h2>
+				<p>The grid system allows you to specify your columns in an intuitive way. Simply pass the width of each column to the <code>row()</code> mixin. The <code>row()</code> mixin accepts three parameters: <strong>column-spans</strong> (a string of column widths), <strong>[column-gutter]</strong> (the space between columns), and <strong>[layout]</strong> (<em>float</em> or <em>flexbox</em>). Only <strong>column-spans</strong> is required. The gutters and layout method can be defined globally.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;div class=&quot;sample-row&quot;&gt;
+&Tab;&lt;div&gt;25%&lt;/div&gt;
+&Tab;&lt;div&gt;25%&lt;/div&gt;
+&Tab;&lt;div&gt;50%&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-row {
+&Tab;@include row(25% 25% 50%);
+}</code></pre>
+
+				<h3>Result</h3>
+
+				<div class="sample simple-percents">
+					<div>25%</div>
+					<div>25%</div>
+					<div>50%</div>
+				</div>
+
+				<p>You can even mix units within a row. In the following example, the left and right columns will always by 200px wide, but the center column will stretch to the fill the remaining space.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;div class=&quot;sample-row&quot;&gt;
+&Tab;&lt;div&gt;200px&lt;/div&gt;
+&Tab;&lt;div&gt;100%&lt;/div&gt;
+&Tab;&lt;div&gt;200px&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-row {
+&Tab;@include row(200px 100% 200px);
+}</code></pre>
+
+				<h3>Result</h3>
+
+				<div class="sample holy-grail">
+					<div>200px</div>
+					<div>100%</div>
+					<div>200px</div>
+				</div>
+
+				<div class="message-info">
+					<p><strong>Note:</strong> A Flexbox layout will be automatically triggered when using units other than percentages. Keep this in mind if you need to support older browsers.</p>
+				</div>
+
+				<p>If you prefer the more traditional grids (e.g., 2 out of 12 columns), you can use the following syntax.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;div class=&quot;sample-row&quot;&gt;
+&Tab;&lt;div&gt;2 of 12&lt;/div&gt;
+&Tab;&lt;div&gt;4 of 12&lt;/div&gt;
+&Tab;&lt;div&gt;6 of 12&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-row {
+	@include row(200%/12 400%/12 600%/12);
+}
+		</code></pre>
+
+				<h3>Result</h3>
+
+				<div class="sample x-of-y">
+					<div>2 of 12</div>
+					<div>4 of 12</div>
+					<div>6 of 12</div>
+				</div>
+			</section>
+
+			<section id="nested-rows" class="nested-rows">
+				<h2>Nested Rows</h2>
+
+				<p>Nesting rows is easy. Just use the same <code>row()</code> mixin on the child rows.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;div class=&quot;sample-parent&quot;&gt;
+&Tab;&lt;div&gt;25%&lt;/div&gt;
+
+&Tab;&lt;div class=&quot;sample-nested&quot;&gt;
+&Tab;&Tab;&lt;div&gt;5em&lt;/div&gt;
+&Tab;&Tab;&lt;div&gt;100%&lt;/div&gt;
+&Tab;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-parent {
+&Tab;@include row(25% 75%);
+}
+
+.sample-nested {
+&Tab;@include row(5em 100%);
+}</code></pre>
+
+				<div class="sample sample-parent">
+					<div>25%</div>
+
+					<div class="sample-nested">
+						<div>5em</div>
+						<div>100%</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="centered-columns" class="centered-columns">
+				<h2>Centered Columns</h2>
+
+				<p>Easily center columns using the native <code>justify-content</code> CSS property.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;div class=&quot;sample-row&quot;&gt;
+&Tab;&lt;div&gt;15rem&lt;/div&gt;
+&Tab;&lt;div&gt;15rem&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-row {
+&Tab;@include row(15rem 15rem);
+&Tab;justify-content: center;
+}</code></pre>
+
+				<h3>Result</h3>
+
+				<div class="sample simple-center">
+					<div>15rem</div>
+					<div>15rem</div>
+				</div>
+
+				<div class="message-info">
+					<p><strong>Note:</strong> If you want to center columns with percentage width values, you will have to use Flexbox layout. This can be configured globally or by passing the <code>$layout:flexbox</code> argument to the <code>row()</code> mixin.</p>
+				</div>
+			</section>
+
+			<section id="column-reordering" class="column-reordering">
+				<h2>Column Reordering</h2>
+
+				<p>The <code>column-order()</code> mixin can easily reorder columns for you &mdash; none of that push/pull columns nonsense that other frameworks use.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;div class=&quot;sample-row&quot;&gt;
+&Tab;&lt;div&gt;First&lt;/div&gt;
+&Tab;&lt;div&gt;Second&lt;/div&gt;
+&Tab;&lt;div&gt;Third&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-row {
+&Tab;@include row(100%/3 100%/3 100%/3, $layout: flexbox);
+&Tab;@include column-order(3 1 2);
+}</code></pre>
+
+				<h3>Result</h3>
+
+				<div class="sample simple-reorder">
+					<div>First</div>
+					<div>Second</div>
+					<div>Third</div>
+				</div>
+
+				<div class="message-info">
+					<p><strong>Note:</strong> The <code>column-order()</code> mixin makes use of Flexbox, so set it globally or pass it as an argument as in the example above.</p>
+				</div>
+			</section>
+
+			<section id="gallery-layout" class="gallery">
+				<h2>Gallery Layout</h2>
+
+				<p>If you only need a simple grid of thumbnail images or all of your columns are the same width, you can take advantage of the <strong>gallery()</strong> mixin. Then you can add as many items as you want without having to place them in separate rows.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;ul class=&quot;sample-gallery&quot;&gt;
+&Tab;&lt;li&gt;1&lt;/li&gt;
+&Tab;&lt;li&gt;2&lt;/li&gt;
+&Tab;&lt;li&gt;3&lt;/li&gt;
+&Tab;&lt;li&gt;4&lt;/li&gt;
+&Tab;&lt;li&gt;5&lt;/li&gt;
+&Tab;&lt;li&gt;6&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-gallery {
+&Tab;@include gallery(3);
+}</code></pre>
+
+				<h3>Result</h3>
+
+				<ul class="sample list-gallery">
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+				</ul>
+			</section>
+
+			<section id="equal-columns" class="equal-columns">
+				<h2>Equal Columns</h2>
+
+				<p>Sometimes it just isn’t possible to know how many columns will go in your row. For example, you may need to create a horizontal menu that will be managed by authors in a content management system. In these cases, the <code>equal-columns()</code> mixin is helpful.</p>
+				<p>The sample below can have any number of columns, and they will automatically adjust to fill the row.</p>
+
+				<h3>HTML</h3>
+				<pre><code>&lt;ul class=&quot;sample-row&quot;&gt;
+&Tab;&lt;li&gt;1&lt;/li&gt;
+&Tab;&lt;li&gt;2&lt;/li&gt;
+&Tab;&lt;li&gt;3&lt;/li&gt;
+&Tab;&lt;li&gt;4&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+				<h3>Sass</h3>
+				<pre><code>.sample-row {
+&Tab;@include equal-columns($layout: flexbox);
+}</code></pre>
+
+				<h3>Result</h3>
+
+				<ul class="sample list-equal-cols">
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+				</ul>
+
+				<div class="message-info">
+					<p>We use <code>display: table</code> when Flexbox is not specified. If you decide not to use the Flexbox layout, be aware that you may need to tweak some margins and spacing around the container element.</p>
+				</div>
+			</section>
+
+			<section id="build-systems" class="build-systems">
+				<h2>Build Systems</h2>
+				<p>If you are familiar with Grunt or Gulp, you will notice that Raven comes with config files for both. Follow these steps:</p>
+
+				<ol>
+					<li>Delete the config file you don’t need (either <strong>Gruntfile.js</strong> or <strong>gulpfile.js</strong>).</li>
+					<li>Open <strong>package.json</strong> and remove the dependencies you won’t be using. For example, if you will be using Gulp, you may remove all of the Grunt dependencies.</li>
+					<li>Run <code>npm install</code> from the root directory of this project.</li>
+				</ol>
+
+				<h3>Grunt</h3>
+				<p>Use <code>grunt watch</code> to automatically compile your Sass into CSS as you make changes. Run <code>grunt</code> by itself to generate optimized CSS.</p>
+
+				<h3>Gulp</h3>
+				<p>Use <code>gulp watch</code> to automatically compile your Sass into CSS as you make changes. Run <code>gulp</code> by itself to generate optimized CSS.</p>
+
+				<div class="message-info">
+					<p>If you’re looking for a more robust development environment, consider using Raven Dev Environment.</p>
+				</div>
+			</section>
+		</main>
+	</div>
+
+	<footer class="page-footer">
+		<p>Raven Framework is freely available under the <a href="https://tldrlegal.com/license/mit-license">MIT License</a>.</p>
+	</footer>
+</body>
+</html>

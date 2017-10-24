@@ -1,0 +1,56 @@
+/* -- Type List Styles -- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 !important;
+}
+
+.type-list__item {
+  margin-bottom: calc(var(--page-gutter) * 1.5);
+}
+
+.type-list__item-header {
+  margin-bottom: calc(var(--page-gutter) / 2);
+  padding-bottom: calc(var(--page-gutter) / 8);
+  border-bottom: 1px solid var(--color-neutral-80);
+}
+
+.type-list__item-heading {
+  margin-right: calc(var(--page-gutter) / 4);
+}
+
+.type-list__item-meta {
+  white-space: nowrap;
+  font-size: var(--font-size-x-small);
+  color: var(--color-neutral-45);
+}
+
+/* Large Viewports */
+@media (min-width: 1024px) {
+  .type-list-headings,
+  .type-list-general,
+  .type-list-lists {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .type-list-headings .type-list__item {
+    flex: 0 0 calc(50% - var(--page-gutter) / 2);
+  }
+
+  .type-list-headings .type-list__item:nth-child(odd) {
+    margin-right: var(--page-gutter);
+  }
+
+  .type-list-lists .type-list__item {
+    flex: 0 0 calc(33.333% - 2/3 * var(--page-gutter));
+  }
+
+  .type-list-lists .type-list__item:not(:last-child) {
+    margin-right: var(--page-gutter);
+  }
+}

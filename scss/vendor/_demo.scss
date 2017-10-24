@@ -1,0 +1,243 @@
+// Vars
+$color-primary: #2c2c6f;
+$color-primary-desaturated: #363669;
+$color-grey-light: #eee;
+$color-grey: #ccc;
+$color-text: #111;
+$color-bg: #fff;
+
+$canvas-small: 640px;
+$canvas-medium: 1024px;
+$canvas-large: 1100px;
+$canvas-limit: 1400px;
+
+// Resets
+body {
+	tab-size: 4;
+	font-family: sans-serif;
+	line-height: 1.6;
+	color: $color-text;
+	background-color: $color-bg;
+}
+
+code {
+	background-color: $color-grey-light;
+}
+
+pre {
+	padding: 1rem;
+	max-height: 400px;
+	font-size: .875em;
+	color: $color-grey-light;
+	background-color: $color-primary-desaturated;
+
+	code {
+		display: block;
+		background-color: $color-primary-desaturated;
+	}
+}
+
+a {
+	color: $color-primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl,
+pre {
+	margin-top: 0;
+}
+
+h1 {
+	font-size: 2.6rem;
+	line-height: 1.2;
+	color: $color-primary;
+}
+
+h3 {
+	margin-bottom: 0;
+	font-size: 1em;
+}
+
+section {
+	margin-bottom: get-gutter() * 1.5;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+// Layout
+.page-wrapper {
+	margin: 0 auto;
+	padding: get-gutter();
+	max-width: $canvas-limit;
+
+	@media (min-width: $canvas-large) {
+		@include row(15rem 100%, $layout: flexbox);
+		@include column-order(2 1);
+	}
+}
+
+// Menu
+.page-nav {
+	margin-bottom: get-gutter();
+	padding: 1rem;
+	background-color: $color-grey-light;
+
+	h2 {
+		margin-bottom: 1rem;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		ul {
+			display: none;
+			margin-left: 1rem;
+		}
+	}
+
+	a {
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	@media (min-width: $canvas-large) {
+		margin-bottom: 0;
+
+		.content-wrapper {
+			position: fixed;
+		}
+
+		ul ul {
+			display: block;
+		}
+	}
+}
+
+// Footer
+.page-footer {
+	padding: get-gutter();
+	text-align: center;
+	color: $color-bg;
+	background-color: $color-primary;
+
+	p {
+		margin: 0 auto;
+		max-width: $canvas-limit;
+	}
+
+	a {
+		text-decoration: underline;
+		color: $color-bg;
+	}
+}
+
+// Message types
+.message-info {
+	margin-bottom: get-gutter();
+	padding: 1rem;
+	border: 2px dashed $color-grey;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	> :first-child {
+		margin-top: 0;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+}
+
+// Background colors and margins for the sample grids
+.sample {
+	margin-bottom: get-gutter();
+	padding: 1rem;
+	border: 1px solid $color-grey;
+	text-align: center;
+	list-style: none;
+
+	> * {
+		margin-bottom: get-gutter();
+		padding: get-gutter();
+		background: $color-grey;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		@media (min-width: $canvas-small) {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Code samples
+@media (min-width: $canvas-small) {
+	// Percentage-based columns
+	.simple-percents {
+		@include row(25% 25% 50%);
+	}
+
+	// Traditional "x of 12" columns grid syntax
+	.x-of-y {
+		@include row(200%/12 400%/12 600%/12);
+	}
+
+	// The "Holy Grail" layout (see http://alistapart.com/article/holygrail)
+	.holy-grail {
+		@include row(200px 100% 200px);
+	}
+
+	// Nested rows
+	.sample-parent {
+		@include row(25% 75%);
+	}
+
+	.sample-nested {
+		@include row(5em 100%);
+
+		> * {
+			background-color: $color-grey-light;
+		}
+	}
+
+	// Use the justify-content property to center columns (flexbox only)
+	.simple-center {
+		// Note: The use of non-percentage units in the row() mixin triggers flexbox
+		@include row(15rem 15rem);
+		justify-content: center;
+	}
+
+	// Use the order property to reorder columns (flexbox only)
+	.simple-reorder {
+		@include row(100%/3 100%/3 100%/3, $layout: flexbox);
+		@include column-order(3 1 2);
+	}
+
+	// Display arbitrary number of elements in a "gallery" grid
+	.list-gallery {
+		@include gallery(3);
+	}
+
+	// Display all columns in a single row
+	.list-equal-cols {
+		@include equal-columns($layout: flexbox);
+	}
+}

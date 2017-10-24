@@ -1,0 +1,8 @@
+<app-header (onExpandNav)="expandNav($event)"></app-header>
+<app-navigation
+  (onExpandNav)="expandNav($event)"
+  [expanded]="navIsExpanded"></app-navigation>
+
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>

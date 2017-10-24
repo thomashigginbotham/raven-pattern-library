@@ -1,0 +1,40 @@
+/* -- Page Header Styles -- */
+
+.page-header {
+  padding-top: var(--page-padding);
+  padding-bottom: var(--page-padding);
+  color: var(--color-neutral-45);
+  background-color: var(--color-neutral-85);
+}
+
+.page-header__wrapper {
+  margin: 0 auto;
+  padding-right: var(--page-gutter);
+  padding-left: var(--page-gutter);
+  max-width: var(--page-max-width);
+}
+
+.page-header__heading {
+  margin: 0;
+  color: var(--color-brand-primary);
+}
+
+.page-header__group {
+  display: block;
+  text-transform: uppercase;
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-x-small);
+  line-height: calc(var(--font-line-height-x-small) / 2);
+}
+
+.page-header__description > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1024px) {
+  .page-header__heading,
+  .page-header__description {
+    width: calc(100% - var(--page-min-width) - var(--page-gutter));
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "raven-framework",
+  "description": "A flexible, pluggable framework with a responsive grid system.",
+  "main": "scss/modules/_grids.scss",
+  "authors": [
+    "Thomas Higginbotham"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "sass",
+    "responsive",
+    "grid",
+    "layout",
+    "flexbox"
+  ],
+  "homepage": "https://github.com/thomashigginbotham/raven-framework",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

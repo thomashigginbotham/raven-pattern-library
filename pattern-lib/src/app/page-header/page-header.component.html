@@ -1,0 +1,12 @@
+<section class="page-header">
+  <div class="page-header__wrapper">
+    <h2 class="page-header__heading">
+      <span class="page-header__group">{{groupName || '&nbsp;'}}</span>
+      <span class="page-header__name">{{heading}}</span>
+    </h2>
+
+    <div *ngIf="description" class="page-header__description">
+      <p>{{description}}</p>
+    </div>
+  </div>
+</section>

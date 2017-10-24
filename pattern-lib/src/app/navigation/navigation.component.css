@@ -1,0 +1,172 @@
+/* -- Navigation Styles -- */
+
+.app-nav__wrapper {
+  position: fixed;
+  top: 0;
+  right: calc(-1 * var(--page-min-width));
+  box-sizing: border-box;
+  padding: var(--page-padding);
+  width: var(--page-min-width);
+  height: 100vh;
+  overflow: auto;
+  color: var(--color-brand-primary);
+  background-color: var(--color-neutral-95);
+  transition: 250ms right ease-out;
+}
+
+.app-nav.active .app-nav__wrapper {
+  right: 0;
+}
+
+.app-nav a {
+  text-decoration: none;
+  color: var(--color-brand-primary);
+}
+
+.app-nav .active > a {
+  font-weight: var(--font-weight-bold);
+}
+
+.app-nav a:hover {
+  text-decoration: underline;
+}
+
+.app-nav__header {
+  margin-bottom: var(--page-padding);
+  padding-bottom: var(--page-padding);
+  border-bottom: 1px solid var(--color-neutral-80);
+  line-height: 0;
+  cursor: pointer;
+}
+
+.app-nav__header h2 {
+  margin-top: 0;
+  margin-bottom: calc(var(--font-size-large) / -3.4);
+  font-size: var(--font-size-large);
+  line-height: var(--font-size-large);
+}
+
+.app-nav__links {
+  clear: left;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: var(--font-size-increased);
+  line-height: var(--font-line-height-x-large);
+}
+
+.app-nav__sublinks {
+  margin: 0;
+  padding-left: var(--page-padding);
+  list-style: none;
+  font-size: var(--font-size-normal);
+  line-height: var(--font-line-height-increased);
+}
+
+.app-nav__sublinks a {
+  color: var(--color-brand-primary-60);
+}
+
+@media (min-width: 1024px) {
+  :host {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    padding-right: var(--page-gutter);
+    padding-left: var(--page-gutter);
+    max-width: var(--page-max-width);
+  }
+
+  .app-nav__wrapper {
+    position: relative;
+    right: 0;
+    float: right;
+    margin-top: var(--page-padding);
+    margin-left: var(--page-gutter);
+    height: auto;
+    overflow: hidden;
+  }
+
+  .app-nav__header {
+    transition: margin 250ms ease-in,
+      padding 250ms ease-in,
+      border 150ms ease-in;
+  }
+
+  .app-nav:not(.active) .app-nav__header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-color: var(--color-neutral-95);
+  }
+
+  .app-nav:not(.active) .app-nav__links {
+    display: none;
+  }
+}
+
+/* Expansion Trigger */
+.app-nav__trigger {
+  --hamburger-width: 26px;
+  --hamburger-bar-height: 5px;
+  --hamburger-space: 4px;
+
+  position: relative;
+  float: left;
+  margin-right: .25em;
+  width: var(--hamburger-width);
+  height: calc(var(--hamburger-bar-height) * 3 + var(--hamburger-space) * 2);
+}
+
+.hamburger-icon {
+  position: relative;
+  top: calc(var(--hamburger-bar-height) + var(--hamburger-space));
+  width: var(--hamburger-width);
+  height: var(--hamburger-bar-height);
+  border-radius: var(--hamburger-bar-height);
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(.55, .055, .675, .19);
+  transition-duration: 220ms;
+  font-size: 0;
+  line-height: 0;
+  background-color: var(--color-brand-primary-60);
+}
+
+.active .hamburger-icon {
+  transform: rotate(225deg);
+  transition-timing-function: cubic-bezier(.215, .61, .355, 1);
+  transition-delay: 120ms;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: var(--hamburger-width);
+  height: var(--hamburger-bar-height);
+  border-radius: var(--hamburger-bar-height);
+  background-color: var(--color-brand-primary-60);
+}
+
+.hamburger-icon::before {
+  top: calc(-1 * (var(--hamburger-bar-height) + var(--hamburger-space)));
+  transition: top 100ms ease-in 250ms, opacity 100ms ease-in;
+}
+
+.active .hamburger-icon::before {
+  top: 0;
+  opacity: 0;
+  transition: top 100ms ease-out, opacity 100ms ease-out 120ms;
+}
+
+.hamburger-icon::after {
+  top: calc(var(--hamburger-bar-height) + var(--hamburger-space));
+  transition: top 100ms ease-in 250ms,
+    transform 220ms cubic-bezier(.55, .055, .675, .19);
+}
+
+.active .hamburger-icon::after {
+  top: 0;
+  transform: rotate(-90deg);
+  transition: top 100ms ease-in,
+    transform 220ms cubic-bezier(.215, .61, .355, 1) 120ms;
+}

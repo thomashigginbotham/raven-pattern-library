@@ -5,9 +5,11 @@ import { UtilsService } from '../utils.service';
 @Component({
   selector: 'app-type-list',
   templateUrl: './type-list.component.html',
-  styleUrls: ['../../assets/ext/css/main.css',
+  styleUrls: [
     '../../assets/rpl-reset.css',
-    './type-list.component.css']
+    './type-list.component.css',
+    '../../assets/ext/css/main.css'
+  ]
 })
 export class TypeListComponent implements AfterContentInit {
   @ViewChild('wrapper')wrapper: ElementRef;

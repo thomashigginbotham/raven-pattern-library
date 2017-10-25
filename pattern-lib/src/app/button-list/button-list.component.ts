@@ -6,8 +6,8 @@ import { UtilsService } from '../utils.service';
   selector: 'app-button-list',
   templateUrl: './button-list.component.html',
   styleUrls: [
-    '../../assets/ext/css/main.css',
     '../../assets/rpl-reset.css',
+    '../../assets/ext/css/main.css',
     './button-list.component.css'
   ]
 })

@@ -7,8 +7,8 @@ import { UtilsService } from '../utils.service';
   templateUrl: './type-list.component.html',
   styleUrls: [
     '../../assets/rpl-reset.css',
-    './type-list.component.css',
-    '../../assets/ext/css/main.css'
+    '../../assets/ext/css/main.css',
+    './type-list.component.css'
   ]
 })
 export class TypeListComponent implements AfterContentInit {

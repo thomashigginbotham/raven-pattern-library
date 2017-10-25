@@ -79,10 +79,25 @@ export class ColorListComponent implements OnInit {
               });
 
               if (promises.length) {
+                const duplicateColorVars: string[] = [];
+
                 Promise.all(promises).then(colors => {
                   if (colors && colors.length) {
-                    colorDetails.push(...colors);
+                    // Add color if it is not a variant color
+                    colors.forEach(color => {
+                      const sassVarParts = color.sassVar.split('-');
 
+                      sassVarParts.pop();
+
+                      const sassVarPrefix = sassVarParts.join('-');
+
+                      if (duplicateColorVars.indexOf(sassVarPrefix) === -1) {
+                        colorDetails.push(color);
+                        duplicateColorVars.push(color.sassVar);
+                      }
+                    });
+
+                    // Add its variants
                     this.addColorVariants(colorDetails, scssText)
                       .then(colors => {
                         resolve(colors);

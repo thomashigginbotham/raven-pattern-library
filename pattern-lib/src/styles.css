@@ -68,6 +68,11 @@ h2 {
   line-height: var(--font-line-height-x-large);
 }
 
+h3 {
+  font-size: var(--font-size-large);
+  line-height: var(--font-line-height-large);
+}
+
 /* Main Content */
 .main-content__wrapper {
   margin: 0 auto;

@@ -4,5 +4,11 @@
 // Grid functions and mixins
 @import 'modules/grids';
 
+// Global Variables
+@import 'modules/vars';
+
+// Partials
+@import 'partials/buttons';
+
 // Demo CSS (remove)
 @import 'vendor/demo';

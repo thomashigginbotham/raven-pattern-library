@@ -25,6 +25,7 @@ import { TypeListComponent } from './type-list/type-list.component';
 import { ColorListComponent } from './color-list/color-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageContentComponent } from './page-content/page-content.component';
+import { ButtonListComponent } from './button-list/button-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PageContentComponent } from './page-content/page-content.component';
     TypeListComponent,
     ColorListComponent,
     FooterComponent,
-    PageContentComponent
+    PageContentComponent,
+    ButtonListComponent
   ],
   imports: [
     BrowserModule,

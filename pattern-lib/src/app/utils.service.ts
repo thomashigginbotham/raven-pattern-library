@@ -1,9 +1,49 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2 } from '@angular/core';
 
 @Injectable()
 export class UtilsService {
 
   constructor() { }
+
+  /**
+   * Applies styles from a style sheet to another element.
+   * @param styleSheetPath The path to a style sheet to use.
+   * @param selector A CSS selector found in the style sheet.
+   * @param element The element that will receive the styles.
+   * @param renderer The renderer for the element.
+   */
+  applyStyleSheetStylesToElement(
+    styleSheetPath: string,
+    selector: string,
+    element: Element,
+    renderer: Renderer2
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.getStylesFromStyleSheet(styleSheetPath, selector)
+        .then(rules => {
+          if (rules && rules.length) {
+            rules.forEach(rule => {
+              if (rule.style && rule.style.length > 0) {
+                Array.from(rule.style).forEach(prop => {
+                  renderer.setStyle(
+                    element,
+                    prop,
+                    rule.style[prop]
+                  );
+                });
+              }
+            });
+
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        })
+        .catch(e => {
+          reject(e);
+        });
+    });
+  }
 
   /**
    * Converts an RGB value to a hexadecimal value.

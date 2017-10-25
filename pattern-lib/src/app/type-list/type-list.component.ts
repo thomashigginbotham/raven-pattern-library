@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterContentInit, Renderer, ElementRef }
+import { Component, ViewChild, AfterContentInit, Renderer2, ElementRef }
   from '@angular/core';
 import { UtilsService } from '../utils.service';
 
@@ -31,7 +31,7 @@ export class TypeListComponent implements AfterContentInit {
 
   constructor(
     private _utilsService: UtilsService,
-    private _renderer: Renderer
+    private _renderer: Renderer2
   ) { }
 
   ngAfterContentInit() {
@@ -44,7 +44,12 @@ export class TypeListComponent implements AfterContentInit {
       this.h6.nativeElement
     ];
 
-    this.addBodyStyles().then(() => {
+    this._utilsService.applyStyleSheetStylesToElement(
+      '/assets/ext/css/main.css',
+      'body',
+      this.wrapper.nativeElement,
+      this._renderer
+    ).then(() => {
       this.headerMetadata = this.bindMetadata(headerEls);
       this.paragraphMetadata = this.bindMetadata([this.p.nativeElement])[0];
       this.blockquoteMetadata = this.bindMetadata(
@@ -76,33 +81,6 @@ export class TypeListComponent implements AfterContentInit {
 
       return `${hexColor} ${fontWeight} ${roundedFontSize}/${roundedLineHeight}
         ${fontFamily}`;
-    });
-  }
-
-  /**
-   * Adds the external style sheet's body rules to this component, since body
-   * styles can not be pulled in through a component's styles.
-   */
-  addBodyStyles(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._utilsService.getStylesFromStyleSheet(
-        '/assets/ext/css/main.css',
-        'body'
-      ).then(rules => {
-        rules.forEach(rule => {
-          if (rule.style && rule.style.length > 0) {
-            Array.from(rule.style).forEach(prop => {
-              this._renderer.setElementStyle(
-                this.wrapper.nativeElement,
-                prop,
-                rule.style[prop]
-              );
-            });
-          }
-        });
-
-        resolve(true);
-      });
     });
   }
 }

@@ -1,5 +1,9 @@
 /* -- Footer Styles -- */
 
+.app-footer {
+  border-top: 1px solid var(--color-neutral-85);
+}
+
 .app-footer::before {
   content: '';
   clear: both;
@@ -9,9 +13,8 @@
 
 .app-footer__wrapper {
   margin: 0 auto;
-  padding: var(--page-padding) var(--page-gutter);
+  padding: 0 var(--page-padding) var(--page-gutter);
   max-width: var(--page-max-width);
-  border-top: 1px solid var(--color-neutral-85);
   font-size: var(--font-size-small);
   color: var(--color-neutral-45);
 }

@@ -18,7 +18,7 @@ button,
 	vertical-align: middle;
 	text-align: center;
 	text-decoration: none;
-	line-height: $button-height * 1.125;
+	line-height: $button-height;
 	color: $color-neutral-100;
 	background-color: $color-brand-secondary-70;
 	transition: background-color 150ms ease-in-out;
@@ -32,10 +32,8 @@ button,
 
 	&:focus,
 	&.focused {
-		padding: 0 $button-height / 3.125;
-		border: $button-height / 12.5 solid $color-brand-secondary;
-		line-height: $button-height * .965;
 		outline: none;
+		box-shadow: 0 0 0 $button-height / 12.5 $color-brand-secondary;
 	}
 
 	&.primary {
@@ -58,22 +56,12 @@ button,
 		min-width: 8rem;
 		height: $button-height * 1.25;
 		font-size: $font-size-large;
-		line-height: $button-height * 1.42;
-
-		&:focus,
-		&.focused {
-			line-height: $button-height * 1.26;
-		}
+		line-height: $button-height * 1.25;
 	}
 
 	&.small {
 		height: $button-height * .8;
-		line-height: $button-height * .92;
-
-		&:focus,
-		&.focused {
-			line-height: $button-height * .76;
-		}
+		line-height: $button-height * .8;
 	}
 
 	&[disabled],

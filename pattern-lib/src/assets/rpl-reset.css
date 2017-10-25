@@ -15,11 +15,19 @@ h6 {
 h1 {
   margin: .67em 0;
   font-size: 2em;
+  font-weight: bold;
 }
 
 h2 {
   margin: .83em 0;
   font-size: 1.5em;
+  font-weight: bold;
+}
+
+h3 {
+  margin: 1em 0;
+  font-size: 1.17em;
+  font-weight: bold;
 }
 
 p {

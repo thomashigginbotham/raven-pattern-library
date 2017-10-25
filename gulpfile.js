@@ -41,5 +41,5 @@ gulp.task('default', ['copy', 'sass:dist']);
 gulp.task('watch', ['copy', 'sass:dev', 'sass:watch']);
 
 gulp.task('sass:watch', function () {
-	gulp.watch('./scss/**/*.scss', ['sass:dev']);
+	gulp.watch('./scss/**/*.scss', ['sass:dev', 'copy']);
 });

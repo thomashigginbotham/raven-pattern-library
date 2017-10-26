@@ -82,6 +82,7 @@
     right: 0;
     float: right;
     margin-top: var(--page-padding);
+    margin-bottom: var(--page-gutter);
     margin-left: var(--page-gutter);
     height: auto;
     overflow: hidden;

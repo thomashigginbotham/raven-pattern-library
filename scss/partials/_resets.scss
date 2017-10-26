@@ -1,0 +1,8 @@
+// Resets
+//
+// No styleguide reference.
+
+*:focus,
+*.focused {
+	outline: $color-brand-secondary auto 5px;
+}

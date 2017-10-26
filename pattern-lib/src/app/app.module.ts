@@ -26,6 +26,7 @@ import { ColorListComponent } from './color-list/color-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageContentComponent } from './page-content/page-content.component';
 import { ButtonListComponent } from './button-list/button-list.component';
+import { FormListComponent } from './form-list/form-list.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ButtonListComponent } from './button-list/button-list.component';
     ColorListComponent,
     FooterComponent,
     PageContentComponent,
-    ButtonListComponent
+    ButtonListComponent,
+    FormListComponent
   ],
   imports: [
     BrowserModule,

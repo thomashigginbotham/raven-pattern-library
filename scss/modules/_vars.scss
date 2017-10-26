@@ -1,5 +1,8 @@
 // Shared Variables
 
+// Layout
+$page-gutter: 2rem;
+
 // Color
 $color-brand-primary: #cc4040;
 $color-brand-primary-95: #f26161;
@@ -21,9 +24,12 @@ $color-utility-success: #80a22a;
 
 $color-neutral: #999;
 $color-neutral-100: #fff;
+$color-neutral-95: #f2f2f2;
 $color-neutral-80: #ccc;
 $color-neutral-20: #333;
 $color-neutral-0: #000;
 
 // Fonts
+$font-size-small: 12px;
+$font-size-normal: 16px;
 $font-size-large: 20px;

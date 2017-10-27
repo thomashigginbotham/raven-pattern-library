@@ -2,6 +2,7 @@
 
 .app-nav__wrapper {
   position: fixed;
+  z-index: 10;
   top: 0;
   right: calc(-1 * var(--page-min-width));
   box-sizing: border-box;
@@ -16,6 +17,7 @@
 
 .app-nav.active .app-nav__wrapper {
   right: 0;
+  filter: drop-shadow(0 0 var(--page-gutter) var(--color-black));
 }
 
 .app-nav a {
@@ -86,6 +88,10 @@
     margin-left: var(--page-gutter);
     height: auto;
     overflow: hidden;
+  }
+
+  .app-nav.active .app-nav__wrapper {
+    filter: none;
   }
 
   .app-nav__header {

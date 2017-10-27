@@ -1,5 +1,15 @@
+# OS
 *.DS_Store
+
+# Compiled Output
 .sass-cache
 node_modules
 /css
 /pattern-lib/src/assets/ext
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

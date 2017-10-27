@@ -2,6 +2,15 @@
 //
 // No styleguide reference.
 
+body {
+	font-family: $font-family-body;
+	font-size: $font-size-normal;
+	line-height: $line-height-normal;
+	color: $color-neutral-0;
+	background-color: $color-neutral-100;
+	tab-size: 4;
+}
+
 h1,
 h2,
 h3,
@@ -10,15 +19,39 @@ h5,
 h6 {
 	margin-top: 0;
 	margin-bottom: .75rem;
+	font-family: $font-family-headings;
+	line-height: $line-height-large;
 }
 
 p,
 ul,
 ol,
 dl,
-table {
+table,
+pre {
 	margin-top: 0;
 	margin-bottom: 1rem;
+}
+
+code {
+	background-color: $color-neutral-95;
+}
+
+pre {
+	padding: 1rem;
+	max-height: 400px;
+	font-size: .875em;
+	color: $color-neutral-0;
+	background-color: $color-neutral-95;
+
+	code {
+		display: block;
+		background-color: $color-neutral-95;
+	}
+}
+
+a {
+	color: $color-brand-secondary;
 }
 
 *:focus,

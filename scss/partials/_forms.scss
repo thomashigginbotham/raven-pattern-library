@@ -11,7 +11,7 @@ $form-field-border-radius: .25rem;
 	box-sizing: border-box;
 	display: block;
 	margin-bottom: 1rem;
-	padding: $form-field-height / 4;
+	padding: $form-field-height / 6;
 	width: 100%;
 	max-width: 30em;
 	border: 1px solid $color-neutral-80;
@@ -232,20 +232,6 @@ select {
 	}
 }
 
-// Misc.
-label {
-	display: block;
-	cursor: pointer;
-}
-
-[type=checkbox],
-[type=radio] {
-	& + label {
-		display: inline-block;
-	}
-}
-
-
 // Form layouts.
 .form-field {
 	margin-bottom: $page-gutter;
@@ -265,5 +251,19 @@ label {
 .form-field-radio {
 	.validation-error {
 		margin-top: 0;
+	}
+}
+
+// Misc.
+label {
+	display: block;
+	margin-bottom: .25rem;
+	cursor: pointer;
+}
+
+[type=checkbox],
+[type=radio] {
+	& + label {
+		display: inline-block;
 	}
 }

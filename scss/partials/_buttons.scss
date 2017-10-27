@@ -2,8 +2,8 @@
 //
 // No styleguide reference.
 
-$button-height: 2.5rem;
-$button-border-radius: 4px;
+$button-height: 2.4rem;
+$button-border-radius: $button-height / 12;
 
 button,
 .button,
@@ -56,7 +56,7 @@ button,
 		min-width: 8rem;
 		height: $button-height * 1.25;
 		font-size: $font-size-large;
-		line-height: $button-height * 1.25;
+		line-height: $button-height * 1.208333;
 	}
 
 	&.small {

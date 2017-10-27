@@ -3,16 +3,15 @@
 .color-list__wrapper {
   display: flex;
   flex-wrap: wrap;
+  margin-left: calc(var(--page-gutter) / -2);
 }
 
 .color-item {
+  flex: 1 0 calc(50% - var(--page-gutter) / 2);
   margin-bottom: var(--page-gutter);
+  margin-left: calc(var(--page-gutter) / 2);
   font-size: var(--font-size-x-small);
   color: var(--color-neutral-45);
-}
-
-.color-item:nth-child(odd) {
-  margin-right: var(--page-gutter);
 }
 
 .color-item__swatch {
@@ -20,7 +19,7 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 4px 4px 4px 50%;
-  width: 160px;
+  min-width: 160px;
   height: 100px;
 }
 

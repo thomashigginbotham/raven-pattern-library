@@ -4,5 +4,6 @@
 
 *:focus,
 *.focused {
-	outline: $color-brand-secondary auto 5px;
+	outline: 0;
+	box-shadow: 0 0 0 .25rem $color-brand-secondary;
 }

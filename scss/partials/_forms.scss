@@ -3,7 +3,7 @@
 // No styleguide reference.
 
 // Vars.
-$form-field-height: 2.5rem;
+$form-field-height: 2.4rem;
 $form-field-border-radius: .25rem;
 
 // Mixins.
@@ -30,6 +30,11 @@ $form-field-border-radius: .25rem;
 	&.invalid {
 		border-color: $color-utility-error;
 		color: $color-utility-error;
+
+		&:focus,
+		&.focused {
+			box-shadow: 0 0 0 .25rem $color-utility-error;
+		}
 	}
 }
 
@@ -102,8 +107,8 @@ select {
 			position: absolute;
 			top: 0;
 			left: 0;
-			width: $form-field-height / 2;
-			height: $form-field-height / 2;
+			width: $form-field-height / 1.92;
+			height: $form-field-height / 1.92;
 			border: 1px solid $color-neutral-80;
 			background-color: $color-neutral-100;
 			cursor: pointer;
@@ -154,10 +159,10 @@ select {
 		}
 
 		&::after {
-			top: $form-field-height * .18;
-			left: $form-field-height / 5;
-			width: $form-field-height * .12;
-			height: $form-field-height / 20;
+			top: $form-field-height / 7.68;
+			left: $form-field-height / 9.6;
+			width: $form-field-height * .24;
+			height: $form-field-height / 9.6;
 			border: 3px solid $color-neutral-100;
 			border-top: 0;
 			border-right: 0;
@@ -170,13 +175,6 @@ select {
 		&::before {
 			border-color: $color-brand-secondary;
 			background-color: $color-brand-secondary;
-		}
-
-		&::after {
-			top: $form-field-height * .12;
-			left: $form-field-height / 10;
-			width: $form-field-height * .24;
-			height: $form-field-height / 10;
 		}
 	}
 
@@ -203,24 +201,26 @@ select {
 		}
 
 		&::after {
-			top: $form-field-height * .15;
-			left: $form-field-height * .15;
-			width: $form-field-height * .175;
-			height: $form-field-height * .175;
+			top: $form-field-height / 3.84;
+			left: $form-field-height / 3.84;
+			width: 0;
+			height: 0;
 			border-radius: 50%;
 			background-color: $color-brand-secondary;
-			transition-property: top, left, width, height;
-			transition-duration: 50ms;
+			opacity: 0;
+			transition-property: top, left, width, height, opacity;
+			transition-duration: 150ms;
 			transition-timing-function: ease-in;
 		}
 	}
 
 	&:checked + label {
 		&::after {
-			top: $form-field-height * .075;
-			left: $form-field-height * .075;
-			width: $form-field-height * .35;
-			height: $form-field-height * .35;
+			top: $form-field-height / 9.6;
+			left: $form-field-height / 9.6;
+			width: $form-field-height / 3.2;
+			height: $form-field-height / 3.2;
+			opacity: 1;
 		}
 	}
 

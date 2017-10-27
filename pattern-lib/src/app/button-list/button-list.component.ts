@@ -28,4 +28,29 @@ export class ButtonListComponent implements OnInit {
       this._renderer
     ).then();
   }
+
+  /**
+   * Alerts a random phrase.
+   * @param e A click event.
+   */
+  onButtonClick(e) {
+    e.preventDefault();
+
+    const phraseList = [
+      'Ouch!',
+      'Don’t do that again.',
+      'Please stop.',
+      'Hey! Watch it, Mr. Clicky.',
+      'What did you do that for?',
+      '’Tis but a flesh wound. Come on, you pansy. Press me again!',
+      'Do you always press every button you see?',
+      'Nope. Nothing happened.',
+      'I’m sorry, Dave. I’m afraid I can’t do that.',
+      'I won’t dignify that behavior with a response.',
+      'Stop pressing this button. It turns on Mrs. Schultz’s porchlight in Germany.'
+    ];
+    const randomSelection = Math.floor(Math.random() * phraseList.length);
+
+    alert(phraseList[randomSelection]);
+  }
 }

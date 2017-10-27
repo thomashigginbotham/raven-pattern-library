@@ -27,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PageContentComponent } from './page-content/page-content.component';
 import { ButtonListComponent } from './button-list/button-list.component';
 import { FormListComponent } from './form-list/form-list.component';
+import { TableListComponent } from './table-list/table-list.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { FormListComponent } from './form-list/form-list.component';
     FooterComponent,
     PageContentComponent,
     ButtonListComponent,
-    FormListComponent
+    FormListComponent,
+    TableListComponent
   ],
   imports: [
     BrowserModule,

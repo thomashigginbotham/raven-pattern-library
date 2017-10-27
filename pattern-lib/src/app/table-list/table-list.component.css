@@ -1,0 +1,22 @@
+/* -- Table List Styles -- */
+
+.table-list__group-heading {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-large);
+  line-height: var(--font-line-height-large);
+}
+
+@media (min-width: 720px) {
+  .table-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .table-list__group {
+    flex: 1 0 calc(50% - var(--page-gutter) / 2);
+  }
+
+  .table-list__group:nth-child(odd) {
+    margin-right: calc(var(--page-gutter));
+  }
+}

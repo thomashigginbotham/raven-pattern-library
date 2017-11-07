@@ -1,0 +1,21 @@
+/* -- Component List Styles -- */
+
+.component-item {
+  margin-bottom: calc(var(--page-gutter) * 2);
+}
+
+.component-item__demo-wrapper {
+  margin-bottom: var(--page-padding);
+}
+
+.component-item__subheading {
+  margin-bottom: .5em;
+  text-transform: uppercase;
+}
+
+/* Large viewport */
+@media (min-width: 720px) {
+  :host {
+    display: flex;
+  }
+}

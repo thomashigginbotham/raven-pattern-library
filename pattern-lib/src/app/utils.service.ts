@@ -63,11 +63,23 @@ export class UtilsService {
   }
 
   /**
+   * Returns a GUID.
+   */
+  getGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0
+      const v = c == 'x' ? r : (r & 0x3 | 0x8);
+
+      return v.toString(16);
+    });
+  }
+
+  /**
    * Returns styles that match a selector found in a style sheet.
    * @param styleSheetPath The path to the style sheet file.
-   * @param selector A CSS selector (e.g. "li.active a").
+   * @param selector A CSS selector (e.g. "li.active a") (optional).
    */
-  getStylesFromStyleSheet(styleSheetPath: string, selector: string)
+  getStylesFromStyleSheet(styleSheetPath: string, selector: string = null)
     : Promise<CSSStyleRule[]> {
     return new Promise((resolve, reject) => {
       const head = document.getElementsByTagName('head')[0];
@@ -81,9 +93,11 @@ export class UtilsService {
         const lastStyleSheet = styleSheets[styleSheets.length - 1] as CSSStyleSheet;
         const rules = lastStyleSheet.rules || lastStyleSheet.cssRules;
 
-        const matches = Array.from(rules).filter(rule => {
-          return (rule as CSSStyleRule).selectorText === selector;
-        }) as CSSStyleRule[];
+        const matches = selector === null
+          ? Array.from(rules).map(rule => rule as CSSStyleRule)
+          : Array.from(rules).filter(rule => {
+              return (rule as CSSStyleRule).selectorText === selector;
+            }) as CSSStyleRule[];
 
         link.remove();
 

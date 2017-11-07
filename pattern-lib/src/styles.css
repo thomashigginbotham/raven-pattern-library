@@ -53,6 +53,7 @@ body {
   font: var(--font-size-normal)/var(--font-line-height-normal) var(--font-family-body);
   color: var(--color-black);
   background-color: var(--color-white);
+  tab-size: 4;
 }
 
 h2,
@@ -71,6 +72,11 @@ h2 {
 h3 {
   font-size: var(--font-size-large);
   line-height: var(--font-line-height-large);
+}
+
+pre {
+  max-height: 75vh;
+  overflow: auto;
 }
 
 /* Main Content */

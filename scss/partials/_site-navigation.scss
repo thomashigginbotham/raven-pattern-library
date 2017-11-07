@@ -1,0 +1,56 @@
+// Site Navigation component styles.
+//
+// No styleguide reference.
+
+.site-navigation {
+	padding: 0 $page-padding;
+	font-size: $font-size-large;
+	line-height: $line-height-large;
+	color: $color-neutral-100;
+	background-color: $color-brand-primary-65;
+
+	.menu {
+		margin-bottom: 0;
+		margin-left: 0;
+		padding-left: 0;
+		list-style: none;
+	}
+
+	li {
+		display: inline;
+	}
+
+	a {
+		display: inline-block;
+		margin-right: $page-padding;
+		border-top: $page-padding / 2 solid transparent;
+		border-bottom: $page-padding / 2 solid transparent;
+		text-decoration: none;
+		color: $color-neutral-100;
+
+		// Align text on its baseline
+		&::after {
+			content: '';
+			display: inline-block;
+			height: 100%;
+		}
+
+		&:hover,
+		&:focus {
+			color: $color-brand-primary-95;
+		}
+	}
+
+	li:last-child {
+		a {
+			margin-right: 0;
+		}
+	}
+
+	li.active {
+		a {
+			border-top-color: $color-brand-primary;
+			border-bottom-color: $color-neutral-100;
+		}
+	}
+}

@@ -28,6 +28,10 @@ import { PageContentComponent } from './page-content/page-content.component';
 import { ButtonListComponent } from './button-list/button-list.component';
 import { FormListComponent } from './form-list/form-list.component';
 import { TableListComponent } from './table-list/table-list.component';
+import { ComponentListComponent } from './component-list/component-list.component';
+
+import { SafeHtmlPipe } from './shared/safehtml.pipe';
+import { ComponentItemComponent } from './component-item/component-item.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,10 @@ import { TableListComponent } from './table-list/table-list.component';
     PageContentComponent,
     ButtonListComponent,
     FormListComponent,
-    TableListComponent
+    TableListComponent,
+    ComponentListComponent,
+    SafeHtmlPipe,
+    ComponentItemComponent
   ],
   imports: [
     BrowserModule,

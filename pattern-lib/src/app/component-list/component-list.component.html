@@ -1,0 +1,25 @@
+<div #wrapper class="component-list">
+  <div *ngFor="let webComponent of webComponents" class="component-item">
+    <header class="component-item__header">
+      <h3 class="component-item__heading">{{webComponent.name}}</h3>
+      <p class="component-item__summary">{{webComponent.summary}}</p>
+    </header>
+
+    <div class="component-item__demo-wrapper">
+      <h4 class="component-item__subheading">Demo</h4>
+
+      <div class="component-item__demo-render">
+        <app-component-item
+          [html]="webComponent.html | safeHtml"></app-component-item>
+      </div>
+    </div>
+
+    <div class="component-item__html-wrapper">
+      <h4 class="component-item__subheading">HTML</h4>
+
+      <div class="component-item__html-content">
+        <pre><code>{{webComponent.html}}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
 
 .page-header {
   padding-top: var(--page-padding);
-  padding-bottom: var(--page-padding);
+  padding-bottom: calc(var(--page-padding) - var(--font-size-x-small) / 2);
   color: var(--color-neutral-45);
   background-color: var(--color-neutral-85);
 }
@@ -26,6 +26,10 @@
   font-weight: var(--font-weight-normal);
   font-size: var(--font-size-x-small);
   line-height: calc(var(--font-line-height-x-small) / 2);
+}
+
+.page-header__description p {
+  margin-top: .5em;
 }
 
 .page-header__description > :last-child {

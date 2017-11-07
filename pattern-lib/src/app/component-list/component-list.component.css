@@ -18,4 +18,8 @@
   :host {
     display: flex;
   }
+
+  .component-list {
+    flex-basis: 100%;
+  }
 }

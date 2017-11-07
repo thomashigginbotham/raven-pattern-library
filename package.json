@@ -9,19 +9,18 @@
     "url": "https://github.com/thomashigginbotham/raven-pattern-library.git"
   },
   "keywords": [
-	"pattern",
-	"library",
-	"style",
-	"guide"
+    "pattern",
+    "library",
+    "style",
+    "guide"
   ],
   "license": "MIT",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^0.6.1",
     "gulp": "^3.9.1",
+    "gulp-processhtml": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.0.6",
-    "gulp-sourcemaps": "^1.6.0"
+    "gulp-sourcemaps": "^1.6.0",
+    "run-sequence": "^2.2.0"
   }
 }

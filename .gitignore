@@ -4,6 +4,8 @@
 # Compiled Output
 .sass-cache
 node_modules
+/.tmp
+/dist
 /css
 /pattern-lib/src/assets/ext
 

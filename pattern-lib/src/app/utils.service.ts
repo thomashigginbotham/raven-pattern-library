@@ -75,6 +75,17 @@ export class UtilsService {
   }
 
   /**
+   * Returns configuration values from a JSON file.
+   */
+  getRplConfig(): Promise<any> {
+    const path = '/assets/rpl-config.json';
+
+    return new Promise((resolve, reject) => {
+      fetch(path).then(response => resolve(response.json()));
+    });
+  }
+
+  /**
    * Returns styles that match a selector found in a style sheet.
    * @param styleSheetPath The path to the style sheet file.
    * @param selector A CSS selector (e.g. "li.active a") (optional).

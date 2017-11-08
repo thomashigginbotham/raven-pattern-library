@@ -7,8 +7,9 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsComponent } from './forms/forms.component';
 import { TablesComponent } from './tables/tables.component';
 import { ComponentsComponent } from './components/components.component';
-import { PageStructureComponent } from './page-structure/page-structure.component';
+import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { PagesComponent } from './pages/pages.component';
+import { PageLoaderComponent } from './page-loader/page-loader.component';
 
 export const appRoutes: Routes = [
   {
@@ -36,11 +37,14 @@ export const appRoutes: Routes = [
     path: 'components',
     component: ComponentsComponent
   }, {
-    path: 'components/page-structure',
-    component: PageStructureComponent
+    path: 'components/:id',
+    component: ComponentLoaderComponent
   }, {
     path: 'pages',
     component: PagesComponent
+  }, {
+    path: 'pages/:id',
+    component: PageLoaderComponent
   }, {
     path: '',
     redirectTo: 'introduction',

@@ -19,7 +19,6 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsComponent } from './forms/forms.component';
 import { TablesComponent } from './tables/tables.component';
 import { ComponentsComponent } from './components/components.component';
-import { PageStructureComponent } from './page-structure/page-structure.component';
 import { PagesComponent } from './pages/pages.component';
 import { TypeListComponent } from './type-list/type-list.component';
 import { ColorListComponent } from './color-list/color-list.component';
@@ -32,6 +31,8 @@ import { ComponentListComponent } from './component-list/component-list.componen
 
 import { SafeHtmlPipe } from './shared/safehtml.pipe';
 import { ComponentItemComponent } from './component-item/component-item.component';
+import { ComponentLoaderComponent } from './component-loader/component-loader.component';
+import { PageLoaderComponent } from './page-loader/page-loader.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,6 @@ import { ComponentItemComponent } from './component-item/component-item.componen
     FormsComponent,
     TablesComponent,
     ComponentsComponent,
-    PageStructureComponent,
     PagesComponent,
     TypeListComponent,
     ColorListComponent,
@@ -58,7 +58,9 @@ import { ComponentItemComponent } from './component-item/component-item.componen
     TableListComponent,
     ComponentListComponent,
     SafeHtmlPipe,
-    ComponentItemComponent
+    ComponentItemComponent,
+    ComponentLoaderComponent,
+    PageLoaderComponent
   ],
   imports: [
     BrowserModule,

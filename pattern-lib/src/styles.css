@@ -8,6 +8,9 @@
   --page-gutter: 2rem;
   --page-padding: 1.4rem;
 
+  /* Config */
+  --logo-height: 58px;
+
   /* Colors */
   --color-brand-primary: #363669;
   --color-brand-primary-60: #5c5c99;

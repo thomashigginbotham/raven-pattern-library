@@ -1,8 +1,6 @@
 /* -- Header Styles -- */
 
 .app-header {
-  --logo-height: 58px;
-
   color: var(--color-white);
   background-color: var(--color-brand-primary);
 }

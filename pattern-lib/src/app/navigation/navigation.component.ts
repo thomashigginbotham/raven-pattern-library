@@ -1,7 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { navData } from '../app.config';
+import { rplConfig } from '../app.config';
 
 import { UtilsService } from '../utils.service';
 
@@ -26,7 +26,7 @@ export class NavigationComponent implements OnInit {
   }
 
   navCssClasses: string[] = ['app-nav'];
-  navData: {}[] = navData;
+  navData: {}[] = rplConfig.navigation;
 
   constructor(
     private _utilsService: UtilsService

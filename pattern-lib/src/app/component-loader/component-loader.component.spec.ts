@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageStructureComponent } from './page-structure.component';
+import { ComponentLoaderComponent } from './component-loader.component';
 
-describe('PageStructureComponent', () => {
-  let component: PageStructureComponent;
-  let fixture: ComponentFixture<PageStructureComponent>;
+describe('ComponentLoaderComponent', () => {
+  let component: ComponentLoaderComponent;
+  let fixture: ComponentFixture<ComponentLoaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageStructureComponent ]
+      declarations: [ ComponentLoaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PageStructureComponent);
+    fixture = TestBed.createComponent(ComponentLoaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

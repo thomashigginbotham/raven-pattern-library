@@ -1,0 +1,37 @@
+{
+  "title": "Raven Pattern Library",
+  "logoUri": "/assets/rpl-logo.svg",
+  "components": [
+    {
+      "heading": "Page Structure",
+      "description": "Common page sections that provide branding, navigation, or important information",
+      "list": [
+        "site-header",
+        "site-navigation"
+      ]
+    }, {
+      "heading": "Lists",
+      "description": "TODO",
+      "list": []
+    }, {
+      "heading": "Call-outs",
+      "description": "TODO",
+      "list": []
+    }, {
+      "heading": "UI",
+      "description": "TODO",
+      "list": []
+    }
+  ],
+  "pages": [
+    {
+      "heading": "Home",
+      "description": "TODO",
+      "uri": "/index.html"
+    }, {
+      "heading": "Interior",
+      "description": "A generic interior page.",
+      "uri": "/interior.html"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 
 const runSequence = require('run-sequence');
 const gulp = require('gulp');
-const sass = require('gulp-ruby-sass');
+const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const processhtml = require('gulp-processhtml');
@@ -49,28 +49,27 @@ gulp.task('html:copy:dist', () => {
 });
 
 gulp.task('sass:dev', () => {
-	return sass('./scss/**/*.scss', {style: 'expanded', sourcemap: true})
-		.on('error', sass.logError)
-		.pipe(sourcemaps.write('maps', {
-			includeContent: false,
-			sourceRoot: '/scss'
-		}))
-		.pipe(gulp.dest('css'))
+	return gulp.src('scss/**/*.scss')
+		.pipe(sourcemaps.init())
+		.pipe(sass({ outputStyle: 'expanded' })
+			.on('error', sass.logError))
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('.tmp/css'))
 		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'));
 });
 
 gulp.task('sass:dist', () => {
-	return sass('scss/**/*.scss', {style: 'compressed', sourcemap: true})
-		.on('error', sass.logError)
-		.pipe(rename({
-			suffix: '.min'
-		}))
+	return gulp.src('scss/**/*.scss')
+		.pipe(sourcemaps.init())
+		.pipe(sass({ outputStyle: 'compressed' })
+			.on('error', sass.logError))
 		.pipe(sourcemaps.write('maps', {
 			includeContent: false,
 			sourceRoot: '/scss'
 		}))
-		.pipe(gulp.dest('css'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'));
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('sass:copy', () => {

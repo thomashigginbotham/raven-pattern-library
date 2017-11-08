@@ -8,9 +8,25 @@
   margin-bottom: var(--page-padding);
 }
 
-.component-item__subheading {
-  margin-bottom: .5em;
+.component-item .component-item__heading,
+.component-item .component-item__summary,
+.component-item .component-item__subheading {
+  margin: 0 0 1rem;
+  padding: 0;
+  font: var(--font-size-normal)/var(--font-line-height-normal) var(--font-family-body);
+}
+
+.component-item .component-item__heading {
+  margin-bottom: .5rem;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--font-line-height-large);
+}
+
+.component-item .component-item__subheading {
+  margin-bottom: .25rem;
   text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
 }
 
 /* Large viewport */

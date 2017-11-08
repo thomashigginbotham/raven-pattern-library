@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Angular</title>
-  <base href="/">
-
+  <title>Raven Pattern Library</title>
+  <base href="/pattern-lib/">
+  <script>
+    (function() {
+      document.getElementsByTagName('base')[0].href =
+        window.location.pathname.startsWith('/pattern-lib')
+          ? '/pattern-lib/'
+          : '/';
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet"

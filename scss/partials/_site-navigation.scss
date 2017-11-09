@@ -21,19 +21,13 @@
 	}
 
 	a {
+		position: relative;
 		display: inline-block;
 		margin-right: $page-padding;
-		border-top: $page-padding / 2 solid transparent;
-		border-bottom: $page-padding / 2 solid transparent;
+		padding-top: .5em;
+		padding-bottom: .5em;
 		text-decoration: none;
 		color: $color-neutral-100;
-
-		// Align text on its baseline
-		&::after {
-			content: '';
-			display: inline-block;
-			height: 100%;
-		}
 
 		&:hover,
 		&:focus {
@@ -51,6 +45,20 @@
 		a {
 			border-top-color: $color-brand-primary;
 			border-bottom-color: $color-neutral-100;
+
+			&::after {
+				$indicator-size: 1em;
+
+				content: '';
+				position: absolute;
+				bottom: $indicator-size / -2;
+				left: calc(50% - #{$indicator-size / 2});
+				display: block;
+				width: $indicator-size;
+				height: $indicator-size;
+				background-color: $color-neutral-100;
+				transform: rotate(45deg);
+			}
 		}
 	}
 }

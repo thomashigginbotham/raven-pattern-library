@@ -2,7 +2,13 @@
 //
 // No styleguide reference.
 
+html,
 body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
 	font-family: $font-family-body;
 	font-size: $font-size-normal;
 	line-height: $line-height-normal;

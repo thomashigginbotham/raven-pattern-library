@@ -15,6 +15,11 @@
     "guide"
   ],
   "license": "MIT",
+  "scripts": {
+    "build": "gulp",
+    "serve": "gulp serve",
+    "build-rpl": "cd pattern-lib && ng build --prod --base-href /pattern-lib/"
+  },
   "devDependencies": {
     "connect-modrewrite": "^0.10.2",
     "gulp": "^3.9.1",

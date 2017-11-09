@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   navIsExpanded: boolean = false;
 
-  ngOnInit() {
+  constructor(
+    private _router: Router
+  ) { }
 
+  ngOnInit() {
+    // Scroll to top after route change
+    this._router.events.subscribe(e => {
+      if (!(e instanceof NavigationEnd)) {
+        return;
+      }
+
+      window.scrollTo(0, 0);
+    });
   }
 
   /**

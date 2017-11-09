@@ -13,9 +13,19 @@ import { UtilsService } from '../utils.service';
   ]
 })
 export class ComponentListComponent implements OnInit {
-  @Input() list: string;
+  private _list: string;
   @ViewChild('wrapper') wrapper: ElementRef;
   webComponents: WebComponent[];
+
+  get list(): string {
+    return this._list;
+  }
+
+  @Input()
+  set list(value: string) {
+    this._list = value;
+    this.bindComponents();
+  }
 
   constructor(
     private _utilsService: UtilsService,
@@ -23,7 +33,15 @@ export class ComponentListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Get components
+    // Apply user's styles
+    this.applyUserStyles();
+  }
+
+  /**
+   * Clears the current web components, then gets new ones from the list
+   * property.
+   */
+  bindComponents() {
     const componentPromises: Promise<WebComponent>[] = [];
     this.webComponents = [];
 
@@ -37,9 +55,6 @@ export class ComponentListComponent implements OnInit {
     Promise.all(componentPromises).then(webComponents => {
       this.webComponents = webComponents;
     });
-
-    // Apply user's styles
-    this.applyUserStyles();
   }
 
   /**

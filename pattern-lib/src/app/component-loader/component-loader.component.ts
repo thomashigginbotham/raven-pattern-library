@@ -9,9 +9,20 @@ import { rplConfig } from '../app.config';
   styleUrls: ['./component-loader.component.css']
 })
 export class ComponentLoaderComponent implements OnInit {
+  private _list: string[];
+
   heading: string;
   description: string;
-  list: string[];
+  listValues: string;
+
+  get list(): string[] {
+    return this._list;
+  }
+
+  set list(value: string[]) {
+    this._list = value;
+    this.listValues = value.join();
+  }
 
   constructor(
     private _activatedRoute: ActivatedRoute

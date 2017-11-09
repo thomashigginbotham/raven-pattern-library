@@ -1,0 +1,13 @@
+// Site Footer component styles.
+//
+// No styleguide reference.
+
+.site-footer {
+	padding: $page-padding;
+	color: $color-neutral-100;
+	background-color: $color-neutral-20;
+
+	p {
+		margin: 0;
+	}
+}

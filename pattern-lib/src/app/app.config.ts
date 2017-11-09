@@ -67,7 +67,8 @@ export const rplConfig = {
       description: 'Common page sections that provide branding, navigation, or important information',
       list: [
         'site-header',
-        'site-navigation'
+        'site-navigation',
+        'site-footer'
       ]
     }, {
       uriKey: 'lists',

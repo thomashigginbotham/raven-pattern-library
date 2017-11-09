@@ -77,9 +77,9 @@ export class ComponentListComponent implements OnInit {
    * @param html The HTML to search for comment data.
    */
   getComponentCommentData(html: string): object {
-    const matches = html.match(/<!--\s*\nName:\s*(.+)\nSummary:\s*([\s\S]+?)-->/);
+    const matches = html.match(/<!--\s*\r?\nName:\s*(.+)\r?\nSummary:\s*([\s\S]+?)-->/);
 
-    if (matches.length < 3) {
+    if (!matches || matches.length < 3) {
       return null;
     }
 

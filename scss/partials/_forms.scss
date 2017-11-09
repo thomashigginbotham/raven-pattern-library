@@ -112,9 +112,7 @@ select {
 			border: 1px solid $color-neutral-80;
 			background-color: $color-neutral-100;
 			cursor: pointer;
-			transition:
-				background-color 100ms ease-in,
-				border-color 100ms ease-in;
+			transition: background-color 100ms ease-in, border-color 100ms ease-in;
 		}
 
 		&::after {

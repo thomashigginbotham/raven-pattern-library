@@ -1,8 +1,15 @@
 <app-page-header groupName="Pages" heading="{{heading}}"
   description="{{description}}"></app-page-header>
 
-<section class="main-content component-loader">
+<section [ngClass]="{
+    'main-content': true,
+    'component-loader': true,
+    'maximize': iframeIsMaximized
+  }">
   <div class="main-content__wrapper">
+    <button class="component-loader__maximize-button"
+      (click)="toggleMaximize()">{{maximizeText}}</button>
+
     <div class="iframe-wrapper">
       <iframe [src]="pageUri" frameborder="0"></iframe>
     </div>

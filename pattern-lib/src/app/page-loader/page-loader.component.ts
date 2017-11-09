@@ -13,6 +13,8 @@ export class PageLoaderComponent implements OnInit {
   heading: string;
   description: string;
   pageUri: SafeResourceUrl;
+  iframeIsMaximized: boolean;
+  maximizeText: string;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -20,6 +22,8 @@ export class PageLoaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setMaximizeText();
+
     this._activatedRoute.params.subscribe(params => {
       const uriKey = params['id'];
 
@@ -43,6 +47,25 @@ export class PageLoaderComponent implements OnInit {
       this.heading = configValues.heading;
       this.description = configValues.description;
       this.pageUri = sanitizedUri;
+    }
+  }
+
+  /**
+   * Toggles the value of the iframeIsMaximized property.
+   */
+  toggleMaximize() {
+    this.iframeIsMaximized = !this.iframeIsMaximized;
+    this.setMaximizeText();
+  }
+
+  /**
+   * Sets the text for the maximize button.
+   */
+  setMaximizeText() {
+    if (!this.iframeIsMaximized) {
+      this.maximizeText = 'Enlarge';
+    } else {
+      this.maximizeText = 'Collapse';
     }
   }
 }

@@ -73,17 +73,21 @@ export const rplConfig = {
     }, {
       uriKey: 'lists',
       heading: 'Lists',
-      description: 'TODO',
-      list: []
+      description: 'Components that display listings of content.',
+      list: [
+        'link-list'
+      ]
     }, {
       uriKey: 'callouts',
       heading: 'Call-outs',
-      description: 'TODO',
-      list: []
+      description: 'Call-outs are small blocks of content or imagery that draw user’s attention.',
+      list: [
+        'callout-link-list'
+      ]
     }, {
       uriKey: 'ui',
       heading: 'UI',
-      description: 'TODO',
+      description: 'User interface elements can be used to provide interaction.',
       list: []
     }
   ],

@@ -24,3 +24,25 @@
 	padding-left: $page-padding;
 	max-width: $page-max-width;
 }
+
+// Add maximum width to wrapped content
+.content-wrapper {
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding-right: $page-padding;
+	padding-left: $page-padding;
+	max-width: $page-max-width;
+}
+
+// Sidebar on right for larger viewports
+@media (min-width: $page-size-medium) {
+	.page-body {
+		@include row(100% 250px);
+	}
+}
+
+@media (min-width: $page-size-large) {
+	.page-body {
+		@include row(100% 350px);
+	}
+}

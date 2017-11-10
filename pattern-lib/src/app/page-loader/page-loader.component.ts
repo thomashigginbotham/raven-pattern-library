@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-import { rplConfig } from '../app.config';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-page-loader',
@@ -18,7 +18,8 @@ export class PageLoaderComponent implements OnInit {
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _domSanitizer: DomSanitizer
+    private _domSanitizer: DomSanitizer,
+    private _utilsService: UtilsService
   ) { }
 
   ngOnInit() {
@@ -36,18 +37,20 @@ export class PageLoaderComponent implements OnInit {
    * @param uriKey The uriKey of the page config to load.
    */
   bindPageDetails(uriKey: string) {
-    const configValues = rplConfig.pages
-      .find(value => value.uriKey === uriKey.toLowerCase());
+    this._utilsService.getRplConfig().then(config => {
+      const configValues = config.pages
+        .find(value => value.uriKey === uriKey.toLowerCase());
 
-    if (configValues) {
-      const sanitizedUri = this._domSanitizer.bypassSecurityTrustResourceUrl(
-        configValues.uri
-      );
+      if (configValues) {
+        const sanitizedUri = this._domSanitizer.bypassSecurityTrustResourceUrl(
+          configValues.uri
+        );
 
-      this.heading = configValues.heading;
-      this.description = configValues.description;
-      this.pageUri = sanitizedUri;
-    }
+        this.heading = configValues.heading;
+        this.description = configValues.description;
+        this.pageUri = sanitizedUri;
+      }
+    });
   }
 
   /**

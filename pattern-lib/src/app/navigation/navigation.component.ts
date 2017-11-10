@@ -1,8 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { rplConfig } from '../app.config';
-
 import { UtilsService } from '../utils.service';
 
 @Component({
@@ -26,13 +24,18 @@ export class NavigationComponent implements OnInit {
   }
 
   navCssClasses: string[] = ['app-nav'];
-  navData: {}[] = rplConfig.navigation;
+  navData: {}[];
 
   constructor(
     private _utilsService: UtilsService
   ) { }
 
   ngOnInit() {
+    // Get navigation
+    this._utilsService.getRplConfig().then(config => {
+      this.navData = config.navigation;
+    });
+
     // Expand navigation by default on large viewports
     setTimeout(() => this.expandNavByWinSize(), 0);
   }

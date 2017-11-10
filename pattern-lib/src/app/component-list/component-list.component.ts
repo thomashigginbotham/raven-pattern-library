@@ -42,6 +42,10 @@ export class ComponentListComponent implements OnInit {
    * property.
    */
   bindComponents() {
+    if (!this.list || this.list.length === 0) {
+      return;
+    }
+
     const componentPromises: Promise<WebComponent>[] = [];
     this.webComponents = [];
 

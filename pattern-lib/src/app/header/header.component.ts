@@ -1,7 +1,5 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 
-import { rplConfig } from '../app.config';
-
 import { UtilsService } from '../utils.service';
 
 @Component({
@@ -20,8 +18,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     // Set logo and title
-    this.title = rplConfig.title;
-    this.logoUri = rplConfig.logoUri;
+    this._utilsService.getRplConfig().then(config => {
+      this.title = config.title;
+      this.logoUri = config.logoUri;
+    })
   }
 
   /**

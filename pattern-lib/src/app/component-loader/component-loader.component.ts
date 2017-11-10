@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { rplConfig } from '../app.config';
+import { UtilsService } from '../utils.service';
 
 @Component({
   selector: 'app-component-loader',
@@ -25,7 +25,8 @@ export class ComponentLoaderComponent implements OnInit {
   }
 
   constructor(
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _utilsService: UtilsService
   ) { }
 
   ngOnInit() {
@@ -42,13 +43,15 @@ export class ComponentLoaderComponent implements OnInit {
    * @param uriKey The uriKey of the component config to load.
    */
   bindPageDetails(uriKey: string) {
-    const configValues = rplConfig.components
-      .find(value => value.uriKey === uriKey.toLowerCase());
+    this._utilsService.getRplConfig().then(config => {
+      const configValues = config.components
+        .find(value => value.uriKey === uriKey.toLowerCase());
 
-    if (configValues) {
-      this.heading = configValues.heading;
-      this.description = configValues.description;
-      this.list = configValues.list;
-    }
+      if (configValues) {
+        this.heading = configValues.heading;
+        this.description = configValues.description;
+        this.list = configValues.list;
+      }
+    });
   }
 }

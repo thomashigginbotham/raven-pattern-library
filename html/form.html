@@ -18,9 +18,34 @@
 			<article class="main-content">
 				<h2>Contact</h2>
 
-				<p>This is only sample text. Go ahead and clear it out. It won’t hurt our feelings. Promise.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod mi efficitur ullamcorper ornare. Suspendisse nec euismod lectus. Sed viverra lectus in semper sagittis. Mauris et quam viverra, tincidunt magna in, venenatis dui.</p>
-				<p>Pellentesque vel lacus quis neque facilisis elementum. Nullam eget mollis dui. Pellentesque ut molestie velit. Integer mollis eros libero, vitae placerat felis mollis a. Quisque pretium, lectus id porta aliquam, neque sem semper mauris, id vehicula turpis sem quis erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+				<p>This is a sample contact form. It doesn’t actually do anything.</p>
+
+				<form action="#" method="post">
+					<div class="form-field">
+						<label for="fullName">Name</label>
+						<input type="text" id="fullName" name="fullname">
+					</div>
+
+					<div class="form-field">
+						<label for="email">E-mail Address</label>
+						<input type="email" id="email" name="email">
+					</div>
+
+					<div class="form-field">
+						<label for="message">Message</label>
+						<textarea name="message" id="message" cols="30" rows="7">
+						</textarea>
+					</div>
+
+					<div class="form-field form-field-checkbox">
+						<input type="checkbox" id="subscribe" name="subscribe">
+						<label for="subscribe">Subscribe to our newsletter?</label>
+					</div>
+
+					<div class="form-field">
+						<button type="submit" class="primary large">Send Message</button>
+					</div>
+				</form>
 			</article>
 
 			<aside class="page-sidebar">

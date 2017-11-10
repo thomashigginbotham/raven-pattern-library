@@ -56,6 +56,9 @@ export const rplConfig = {
         }, {
           title: 'Interior',
           uri: 'pages/interior'
+        }, {
+          title: 'Form',
+          uri: 'pages/form'
         }
       ]
     }
@@ -67,7 +70,7 @@ export const rplConfig = {
       description: 'Common page sections that provide branding, navigation, or important information',
       list: [
         'site-header',
-        'site-navigation',
+        '/variants/site-navigation-about',
         'site-footer'
       ]
     }, {
@@ -102,6 +105,11 @@ export const rplConfig = {
       heading: 'Interior',
       description: 'A generic interior page.',
       uri: '/interior.html'
+    }, {
+      uriKey: 'form',
+      heading: 'Form',
+      description: 'A page with a form.',
+      uri: '/form.html'
     }
   ]
 };

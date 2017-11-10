@@ -42,8 +42,8 @@ export const rplConfig = {
           title: 'Call-outs',
           uri: 'components/callouts'
         }, {
-          title: 'UI',
-          uri: 'components/ui'
+          title: 'Images',
+          uri: 'components/images'
         }
       ]
     }, {
@@ -88,10 +88,12 @@ export const rplConfig = {
         'callout-link-list'
       ]
     }, {
-      uriKey: 'ui',
-      heading: 'UI',
-      description: 'User interface elements can be used to provide interaction.',
-      list: []
+      uriKey: 'images',
+      heading: 'Images',
+      description: 'Components with a primary focus on imagery.',
+      list: [
+        'thumbnail-grid'
+      ]
     }
   ],
   pages: [

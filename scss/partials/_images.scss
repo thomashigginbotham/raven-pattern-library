@@ -1,0 +1,17 @@
+// Images.
+//
+// No styleguide reference.
+
+// Thumbnail grid.
+.thumbnail-grid {
+	@include gallery(3);
+
+	img {
+		width: 100%;
+		height: auto;
+	}
+
+	@media (min-width: $page-size-medium) {
+		@include gallery(4);
+	}
+}

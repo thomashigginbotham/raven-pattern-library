@@ -18,7 +18,7 @@ const config = {
 // Primary tasks
 gulp.task('default', (callback) => {
 	runSequence(
-		['html:compile:dist', 'sass:copy', 'sass:dist'],
+		['html:compile:dist', 'sass:copy', 'sass:dist', 'js:copy:dist'],
 		'html:copy:dist',
 		callback
 	);
@@ -26,10 +26,9 @@ gulp.task('default', (callback) => {
 
 gulp.task('watch', (callback) => {
 	runSequence(
-		['html:compile:dev', 'sass:copy', 'sass:dev'],
+		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev'],
 		'html:copy:dev',
-		'html:watch',
-		'sass:watch',
+		['html:watch', 'sass:watch', 'js:watch'],
 		callback
 	);
 });
@@ -42,7 +41,13 @@ gulp.task('html:watch', () => {
 
 gulp.task('sass:watch', () => {
 	gulp.watch('./scss/**/*.scss', () => {
-		runSequence(['sass:dev', 'sass:copy'], 'livereload')
+		runSequence(['sass:dev', 'sass:copy'], 'livereload');
+	});
+});
+
+gulp.task('js:watch', () => {
+	gulp.watch('./js/**/*.js', () => {
+		runSequence('js:copy:dev', 'livereload');
 	});
 });
 
@@ -119,6 +124,18 @@ gulp.task('sass:copy', () => {
 		.src('scss/modules/_vars.scss')
 		.pipe(gulp.dest('pattern-lib/src/assets/ext/scss/modules'))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/scss/modules'));
+});
+
+gulp.task('js:copy:dev', () => {
+	return gulp
+		.src('js/**/*.js')
+		.pipe(gulp.dest('.tmp/js'));
+});
+
+gulp.task('js:copy:dist', () => {
+	return gulp
+		.src('js/**/*.js')
+		.pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('connect:dev', () => {

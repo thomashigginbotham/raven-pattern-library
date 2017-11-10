@@ -1,0 +1,23 @@
+/* -- App Styles -- */
+
+/* Keep footer at the bottom */
+:host {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  padding-bottom: calc(var(--page-gutter) * 2 + var(--font-line-height-normal));
+  min-height: 100vh;
+}
+
+:host::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+app-footer {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

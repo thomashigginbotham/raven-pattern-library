@@ -116,12 +116,11 @@ export class UtilsService {
       const link = document.createElement('link');
 
       link.rel = 'stylesheet';
-      link.href = styleSheetPath;
+      link.href = '';
 
       link.onload = (e) => {
-        const styleSheets = document.styleSheets;
-        const lastStyleSheet = styleSheets[styleSheets.length - 1] as CSSStyleSheet;
-        const rules = lastStyleSheet.rules || lastStyleSheet.cssRules;
+        const styleSheet = link.sheet as CSSStyleSheet;
+        const rules = styleSheet.rules || styleSheet.cssRules;
 
         const matches = selector === null
           ? Array.from(rules)
@@ -133,6 +132,8 @@ export class UtilsService {
 
         resolve(matches);
       };
+
+      link.href = styleSheetPath;
 
       try {
         head.appendChild(link);

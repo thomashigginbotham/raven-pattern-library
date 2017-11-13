@@ -97,7 +97,7 @@ export class UtilsService {
    * Returns configuration values from a JSON file.
    */
   getRplConfig(): Promise<any> {
-    const path = '/assets/rpl-config.json';
+    const path = 'assets/rpl-config.json';
 
     return new Promise((resolve, reject) => {
       fetch(path).then(response => resolve(response.json()));

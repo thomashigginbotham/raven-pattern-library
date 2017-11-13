@@ -107,7 +107,7 @@ export class ComponentListComponent implements OnInit {
   applyUserStyles() {
     // Apply user's body styles to component wrapper
     this._utilsService.applyStyleSheetStylesToElement(
-      '../../assets/ext/css/main.css',
+      'assets/ext/css/main.css',
       'body',
       this.wrapper.nativeElement,
       this._renderer
@@ -115,7 +115,7 @@ export class ComponentListComponent implements OnInit {
 
     // Apply user styles to component
     this._utilsService.getStylesFromStyleSheet(
-      '../../assets/ext/css/main.css'
+      'assets/ext/css/main.css'
     ).then(cssRules => {
       const uniqueCssClass = 'rpl-' + this._utilsService.getGuid();
       const styleEl = document.createElement('style');

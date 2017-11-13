@@ -1,6 +1,6 @@
 {
   "title": "Raven Pattern Library",
-  "logoUri": "/assets/rpl-logo.svg",
+  "logoUri": "assets/rpl-logo.svg",
   "navigation": [
     {
       "title": "Introduction",

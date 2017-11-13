@@ -47,7 +47,7 @@ export class TypeListComponent implements AfterContentInit {
     ];
 
     this._utilsService.applyStyleSheetStylesToElement(
-      '/assets/ext/css/main.css',
+      'assets/ext/css/main.css',
       'body',
       this.wrapper.nativeElement,
       this._renderer

@@ -30,7 +30,7 @@ export class CustomPageComponent implements OnInit {
         pageName = parentId + '-' + pageName;
       }
 
-      fetch(`/assets/${pageName}`).then(response => {
+      fetch(`assets/${pageName}`).then(response => {
         response.text().then(text => {
           // Bind HTML
           this.htmlContent = text;

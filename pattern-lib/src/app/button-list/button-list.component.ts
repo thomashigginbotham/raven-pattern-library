@@ -22,7 +22,7 @@ export class ButtonListComponent implements OnInit {
   ngOnInit() {
     // Apply user's body styles to component
     this._utilsService.applyStyleSheetStylesToElement(
-      '/assets/ext/css/main.css',
+      'assets/ext/css/main.css',
       'body',
       this.wrapper.nativeElement,
       this._renderer

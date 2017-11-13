@@ -1,6 +1,7 @@
 /* jshint esversion:6 */
 'use strict';
 
+const del = require('del');
 const runSequence = require('run-sequence');
 const gulp = require('gulp');
 const connect = require('gulp-connect');
@@ -18,15 +19,17 @@ const config = {
 // Primary tasks
 gulp.task('default', (callback) => {
 	runSequence(
+		'clean:dist',
 		['html:compile:dist', 'sass:copy', 'sass:dist', 'js:copy:dist'],
 		'html:copy:dist',
+		'rpl:copy:dist',
 		callback
 	);
 });
 
 gulp.task('watch', (callback) => {
 	runSequence(
-		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy'],
+		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy:dev'],
 		'html:copy:dev',
 		['html:watch', 'sass:watch', 'js:watch', 'rpl:watch'],
 		callback
@@ -53,7 +56,7 @@ gulp.task('js:watch', () => {
 
 gulp.task('rpl:watch', () => {
 	gulp.watch('./pattern-lib/src/assets/*', () => {
-		runSequence('rpl:copy', 'livereload');
+		runSequence('rpl:copy:dev', 'livereload');
 	});
 });
 
@@ -69,6 +72,10 @@ function compileHtml (opts) {
 }
 
 // Helper tasks
+gulp.task('clean:dist', () => {
+	return del('dist/*');
+});
+
 gulp.task('html:compile:dev', () => {
 	const opts = {
 		environment: 'dev',
@@ -144,10 +151,16 @@ gulp.task('js:copy:dist', () => {
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('rpl:copy', () => {
+gulp.task('rpl:copy:dev', () => {
 	return gulp
 		.src('pattern-lib/src/assets/*')
 		.pipe(gulp.dest('pattern-lib/dist/assets'));
+});
+
+gulp.task('rpl:copy:dist', () => {
+	return gulp
+		.src('pattern-lib/dist/**/*')
+		.pipe(gulp.dest('dist/pattern-lib'));
 });
 
 gulp.task('connect:dev', () => {

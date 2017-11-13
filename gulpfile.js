@@ -26,9 +26,9 @@ gulp.task('default', (callback) => {
 
 gulp.task('watch', (callback) => {
 	runSequence(
-		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev'],
+		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy'],
 		'html:copy:dev',
-		['html:watch', 'sass:watch', 'js:watch'],
+		['html:watch', 'sass:watch', 'js:watch', 'rpl:watch'],
 		callback
 	);
 });
@@ -48,6 +48,12 @@ gulp.task('sass:watch', () => {
 gulp.task('js:watch', () => {
 	gulp.watch('./js/**/*.js', () => {
 		runSequence('js:copy:dev', 'livereload');
+	});
+});
+
+gulp.task('rpl:watch', () => {
+	gulp.watch('./pattern-lib/src/assets/*', () => {
+		runSequence('rpl:copy', 'livereload');
 	});
 });
 
@@ -136,6 +142,12 @@ gulp.task('js:copy:dist', () => {
 	return gulp
 		.src('js/**/*.js')
 		.pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('rpl:copy', () => {
+	return gulp
+		.src('pattern-lib/src/assets/*')
+		.pipe(gulp.dest('pattern-lib/dist/assets'));
 });
 
 gulp.task('connect:dev', () => {

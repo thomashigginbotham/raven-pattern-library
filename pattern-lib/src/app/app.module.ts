@@ -11,15 +11,11 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { TypographyComponent } from './typography/typography.component';
 
 import { appRoutes } from './app.routes';
-import { IntroductionComponent } from './introduction/introduction.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { BaseStylesComponent } from './base-styles/base-styles.component';
 import { ColorComponent } from './color/color.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsComponent } from './forms/forms.component';
 import { TablesComponent } from './tables/tables.component';
-import { ComponentsComponent } from './components/components.component';
-import { PagesComponent } from './pages/pages.component';
 import { TypeListComponent } from './type-list/type-list.component';
 import { ColorListComponent } from './color-list/color-list.component';
 import { FooterComponent } from './footer/footer.component';
@@ -33,6 +29,7 @@ import { SafeHtmlPipe } from './shared/safehtml.pipe';
 import { ComponentItemComponent } from './component-item/component-item.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
+import { CustomPageComponent } from './custom-page/custom-page.component';
 
 @NgModule({
   declarations: [
@@ -40,15 +37,11 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
     HeaderComponent,
     PageHeaderComponent,
     TypographyComponent,
-    IntroductionComponent,
     NavigationComponent,
-    BaseStylesComponent,
     ColorComponent,
     ButtonsComponent,
     FormsComponent,
     TablesComponent,
-    ComponentsComponent,
-    PagesComponent,
     TypeListComponent,
     ColorListComponent,
     FooterComponent,
@@ -60,7 +53,8 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
     SafeHtmlPipe,
     ComponentItemComponent,
     ComponentLoaderComponent,
-    PageLoaderComponent
+    PageLoaderComponent,
+    CustomPageComponent
   ],
   imports: [
     BrowserModule,

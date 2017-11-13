@@ -63,6 +63,23 @@ export class UtilsService {
   }
 
   /**
+   * Returns key/value pair information from HTML comments.
+   * @param html The HTML to search for comment data.
+   */
+  getCommentData(html: string): object {
+    const matches = html.match(/<!--\s*\r?\nName:\s*(.+)\r?\nSummary:\s*([\s\S]+?)-->/);
+
+    if (!matches || matches.length < 3) {
+      return null;
+    }
+
+    return {
+      name: matches[1],
+      summary: matches[2].replace(/\s{2,}/g, ' ').trim()
+    };
+  }
+
+  /**
    * Returns a GUID.
    */
   getGuid() {

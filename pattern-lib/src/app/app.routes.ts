@@ -1,24 +1,15 @@
 import { Routes } from '@angular/router';
-import { IntroductionComponent } from './introduction/introduction.component';
-import { BaseStylesComponent } from './base-styles/base-styles.component';
 import { TypographyComponent } from './typography/typography.component';
 import { ColorComponent } from './color/color.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsComponent } from './forms/forms.component';
 import { TablesComponent } from './tables/tables.component';
-import { ComponentsComponent } from './components/components.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
-import { PagesComponent } from './pages/pages.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
+import { CustomPageComponent } from './custom-page/custom-page.component';
 
 export const appRoutes: Routes = [
   {
-    path: 'introduction',
-    component: IntroductionComponent
-  }, {
-    path: 'styles',
-    component: BaseStylesComponent
-  }, {
     path: 'styles/typography',
     component: TypographyComponent
   }, {
@@ -34,17 +25,17 @@ export const appRoutes: Routes = [
     path: 'styles/tables',
     component: TablesComponent
   }, {
-    path: 'components',
-    component: ComponentsComponent
-  }, {
     path: 'components/:id',
     component: ComponentLoaderComponent
   }, {
-    path: 'pages',
-    component: PagesComponent
-  }, {
     path: 'pages/:id',
     component: PageLoaderComponent
+  }, {
+    path: ':id',
+    component: CustomPageComponent
+  }, {
+    path: ':parentId/:id',
+    component: CustomPageComponent
   }, {
     path: '',
     redirectTo: 'introduction',

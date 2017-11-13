@@ -4,7 +4,13 @@
   "navigation": [
     {
       "title": "Introduction",
-      "uri": "introduction"
+      "uri": "introduction",
+      "children": [
+        {
+          "title": "Coding Style",
+          "uri": "introduction/coding-style"
+        }
+      ]
     }, {
       "title": "Base Styles",
       "uri": "styles",

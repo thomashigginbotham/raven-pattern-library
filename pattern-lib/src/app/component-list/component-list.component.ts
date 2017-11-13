@@ -68,7 +68,7 @@ export class ComponentListComponent implements OnInit {
   getComponent(path: string): Promise<WebComponent> {
     return new Promise((resolve, reject) => {
       this.getComponentHtml(path).then(html => {
-        const commentData = this.getComponentCommentData(html);
+        const commentData = this._utilsService.getCommentData(html);
 
         resolve({
           name: commentData['name'],
@@ -89,23 +89,6 @@ export class ComponentListComponent implements OnInit {
         response.text().then(text => resolve(text));
       });
     });
-  }
-
-  /**
-   * Returns key/value pair information from a component's HTML comments.
-   * @param html The HTML to search for comment data.
-   */
-  getComponentCommentData(html: string): object {
-    const matches = html.match(/<!--\s*\r?\nName:\s*(.+)\r?\nSummary:\s*([\s\S]+?)-->/);
-
-    if (!matches || matches.length < 3) {
-      return null;
-    }
-
-    return {
-      name: matches[1],
-      summary: matches[2].replace(/\s{2,}/g, ' ').trim()
-    };
   }
 
   /**

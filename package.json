@@ -18,6 +18,7 @@
   "scripts": {
     "build": "gulp",
     "serve": "gulp serve",
+    "build-ng": "cd pattern-lib && npm install && ng build --prod --base-href /pattern-lib/",
     "build-rpl": "cd pattern-lib && ng build --prod --base-href /pattern-lib/"
   },
   "devDependencies": {

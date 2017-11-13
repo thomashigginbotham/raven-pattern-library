@@ -2,14 +2,9 @@
 
 RPL is a living style guide and component-driven front-end development resource. As you make changes to the styles and components used by your web site or application, the pattern library will automatically update to reflect those changes.
 
-**Note: This project is currently in development and is not ready for production use.**
-
 ## Requirements
 
-* NPM
-* Angular CLI (will be unnecessary in a future revision)
-* Bower (will be replaced by Yarn in a future revision)
-* Gulp or Grunt (may be replaced by Webpack or removed in a future revision)
+* [Node.js/NPM](https://nodejs.org/en/)
 
 ## Getting Started
 
@@ -22,12 +17,11 @@ Use your preferred method to download the files.
 
 1. From the command line, change to the directory where the files were downloaded.
 1. Run `npm install`.
-1. Run `bower install`.
-1. Run `gulp`.
-1. Change to the *pattern-lib* directory.
-1. Run `ng serve -o`.
+1. Run `npm run build-ng`.
 
-**Note: These instructions will be simplified as development continues.**
+### Usage
+
+Run `npm run serve` to start a development server that watches for changes. When you’re ready to publish, use `npm run build` to create a **dist** folder, ready for deployment on another server.
 
 ## Copyright/License
 

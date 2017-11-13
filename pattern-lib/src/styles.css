@@ -47,6 +47,11 @@
   --font-line-height-increased: 32px;
   --font-line-height-large: 33px;
   --font-line-height-x-large: 40px;
+
+  /* Hamburger menu */
+  --hamburger-width: 26px;
+  --hamburger-bar-height: 5px;
+  --hamburger-space: 4px;
 }
 
 body {

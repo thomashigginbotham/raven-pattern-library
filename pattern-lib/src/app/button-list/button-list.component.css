@@ -7,24 +7,24 @@
 }
 
 .button-list__group-heading {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-large);
-  line-height: var(--font-line-height-large);
+  font-family: var(--font-family-body, 'Hind Guntur');
+  font-size: var(--font-size-large, 24px);
+  line-height: var(--font-line-height-large, 33px);
 }
 
 .button-list__item {
-  margin-bottom: var(--page-gutter);
+  margin-bottom: var(--page-gutter, 2rem);
 }
 
 .button-list__item:not(:last-child) {
-  margin-right: var(--page-padding);
+  margin-right: var(--page-padding, 1.4rem);
 }
 
 .button-list__metadata {
   display: block;
-  margin-top: calc(var(--font-line-height-x-small) / 2);
-  font-size: var(--font-size-x-small);
-  color: var(--color-neutral-45);
+  margin-top: calc(var(--font-line-height-x-small, 20px) / 2);
+  font-size: var(--font-size-x-small, 12px);
+  color: var(--color-neutral-45, #777);
 }
 
 /* Large viewport */
@@ -35,10 +35,10 @@
   }
 
   .button-list__type {
-    flex: 0 0 calc(50% - var(--page-gutter));
+    flex: 0 0 calc(50% - var(--page-gutter, 2rem));
   }
 
   .button-list__type:nth-child(odd) {
-    margin-right: calc(var(--page-gutter) * 2);
+    margin-right: calc(var(--page-gutter, 2rem) * 2);
   }
 }

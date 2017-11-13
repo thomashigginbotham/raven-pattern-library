@@ -4,11 +4,15 @@
 
 // Thumbnail grid.
 .thumbnail-grid {
-	@include gallery(3);
+	@include gallery(2);
 
 	img {
 		width: 100%;
 		height: auto;
+	}
+
+	@media (min-width: $page-size-small) {
+		@include gallery(3);
 	}
 
 	@media (min-width: $page-size-medium) {

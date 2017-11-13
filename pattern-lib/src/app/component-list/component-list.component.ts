@@ -122,18 +122,28 @@ export class ComponentListComponent implements OnInit {
       let css: string = '';
 
       cssRules.forEach(rule => {
-        if (rule.selectorText) {
-          const scopedSelector = '.' + uniqueCssClass + ' ' + rule.selectorText.replace(
-            /,\s*([^,{]+)/g,
-            ', .' + uniqueCssClass + ' $1'
-          );
+        const styleRule = rule as CSSStyleRule;
 
-          const scopedText = rule.cssText.replace(
-            rule.selectorText,
-            scopedSelector
-          );
+        if (styleRule.selectorText) {
+          // Prepend the selector to the rule
+          css += this.prependSelectorToCssRule('.' + uniqueCssClass, styleRule);
+        } else {
+          // Rule is a media rule
+          const mediaRule = rule as CSSMediaRule;
 
-          css += scopedText;
+          if (mediaRule.media && mediaRule.media.length > 0) {
+            css += '@media ' + mediaRule.media.mediaText;
+            css += '{';
+
+            Array.from(mediaRule.cssRules).forEach(rule => {
+              css += this.prependSelectorToCssRule(
+                '.' + uniqueCssClass,
+                rule as CSSStyleRule
+              );
+            });
+
+            css += '}';
+          }
         }
       });
 
@@ -142,5 +152,26 @@ export class ComponentListComponent implements OnInit {
       this.wrapper.nativeElement.classList.add(uniqueCssClass);
       this.wrapper.nativeElement.appendChild(styleEl);
     });
+  }
+
+  /**
+   * Adds a custom selector to the beginning of a CSSStyleRule and returns the
+   * modified text for the rule.
+   * @param selector The selector to prepend to the rule.
+   * @param rule The style rule to use.
+   */
+  prependSelectorToCssRule(selector: string, rule: CSSStyleRule): string {
+    const scopedSelector = selector + ' ' +
+      rule.selectorText.replace(
+        /,\s*([^,{]+)/g,
+        ', ' + selector + ' $1'
+      );
+
+    const scopedText = rule.cssText.replace(
+      rule.selectorText,
+      scopedSelector
+    );
+
+    return scopedText;
   }
 }

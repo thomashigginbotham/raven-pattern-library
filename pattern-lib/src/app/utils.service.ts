@@ -22,12 +22,14 @@ export class UtilsService {
         .then(rules => {
           if (rules && rules.length) {
             rules.forEach(rule => {
-              if (rule.style && rule.style.length > 0) {
-                Array.from(rule.style).forEach(prop => {
+              const styleRule = rule as CSSStyleRule;
+
+              if (styleRule.style && styleRule.style.length > 0) {
+                Array.from(styleRule.style).forEach(prop => {
                   renderer.setStyle(
                     element,
                     prop,
-                    rule.style[prop]
+                    styleRule.style[prop]
                   );
                 });
               }
@@ -108,7 +110,7 @@ export class UtilsService {
    * @param selector A CSS selector (e.g. "li.active a") (optional).
    */
   getStylesFromStyleSheet(styleSheetPath: string, selector: string = null)
-    : Promise<CSSStyleRule[]> {
+    : Promise<CSSRule[]> {
     return new Promise((resolve, reject) => {
       const head = document.getElementsByTagName('head')[0];
       const link = document.createElement('link');
@@ -122,10 +124,10 @@ export class UtilsService {
         const rules = lastStyleSheet.rules || lastStyleSheet.cssRules;
 
         const matches = selector === null
-          ? Array.from(rules).map(rule => rule as CSSStyleRule)
+          ? Array.from(rules)
           : Array.from(rules).filter(rule => {
               return (rule as CSSStyleRule).selectorText === selector;
-            }) as CSSStyleRule[];
+            });
 
         link.remove();
 

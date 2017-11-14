@@ -117,7 +117,8 @@ export class ComponentListComponent implements OnInit {
     this._utilsService.getStylesFromStyleSheet(
       'assets/ext/css/main.css'
     ).then(cssRules => {
-      const uniqueCssClass = 'rpl-' + this._utilsService.getGuid();
+      const uniqueCssClass = 'rpl-' + this._utilsService.getGuid()
+      const demoRenderCssClass = 'component-item__demo-render';
       const styleEl = document.createElement('style');
       let css: string = '';
 
@@ -126,7 +127,10 @@ export class ComponentListComponent implements OnInit {
 
         if (styleRule.selectorText) {
           // Prepend the selector to the rule
-          css += this.prependSelectorToCssRule('.' + uniqueCssClass, styleRule);
+          css += this.prependSelectorToCssRule(
+            '.' + uniqueCssClass + ' .' + demoRenderCssClass,
+            styleRule
+          );
         } else {
           // Rule is a media rule
           const mediaRule = rule as CSSMediaRule;
@@ -137,7 +141,7 @@ export class ComponentListComponent implements OnInit {
 
             Array.from(mediaRule.cssRules).forEach(rule => {
               css += this.prependSelectorToCssRule(
-                '.' + uniqueCssClass,
+                '.' + uniqueCssClass + ' .' + demoRenderCssClass,
                 rule as CSSStyleRule
               );
             });

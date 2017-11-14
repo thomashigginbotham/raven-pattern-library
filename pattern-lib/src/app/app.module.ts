@@ -30,6 +30,7 @@ import { ComponentItemComponent } from './component-item/component-item.componen
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { CustomPageComponent } from './custom-page/custom-page.component';
+import { PrismComponent } from './prism/prism.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { CustomPageComponent } from './custom-page/custom-page.component';
     ComponentItemComponent,
     ComponentLoaderComponent,
     PageLoaderComponent,
-    CustomPageComponent
+    CustomPageComponent,
+    PrismComponent
   ],
   imports: [
     BrowserModule,

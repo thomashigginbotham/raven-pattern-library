@@ -46,3 +46,12 @@
 		@include row(100% 350px);
 	}
 }
+
+// Component margins
+.thumbnail-grid {
+	margin-bottom: $page-gutter;
+
+	@media (min-width: $page-size-medium) {
+		margin-bottom: 0;
+	}
+}

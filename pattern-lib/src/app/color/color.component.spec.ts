@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ColorComponent } from './color.component';
+import { PageHeaderComponent } from '../page-header/page-header.component';
+import { ColorListComponent } from '../color-list/color-list.component';
 
 describe('ColorComponent', () => {
   let component: ColorComponent;
@@ -8,7 +10,11 @@ describe('ColorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColorComponent ]
+      declarations: [
+        ColorComponent,
+        PageHeaderComponent,
+        ColorListComponent
+      ]
     })
     .compileComponents();
   }));

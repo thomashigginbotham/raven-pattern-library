@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormsComponent } from './forms.component';
+import { PageHeaderComponent } from '../page-header/page-header.component';
+import { FormListComponent } from '../form-list/form-list.component';
+
+import { UtilsService } from '../utils.service';
 
 describe('FormsComponent', () => {
   let component: FormsComponent;
@@ -8,7 +12,14 @@ describe('FormsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormsComponent ]
+      declarations: [
+        FormsComponent,
+        PageHeaderComponent,
+        FormListComponent
+      ],
+      providers: [
+        UtilsService
+      ]
     })
     .compileComponents();
   }));

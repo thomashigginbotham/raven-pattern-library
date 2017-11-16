@@ -2,13 +2,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableListComponent } from './table-list.component';
 
+import { UtilsService } from '../utils.service';
+
 describe('TableListComponent', () => {
   let component: TableListComponent;
   let fixture: ComponentFixture<TableListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableListComponent ]
+      declarations: [ TableListComponent ],
+      providers: [
+        UtilsService
+      ]
     })
     .compileComponents();
   }));

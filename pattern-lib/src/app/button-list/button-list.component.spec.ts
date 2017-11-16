@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonListComponent } from './button-list.component';
+import { ButtonListItemComponent }
+  from '../button-list-item/button-list-item.component';
+
+import { UtilsService } from '../utils.service';
 
 describe('ButtonListComponent', () => {
   let component: ButtonListComponent;
@@ -8,7 +12,13 @@ describe('ButtonListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ButtonListComponent ]
+      declarations: [
+        ButtonListComponent,
+        ButtonListItemComponent
+      ],
+      providers: [
+        UtilsService
+      ]
     })
     .compileComponents();
   }));

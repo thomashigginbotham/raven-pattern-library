@@ -1,22 +1,11 @@
-<div #wrapper class="button-list">
+<div #wrapper [class]="wrapperCssClass">
   <div class="button-list__type button-type-style">
     <h3 class="button-list__group-heading">Style</h3>
 
     <div class="button-list__group">
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button primary">Primary</a>
-        <span class="button-list__metadata">.button.primary</span>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button">Default</a>
-        <span class="button-list__metadata">.button</span>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button warn">Warning</a>
-        <span class="button-list__metadata">.button.warn</span>
-      </div>
+      <app-button-list-item cssClasses="button primary">Primary</app-button-list-item>
+      <app-button-list-item cssClasses="button">Default</app-button-list-item>
+      <app-button-list-item cssClasses="button warn">Warning</app-button-list-item>
     </div>
   </div>
 
@@ -24,20 +13,9 @@
     <h3 class="button-list__group-heading">Size</h3>
 
     <div class="button-list__group">
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button large">Large</a>
-        <span class="button-list__metadata">.button.large</span>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button">Default</a>
-        <span class="button-list__metadata">.button</span>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button small">Small</a>
-        <span class="button-list__metadata">.button.small</span>
-      </div>
+      <app-button-list-item cssClasses="button large">Large</app-button-list-item>
+      <app-button-list-item cssClasses="button">Default</app-button-list-item>
+      <app-button-list-item cssClasses="button small">Small</app-button-list-item>
     </div>
   </div>
 
@@ -45,21 +23,10 @@
     <h3 class="button-list__group-heading">State</h3>
 
     <div class="button-list__group">
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button">Default</a>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button hovered">Hover</a>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button focused">Focus</a>
-      </div>
-
-      <div class="button-list__item">
-        <a href="#" (click)="onButtonClick($event)" class="button disabled">Disabled</a>
-      </div>
+      <app-button-list-item cssClasses="button">Default</app-button-list-item>
+      <app-button-list-item cssClasses="button hovered">Hover</app-button-list-item>
+      <app-button-list-item cssClasses="button focused">Focus</app-button-list-item>
+      <app-button-list-item cssClasses="button disabled">Disabled</app-button-list-item>
     </div>
   </div>
 </div>

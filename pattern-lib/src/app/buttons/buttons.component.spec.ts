@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonsComponent } from './buttons.component';
+import { PageHeaderComponent } from '../page-header/page-header.component';
+import { ButtonListComponent } from '../button-list/button-list.component';
+import { ButtonListItemComponent }
+  from '../button-list-item/button-list-item.component';
+
+import { UtilsService } from '../utils.service';
 
 describe('ButtonsComponent', () => {
   let component: ButtonsComponent;
@@ -8,7 +14,15 @@ describe('ButtonsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ButtonsComponent ]
+      declarations: [
+        ButtonsComponent,
+        PageHeaderComponent,
+        ButtonListComponent,
+        ButtonListItemComponent
+      ],
+      providers: [
+        UtilsService
+      ]
     })
     .compileComponents();
   }));

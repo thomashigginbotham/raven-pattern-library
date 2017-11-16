@@ -7,12 +7,12 @@ import { UtilsService } from '../utils.service';
   templateUrl: './button-list.component.html',
   styleUrls: [
     '../../assets/rpl-reset.css',
-    '../../assets/ext/css/main.css',
     './button-list.component.css'
   ]
 })
 export class ButtonListComponent implements OnInit {
-  @ViewChild('wrapper')wrapper: ElementRef;
+  @ViewChild('wrapper') wrapper: ElementRef;
+  wrapperCssClass: string = 'button-list';
 
   constructor(
     private _utilsService: UtilsService,
@@ -20,37 +20,40 @@ export class ButtonListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Apply user's body styles to component
-    this._utilsService.applyStyleSheetStylesToElement(
-      'assets/ext/css/main.css',
-      'body',
-      this.wrapper.nativeElement,
-      this._renderer
-    ).then();
+    // Apply user's styles to component wrapper
+    this.applyScopedStyles();
   }
 
   /**
-   * Alerts a random phrase.
-   * @param e A click event.
+   * Applies the user's styles to the buttons but not the rest of the page.
    */
-  onButtonClick(e) {
-    e.preventDefault();
+  applyScopedStyles() {
+    const styleUri = 'assets/ext/css/main.css';
 
-    const phraseList = [
-      'Ouch!',
-      'Don’t do that again.',
-      'Please stop.',
-      'Hey! Watch it, Mr. Clicky.',
-      'What did you do that for?',
-      '’Tis but a flesh wound. Come on, you pansy. Press me again!',
-      'Do you always press every button you see?',
-      'Nope. Nothing happened.',
-      'I’m sorry, Dave. I’m afraid I can’t do that.',
-      'I won’t dignify that behavior with a response.',
-      'Stop pressing this button. It turns on Mrs. Schultz’s porchlight in Germany.'
-    ];
-    const randomSelection = Math.floor(Math.random() * phraseList.length);
+    fetch(styleUri)
+      .then(response => response.text())
+      .then(styles => {
+        // Create temporary style tag
+        const headEl = document.getElementsByTagName('head')[0];
+        const styleEl = document.createElement('style');
 
-    alert(phraseList[randomSelection]);
+        styleEl.appendChild(document.createTextNode(styles));
+        headEl.appendChild(styleEl);
+
+        // Prefix the selectors
+        const sheet = styleEl.sheet as CSSStyleSheet;
+        const prefixClass = 'rpl-' + this._utilsService.getGuid();
+        const prefixSelector = '.' + prefixClass;
+        const prefixedStyles = this._utilsService.prefixCssRules(
+          sheet.rules,
+          prefixSelector
+        );
+
+        // Replace CSS rules
+        styleEl.innerText = prefixedStyles;
+
+        // Add class to wrapper
+        this.wrapperCssClass += ' ' + prefixClass;
+      });
   }
 }

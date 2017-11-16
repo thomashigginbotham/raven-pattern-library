@@ -1,0 +1,12 @@
+/* -- Button List Item Styles -- */
+
+.button-list__item {
+  margin-bottom: var(--page-gutter, 2rem);
+}
+
+.button-list__metadata {
+  display: block;
+  margin-top: calc(var(--font-line-height-x-small, 20px) / 2);
+  font-size: var(--font-size-x-small, 12px);
+  color: var(--color-neutral-45, #777);
+}

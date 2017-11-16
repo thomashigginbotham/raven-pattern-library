@@ -5,6 +5,62 @@ export class UtilsService {
   constructor() { }
 
   /**
+   * Adds a selector prefix to a CSSRuleList.
+   * @param styles The styles to prefix.
+   * @param prefix A CSS selector to prefix every style rule.
+   */
+  prefixCssRules(styles: CSSRuleList, prefix: string): string {
+    return Array.from(styles).reduce((output, rule) => {
+      const styleRule = rule as CSSStyleRule;
+      const prefixedSelectorText = (selectorText: string) => {
+        return selectorText.split(',')
+          .reduce((prev, selector) => {
+            const trimmedPrev = prev.trim();
+            const trimmedSelector = selector
+              .trim()
+              .replace('html', '')
+              .replace('body', '');
+
+            if (!trimmedPrev) {
+              return `${prefix} ${trimmedSelector}`.trim();
+            }
+
+            return `${trimmedPrev}, ${prefix} ${trimmedSelector}`.trim();
+          } , '');
+      };
+
+      if (styleRule.selectorText) {
+        const newSelectorText = prefixedSelectorText(styleRule.selectorText);
+
+        return output + styleRule.cssText.replace(
+          styleRule.selectorText,
+          newSelectorText
+        );
+      }
+
+      // Rule is a media rule
+      const mediaRule = rule as CSSMediaRule;
+
+      if (mediaRule.media && mediaRule.media.length > 0) {
+        let cssText = mediaRule.cssText;
+
+        Array.from(mediaRule.cssRules).forEach(rule => {
+          const styleRule = rule as CSSStyleRule;
+          const newSelectorText = prefixedSelectorText(styleRule.selectorText);
+
+          cssText = cssText.replace(
+            styleRule.selectorText,
+            newSelectorText
+          );
+        });
+        return output + cssText;
+      }
+
+      return output;
+    }, '');
+  }
+
+  /**
    * Applies styles from a style sheet to another element.
    * @param styleSheetPath The path to a style sheet to use.
    * @param selector A CSS selector found in the style sheet.

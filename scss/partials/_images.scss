@@ -7,6 +7,7 @@
 	@include gallery(2);
 
 	img {
+		display: block;
 		width: 100%;
 		height: auto;
 	}

@@ -18,7 +18,7 @@
   --color-neutral-05: #111;
   --color-neutral-45: #777;
   --color-neutral-80: #ccc;
-  --color-neutral-85: #ddd;
+  --color-neutral-85: #e4e4e4;
   --color-neutral-95: #eee;
   --color-neutral-100: #fff;
 
@@ -62,6 +62,10 @@ body {
   color: var(--color-black);
   background-color: var(--color-white);
   tab-size: 4;
+}
+
+a {
+  color: var(--color-brand-primary-60, #5c5c99);
 }
 
 h2,

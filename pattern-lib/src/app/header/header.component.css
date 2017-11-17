@@ -3,6 +3,7 @@
 .app-header {
   color: var(--color-white, #fff);
   background-color: var(--color-brand-primary, #363669);
+  background-image: linear-gradient(to right, var(--color-brand-primary, #363669), var(--color-brand-primary-60, #5c5c99));
 }
 
 .app-header__wrapper {

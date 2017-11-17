@@ -12,6 +12,7 @@
   .type-list-headings app-type-list-item {
     flex: 0 0 calc(50% - var(--page-gutter, 2rem) / 2);
     width: 0;
+    overflow: hidden;
   }
 
   .type-list-headings app-type-list-item:nth-child(odd) {
@@ -21,6 +22,7 @@
   .type-list-lists app-type-list-item {
     flex: 0 0 calc(33.333% - 2/3 * var(--page-gutter, 2rem));
     width: 0;
+    overflow: hidden;
   }
 
   .type-list-lists app-type-list-item:not(:last-child) {

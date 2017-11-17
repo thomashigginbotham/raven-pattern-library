@@ -81,7 +81,7 @@ export class UtilsService {
         const sheet = styleEl.sheet as CSSStyleSheet;
         const prefixSelector = '.' + className;
         const prefixedStyles = this.prefixCssRules(
-          sheet.rules,
+          sheet.cssRules,
           prefixSelector
         );
 

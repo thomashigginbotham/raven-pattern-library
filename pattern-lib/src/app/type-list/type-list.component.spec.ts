@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TypeListComponent } from './type-list.component';
+import { TypeListItemComponent } from '../type-list-item/type-list-item.component';
 
 import { UtilsService } from '../utils.service';
 
@@ -10,7 +11,10 @@ describe('TypeListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TypeListComponent ],
+      declarations: [
+        TypeListComponent,
+        TypeListItemComponent
+      ],
       providers: [
         UtilsService
       ]

@@ -1,5 +1,10 @@
-import { Component, ViewChild, AfterContentInit, Renderer2, ElementRef }
-  from '@angular/core';
+import {
+  Component,
+  Output,
+  ViewChild,
+  ElementRef,
+  OnInit
+} from '@angular/core';
 import { UtilsService } from '../utils.service';
 
 @Component({
@@ -7,82 +12,56 @@ import { UtilsService } from '../utils.service';
   templateUrl: './type-list.component.html',
   styleUrls: [
     '../../assets/rpl-reset.css',
-    '../../assets/ext/css/main.css',
     './type-list.component.css'
   ]
 })
-export class TypeListComponent implements AfterContentInit {
-  @ViewChild('wrapper')wrapper: ElementRef;
-  @ViewChild('h1')h1: ElementRef;
-  @ViewChild('h2')h2: ElementRef;
-  @ViewChild('h3')h3: ElementRef;
-  @ViewChild('h4')h4: ElementRef;
-  @ViewChild('h5')h5: ElementRef;
-  @ViewChild('h6')h6: ElementRef;
-  @ViewChild('p')p: ElementRef;
-  @ViewChild('blockquote')blockquote: ElementRef;
-  @ViewChild('ul')ul: ElementRef;
-  @ViewChild('ol')ol: ElementRef;
-  @ViewChild('dl')dl: ElementRef;
-  headerMetadata: string[] = [];
-  paragraphMetadata: string;
-  blockquoteMetadata: string;
-  ulMetadata: string;
-  olMetadata: string;
-  dlMetadata: string;
+export class TypeListComponent implements OnInit {
+  @ViewChild('wrapper') wrapper: ElementRef;
+  wrapperCssClass: string = 'type-list-wrapper';
+  stylesLoaded: boolean = false;
 
   constructor(
-    private _utilsService: UtilsService,
-    private _renderer: Renderer2
+    private _utilsService: UtilsService
   ) { }
 
-  ngAfterContentInit() {
-    const headerEls = [
-      this.h1.nativeElement,
-      this.h2.nativeElement,
-      this.h3.nativeElement,
-      this.h4.nativeElement,
-      this.h5.nativeElement,
-      this.h6.nativeElement
-    ];
-
-    this._utilsService.applyStyleSheetStylesToElement(
-      'assets/ext/css/main.css',
-      'body',
-      this.wrapper.nativeElement,
-      this._renderer
-    ).then(() => {
-      this.headerMetadata = this.bindMetadata(headerEls);
-      this.paragraphMetadata = this.bindMetadata([this.p.nativeElement])[0];
-      this.blockquoteMetadata = this.bindMetadata(
-        [this.blockquote.nativeElement]
-      )[0];
-      this.ulMetadata = this.bindMetadata([this.ul.nativeElement])[0];
-      this.olMetadata = this.bindMetadata([this.ol.nativeElement])[0];
-      this.dlMetadata = this.bindMetadata([this.dl.nativeElement])[0];
-    });
+  ngOnInit() {
+    // Apply user's styles to component wrapper
+    this.applyScopedStyles();
   }
 
   /**
-   * Extracts type-related CSS properties from an array of elements and returns
-   * a string of related metadata for each one.
-   * @param elements An array of elements.
+   * Applies the user's styles to the buttons but not the rest of the page.
    */
-  bindMetadata(elements: any[]): string[] {
-    return elements.map(element => {
-      const style = window.getComputedStyle(element);
-      const rgbColor = style.getPropertyValue('color');
-      const fontWeight = style.getPropertyValue('font-weight');
-      const fontSize = style.getPropertyValue('font-size');
-      const lineHeight = style.getPropertyValue('line-height');
-      const fontFamily = style.getPropertyValue('font-family');
+  applyScopedStyles() {
+    const styleUri = 'assets/ext/css/main.css';
 
-      const hexColor = this._utilsService.convertRgbToHex(rgbColor);
-      const roundedFontSize = this._utilsService.roundNumberWithUnit(fontSize);
-      const roundedLineHeight = this._utilsService.roundNumberWithUnit(lineHeight);
+    fetch(styleUri)
+      .then(response => response.text())
+      .then(styles => {
+        // Create temporary style tag
+        const headEl = document.getElementsByTagName('head')[0];
+        const styleEl = document.createElement('style');
 
-      return `${hexColor} ${fontWeight} ${roundedFontSize}/${roundedLineHeight}
-        ${fontFamily}`;
-    });
+        styleEl.appendChild(document.createTextNode(styles));
+        headEl.appendChild(styleEl);
+
+        // Prefix the selectors
+        const sheet = styleEl.sheet as CSSStyleSheet;
+        const prefixClass = 'rpl-' + this._utilsService.getGuid();
+        const prefixSelector = '.' + prefixClass;
+        const prefixedStyles = this._utilsService.prefixCssRules(
+          sheet.rules,
+          prefixSelector
+        );
+
+        // Replace CSS rules
+        styleEl.innerText = prefixedStyles;
+
+        // Add class to wrapper
+        this.wrapperCssClass += ' ' + prefixClass;
+
+        // Finish
+        setTimeout(() => { this.stylesLoaded = true; }, 0);
+      });
   }
 }

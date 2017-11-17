@@ -32,6 +32,7 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { CustomPageComponent } from './custom-page/custom-page.component';
 import { PrismComponent } from './prism/prism.component';
 import { ButtonListItemComponent } from './button-list-item/button-list-item.component';
+import { TypeListItemComponent } from './type-list-item/type-list-item.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ButtonListItemComponent } from './button-list-item/button-list-item.com
     PageLoaderComponent,
     CustomPageComponent,
     PrismComponent,
-    ButtonListItemComponent
+    ButtonListItemComponent,
+    TypeListItemComponent
   ],
   imports: [
     BrowserModule,

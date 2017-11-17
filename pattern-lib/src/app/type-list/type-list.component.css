@@ -1,38 +1,5 @@
 /* -- Type List Styles -- */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 !important;
-}
-
-.type-list__item {
-  margin-bottom: calc(var(--page-gutter, 2rem) * 1.5);
-  overflow: hidden;
-}
-
-.type-list__item-header {
-  margin-bottom: calc(var(--page-gutter, 2rem) / 2);
-  padding-bottom: calc(var(--page-gutter, 2rem) / 8);
-  border-bottom: 1px solid var(--color-neutral-80, #ccc);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.type-list__item-heading {
-  margin-right: calc(var(--page-gutter, 2rem) / 4);
-}
-
-.type-list__item-meta {
-  white-space: nowrap;
-  font-size: var(--font-size-x-small, 12px);
-  color: var(--color-neutral-45, #777);
-}
-
 /* Large Viewports */
 @media (min-width: 1024px) {
   .type-list-headings,
@@ -42,19 +9,21 @@ h6 {
     flex-wrap: wrap;
   }
 
-  .type-list-headings .type-list__item {
+  .type-list-headings app-type-list-item {
     flex: 0 0 calc(50% - var(--page-gutter, 2rem) / 2);
+    width: 0;
   }
 
-  .type-list-headings .type-list__item:nth-child(odd) {
+  .type-list-headings app-type-list-item:nth-child(odd) {
     margin-right: var(--page-gutter, 2rem);
   }
 
-  .type-list-lists .type-list__item {
+  .type-list-lists app-type-list-item {
     flex: 0 0 calc(33.333% - 2/3 * var(--page-gutter, 2rem));
+    width: 0;
   }
 
-  .type-list-lists .type-list__item:not(:last-child) {
+  .type-list-lists app-type-list-item:not(:last-child) {
     margin-right: var(--page-gutter, 2rem);
   }
 }

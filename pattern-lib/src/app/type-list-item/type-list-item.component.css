@@ -1,0 +1,26 @@
+/* -- Type List Item Styles -- */
+
+.type-list__item {
+  margin-bottom: calc(var(--page-gutter, 2rem) * 1.5);
+  overflow: hidden;
+}
+
+.type-list__item-header {
+  margin-bottom: calc(var(--page-gutter, 2rem) / 2);
+  padding-bottom: calc(var(--page-gutter, 2rem) / 8);
+  border-bottom: 1px solid var(--color-neutral-80, #ccc);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-family-body, 'Hind Guntur');
+}
+
+.type-list__item-heading {
+  margin-right: calc(var(--page-gutter, 2rem) / 4);
+}
+
+.type-list__item-meta {
+  white-space: nowrap;
+  font-size: var(--font-size-x-small, 12px);
+  color: var(--color-neutral-45, #777);
+}

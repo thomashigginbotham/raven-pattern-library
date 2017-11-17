@@ -82,14 +82,16 @@ describe('UtilsService', () => {
     inject([UtilsService], (service: UtilsService) => {
       const prefix = '#foo .bar';
 
-      sheet.insertRule('html, body { height: 100%; }');
+      sheet.insertRule('html, .page-body, body { height: 100%; }');
 
       const prefixedStyles = service.prefixCssRules(
         sheet.cssRules,
         prefix
       );
 
-      expect(prefixedStyles).toContain('#foo .bar, #foo .bar {');
+      expect(prefixedStyles).toContain(
+        '#foo .bar, #foo .bar .page-body, #foo .bar {'
+      );
     })
   )
 });

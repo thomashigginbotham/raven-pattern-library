@@ -1,4 +1,4 @@
-import { Component, Renderer2, ViewChild, ElementRef, OnInit }
+import { Component, ViewChild, ElementRef, OnInit }
   from '@angular/core';
 
 import { UtilsService } from '../utils.service';
@@ -8,26 +8,23 @@ import { UtilsService } from '../utils.service';
   templateUrl: './form-list.component.html',
   styleUrls: [
     '../../assets/rpl-reset.css',
-    '../../assets/ext/css/main.css',
     './form-list.component.css'
   ]
 })
 export class FormListComponent implements OnInit {
   @ViewChild('wrapper')wrapper: ElementRef;
+  wrapperCssClass: string = 'form-list';
 
   constructor(
-    private _utilsService: UtilsService,
-    private _renderer: Renderer2
+    private _utilsService: UtilsService
   ) { }
 
   ngOnInit() {
-    // Apply user's body styles to component
-    this._utilsService.applyStyleSheetStylesToElement(
-      'assets/ext/css/main.css',
-      'body',
-      this.wrapper.nativeElement,
-      this._renderer
-    )
-  }
+    // Apply user's styles to component wrapper
+    const styleUri = 'assets/ext/css/main.css';
+    const scopedClass = 'rpl-' + this._utilsService.getGuid();
 
+    this._utilsService.applyScopedStyles(styleUri, scopedClass);
+    this.wrapperCssClass += ' ' + scopedClass;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, Renderer2, OnInit }
+import { Component, Input, ViewChild, ElementRef, OnInit }
   from '@angular/core';
 
 import { WebComponent } from './component.model';
@@ -15,6 +15,7 @@ import { UtilsService } from '../utils.service';
 export class ComponentListComponent implements OnInit {
   private _list: string;
   @ViewChild('wrapper') wrapper: ElementRef;
+  wrapperCssClass: string = 'component-list';
   webComponents: WebComponent[];
 
   get list(): string {
@@ -28,13 +29,18 @@ export class ComponentListComponent implements OnInit {
   }
 
   constructor(
-    private _utilsService: UtilsService,
-    private _renderer: Renderer2
+    private _utilsService: UtilsService
   ) { }
 
   ngOnInit() {
-    // Apply user's styles
-    this.applyUserStyles();
+    // Apply user's styles to component wrapper
+    const styleUri = 'assets/ext/css/main.css';
+    const rplClass = 'rpl-' + this._utilsService.getGuid();
+    const scopedClass = rplClass + ' .component-item__demo-render';
+
+    this._utilsService.applyScopedStyles(styleUri, scopedClass);
+
+    this.wrapperCssClass += ' ' + scopedClass;
   }
 
   /**
@@ -99,83 +105,5 @@ export class ComponentListComponent implements OnInit {
     const noComments = html.replace(/<!--[\s\S]+?-->/, '');
 
     return noComments.trim();
-  }
-
-  /**
-   * Pulls in styles from the user style sheet to apply to the components.
-   */
-  applyUserStyles() {
-    // Apply user's body styles to component wrapper
-    this._utilsService.applyStyleSheetStylesToElement(
-      'assets/ext/css/main.css',
-      'body',
-      this.wrapper.nativeElement,
-      this._renderer
-    );
-
-    // Apply user styles to component
-    this._utilsService.getStylesFromStyleSheet(
-      'assets/ext/css/main.css'
-    ).then(cssRules => {
-      const uniqueCssClass = 'rpl-' + this._utilsService.getGuid()
-      const demoRenderCssClass = 'component-item__demo-render';
-      const styleEl = document.createElement('style');
-      let css: string = '';
-
-      cssRules.forEach(rule => {
-        const styleRule = rule as CSSStyleRule;
-
-        if (styleRule.selectorText) {
-          // Prepend the selector to the rule
-          css += this.prependSelectorToCssRule(
-            '.' + uniqueCssClass + ' .' + demoRenderCssClass,
-            styleRule
-          );
-        } else {
-          // Rule is a media rule
-          const mediaRule = rule as CSSMediaRule;
-
-          if (mediaRule.media && mediaRule.media.length > 0) {
-            css += '@media ' + mediaRule.media.mediaText;
-            css += '{';
-
-            Array.from(mediaRule.cssRules).forEach(rule => {
-              css += this.prependSelectorToCssRule(
-                '.' + uniqueCssClass + ' .' + demoRenderCssClass,
-                rule as CSSStyleRule
-              );
-            });
-
-            css += '}';
-          }
-        }
-      });
-
-      styleEl.appendChild(document.createTextNode(css));
-
-      this.wrapper.nativeElement.classList.add(uniqueCssClass);
-      this.wrapper.nativeElement.appendChild(styleEl);
-    });
-  }
-
-  /**
-   * Adds a custom selector to the beginning of a CSSStyleRule and returns the
-   * modified text for the rule.
-   * @param selector The selector to prepend to the rule.
-   * @param rule The style rule to use.
-   */
-  prependSelectorToCssRule(selector: string, rule: CSSStyleRule): string {
-    const scopedSelector = selector + ' ' +
-      rule.selectorText.replace(
-        /,\s*([^,{]+)/g,
-        ', ' + selector + ' $1'
-      );
-
-    const scopedText = rule.cssText.replace(
-      rule.selectorText,
-      scopedSelector
-    );
-
-    return scopedText;
   }
 }

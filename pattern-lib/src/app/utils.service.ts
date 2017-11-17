@@ -18,8 +18,7 @@ export class UtilsService {
             const trimmedPrev = prev.trim();
             const trimmedSelector = selector
               .trim()
-              .replace('html', '')
-              .replace('body', '');
+              .replace(/^html$|^body$/, '');
 
             if (!trimmedPrev) {
               return `${prefix} ${trimmedSelector}`.trim();
@@ -47,17 +46,50 @@ export class UtilsService {
         Array.from(mediaRule.cssRules).forEach(rule => {
           const styleRule = rule as CSSStyleRule;
           const newSelectorText = prefixedSelectorText(styleRule.selectorText);
-
-          cssText = cssText.replace(
+          const newRuleText = styleRule.cssText.replace(
             styleRule.selectorText,
             newSelectorText
           );
+
+          cssText = cssText.replace(styleRule.cssText, newRuleText);
         });
         return output + cssText;
       }
 
       return output;
     }, '');
+  }
+
+  /**
+   * Applies a <style> tag to the head containing revised rules that scope the
+   * CSS to a provided class name.
+   * @param styleUri The URI of the style sheet to apply.
+   * @param className The HTML class name to act as a scope.
+   */
+  applyScopedStyles(styleUri: string, className: string): Promise<boolean> {
+    return fetch(styleUri)
+      .then(response => response.text())
+      .then(styles => {
+        // Create temporary style tag
+        const headEl = document.getElementsByTagName('head')[0];
+        const styleEl = document.createElement('style');
+
+        styleEl.appendChild(document.createTextNode(styles));
+        headEl.appendChild(styleEl);
+
+        // Prefix the selectors
+        const sheet = styleEl.sheet as CSSStyleSheet;
+        const prefixSelector = '.' + className;
+        const prefixedStyles = this.prefixCssRules(
+          sheet.rules,
+          prefixSelector
+        );
+
+        // Replace CSS rules
+        styleEl.innerText = prefixedStyles;
+
+        return true;
+      });
   }
 
   /**

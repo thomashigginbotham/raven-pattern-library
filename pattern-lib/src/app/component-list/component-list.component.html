@@ -1,4 +1,4 @@
-<div #wrapper class="component-list">
+<div #wrapper [class]="wrapperCssClass">
   <div *ngFor="let webComponent of webComponents" class="component-item">
     <header class="component-item__header">
       <h3 class="component-item__heading">{{webComponent.name}}</h3>

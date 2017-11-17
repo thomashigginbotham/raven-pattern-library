@@ -37,25 +37,25 @@ gulp.task('watch', (callback) => {
 });
 
 gulp.task('html:watch', () => {
-	gulp.watch('./html/**/*.html', () => {
+	gulp.watch('html/**/*.html', () => {
 		runSequence('html:compile:dev', 'html:copy:dev', 'livereload');
 	});
 });
 
 gulp.task('sass:watch', () => {
-	gulp.watch('./scss/**/*.scss', () => {
+	gulp.watch('scss/**/*.scss', () => {
 		runSequence(['sass:dev', 'sass:copy'], 'livereload');
 	});
 });
 
 gulp.task('js:watch', () => {
-	gulp.watch('./js/**/*.js', () => {
+	gulp.watch('js/**/*.js', () => {
 		runSequence('js:copy:dev', 'livereload');
 	});
 });
 
 gulp.task('rpl:watch', () => {
-	gulp.watch('./pattern-lib/src/assets/*', () => {
+	gulp.watch('pattern-lib/src/assets/*', () => {
 		runSequence('rpl:copy:dev', 'livereload');
 	});
 });

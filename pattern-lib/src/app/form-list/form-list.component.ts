@@ -13,18 +13,10 @@ import { UtilsService } from '../utils.service';
 })
 export class FormListComponent implements OnInit {
   @ViewChild('wrapper')wrapper: ElementRef;
-  wrapperCssClass: string = 'form-list';
 
   constructor(
     private _utilsService: UtilsService
   ) { }
 
-  ngOnInit() {
-    // Apply user's styles to component wrapper
-    const styleUri = 'assets/ext/css/main.css';
-    const scopedClass = 'rpl-' + this._utilsService.getGuid();
-
-    this._utilsService.applyScopedStyles(styleUri, scopedClass);
-    this.wrapperCssClass += ' ' + scopedClass;
-  }
+  ngOnInit() { }
 }

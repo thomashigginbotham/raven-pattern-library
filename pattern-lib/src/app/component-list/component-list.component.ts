@@ -9,7 +9,7 @@ import { UtilsService } from '../utils.service';
   selector: 'app-component-list',
   templateUrl: './component-list.component.html',
   styleUrls: [
-    './component-list.component.css'
+    './component-list.component.css',
   ]
 })
 export class ComponentListComponent implements OnInit {
@@ -32,16 +32,7 @@ export class ComponentListComponent implements OnInit {
     private _utilsService: UtilsService
   ) { }
 
-  ngOnInit() {
-    // Apply user's styles to component wrapper
-    const styleUri = 'assets/ext/css/main.css';
-    const rplClass = 'rpl-' + this._utilsService.getGuid();
-    const scopedClass = rplClass + ' .component-item__demo-render';
-
-    this._utilsService.applyScopedStyles(styleUri, scopedClass);
-
-    this.wrapperCssClass += ' ' + scopedClass;
-  }
+  ngOnInit() { }
 
   /**
    * Clears the current web components, then gets new ones from the list

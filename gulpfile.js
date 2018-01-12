@@ -2,15 +2,17 @@
 'use strict';
 
 const del = require('del');
+const cssom = require('cssom');
 const runSequence = require('run-sequence');
 const gulp = require('gulp');
 const connect = require('gulp-connect');
 const modRewrite = require('connect-modrewrite');
 const open = require('gulp-open');
+const processhtml = require('gulp-processhtml');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
-const processhtml = require('gulp-processhtml');
+const transform = require('gulp-transform');
 
 const config = {
 	port: 9090
@@ -30,7 +32,7 @@ gulp.task('default', (callback) => {
 gulp.task('watch', (callback) => {
 	runSequence(
 		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy:dev'],
-		'html:copy:dev',
+		['html:copy:dev', 'scopeStyles'],
 		['html:watch', 'sass:watch', 'js:watch', 'rpl:watch'],
 		callback
 	);
@@ -44,7 +46,7 @@ gulp.task('html:watch', () => {
 
 gulp.task('sass:watch', () => {
 	gulp.watch('scss/**/*.scss', () => {
-		runSequence(['sass:dev', 'sass:copy'], 'livereload');
+		runSequence(['sass:dev', 'sass:copy'], 'scopeStyles', 'livereload');
 	});
 });
 
@@ -61,15 +63,6 @@ gulp.task('rpl:watch', () => {
 });
 
 gulp.task('serve', ['open:dev', 'watch']);
-
-// Helper functions
-function compileHtml (opts) {
-	const dest = (opts.environment === 'dist') ? 'dist' : '.tmp';
-
-	return gulp.src('html/**/*.html')
-		.pipe(processhtml(opts))
-		.pipe(gulp.dest(dest));
-}
 
 // Helper tasks
 gulp.task('clean:dist', () => {
@@ -139,6 +132,20 @@ gulp.task('sass:copy', () => {
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/scss/modules'));
 });
 
+gulp.task('scopeStyles', () => {
+	return gulp
+		.src('.tmp/css/main.css')
+		.pipe(transform('utf8', content => prefixCssRules(
+			content,
+			[
+				'.main-content .rpl-user-styles'
+			]
+		)))
+		.pipe(rename('rpl-scoped-styles.css'))
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
+});
+
 gulp.task('js:copy:dev', () => {
 	return gulp
 		.src('js/**/*.js')
@@ -191,3 +198,87 @@ gulp.task('livereload', () => {
 	gulp.src(sources)
 		.pipe(connect.reload());
 });
+
+
+// Helper functions
+
+/**
+ * Runs processhtml task and saves resulting file.
+ * @param opts Options to be passed to processhtml.
+ */
+function compileHtml (opts) {
+	const dest = (opts.environment === 'dist') ? 'dist' : '.tmp';
+
+	return gulp.src('html/**/*.html')
+		.pipe(processhtml(opts))
+		.pipe(gulp.dest(dest));
+}
+
+/**
+ * Adds a selector prefix to each rule in a string of CSS rules.
+ * @param styles A string of styles to prefix.
+ * @param prefixes An array of CSS selectors to prefix every style rule.
+ * @returns A string of modified styles.
+ */
+function prefixCssRules(styles, prefixes) {
+	const sheet = cssom.parse(styles);
+
+	if (!sheet.cssRules) {
+		return '';
+	}
+
+	const ruleList = sheet.cssRules;
+
+	return Array.from(ruleList).reduce((output, rule) => {
+		const styleRule = rule;
+		const prefixedSelectorText = (selectorText) => {
+			return selectorText.split(',')
+				.reduce((prev, selector) => {
+					const trimmedPrev = prev.trim();
+					const trimmedSelector = selector
+						.trim()
+						.replace(/^html$|^body$/, '');
+					const prefixedSelectors = prefixes.map(prefix => {
+						return `${prefix} ${trimmedSelector}`.trim();
+					});
+
+					if (!trimmedPrev) {
+						return prefixedSelectors.join(',');
+					}
+
+					return `${trimmedPrev}, ` + prefixedSelectors.join(',');
+				}, '');
+		};
+
+		if (styleRule.selectorText) {
+			const newSelectorText = prefixedSelectorText(styleRule.selectorText);
+
+			return output + styleRule.cssText.replace(
+				styleRule.selectorText,
+				newSelectorText
+			);
+		}
+
+		// Rule is a media or supports rule
+		const conditionRule = rule;
+
+		if (conditionRule.media || conditionRule.conditionText) {
+			let cssText = conditionRule.cssText;
+
+			Array.from(conditionRule.cssRules).forEach(rule => {
+				const styleRule = rule;
+				const newSelectorText = prefixedSelectorText(styleRule.selectorText);
+				const newRuleText = styleRule.cssText.replace(
+					styleRule.selectorText,
+					newSelectorText
+				);
+
+				cssText = cssText.replace(styleRule.cssText, newRuleText);
+			});
+
+			return output + cssText;
+		}
+
+		return output;
+	}, '');
+}

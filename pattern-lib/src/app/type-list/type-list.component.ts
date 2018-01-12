@@ -18,22 +18,10 @@ import { UtilsService } from '../utils.service';
 export class TypeListComponent implements OnInit {
   @ViewChild('wrapper') wrapper: ElementRef;
   wrapperCssClass: string = 'type-list-wrapper';
-  stylesLoaded: boolean = false;
 
   constructor(
     private _utilsService: UtilsService
   ) { }
 
-  ngOnInit() {
-    // Apply user's styles to component wrapper
-    const styleUri = 'assets/ext/css/main.css';
-    const scopedClass = 'rpl-' + this._utilsService.getGuid();
-
-    this._utilsService.applyScopedStyles(styleUri, scopedClass)
-      .then(() => {
-        this.stylesLoaded = true;
-      });
-
-    this.wrapperCssClass += ' ' + scopedClass;
-  }
+  ngOnInit() { }
 }

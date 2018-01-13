@@ -1,7 +1,12 @@
 /* jshint browser:true */
 
-(function () {
-	'use strict';
+var myScripts = {
+	initComponents: function() {
+		// Replace the following with your own code
+		console.log('Web components have loaded.');
+	}
+};
 
-	// Add your scripts here
-})();
+if (!window.isRpl) {
+	myScripts.initComponents();
+}

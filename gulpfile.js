@@ -149,13 +149,16 @@ gulp.task('scopeStyles', () => {
 gulp.task('js:copy:dev', () => {
 	return gulp
 		.src('js/**/*.js')
-		.pipe(gulp.dest('.tmp/js'));
+		.pipe(gulp.dest('.tmp/js'))
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/js'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
 });
 
 gulp.task('js:copy:dist', () => {
 	return gulp
 		.src('js/**/*.js')
-		.pipe(gulp.dest('dist/js'));
+		.pipe(gulp.dest('dist/js'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
 });
 
 gulp.task('rpl:copy:dev', () => {

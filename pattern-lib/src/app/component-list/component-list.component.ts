@@ -25,7 +25,14 @@ export class ComponentListComponent implements OnInit {
   @Input()
   set list(value: string) {
     this._list = value;
-    this.bindComponents();
+    this.bindComponents()
+      .then(components => {
+        if (components && components.length) {
+          setTimeout(() => {
+            this.runUserScripts();
+          }, 0);
+        }
+      });
   }
 
   constructor(
@@ -38,9 +45,9 @@ export class ComponentListComponent implements OnInit {
    * Clears the current web components, then gets new ones from the list
    * property.
    */
-  bindComponents() {
+  bindComponents(): Promise<WebComponent[]> {
     if (!this.list || this.list.length === 0) {
-      return;
+      return Promise.resolve(null);
     }
 
     const componentPromises: Promise<WebComponent>[] = [];
@@ -53,8 +60,10 @@ export class ComponentListComponent implements OnInit {
       componentPromises.push(this.getComponent(path));
     });
 
-    Promise.all(componentPromises).then(webComponents => {
+    return Promise.all(componentPromises).then(webComponents => {
       this.webComponents = webComponents;
+
+      return webComponents;
     });
   }
 
@@ -96,5 +105,17 @@ export class ComponentListComponent implements OnInit {
     const noComments = html.replace(/<!--[\s\S]+?-->/, '');
 
     return noComments.trim();
+  }
+
+  /**
+   * Executes script in config's initComponentsScript value.
+   */
+  runUserScripts() {
+    this._utilsService.getRplConfig()
+      .then(config => {
+        const userScript = config.initComponentsScript;
+
+        eval(userScript);
+      });
   }
 }

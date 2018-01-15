@@ -1,6 +1,7 @@
 /* jshint esversion:6 */
 'use strict';
 
+const argv = require('yargs').argv;
 const del = require('del');
 const cssom = require('cssom');
 const runSequence = require('run-sequence');
@@ -69,7 +70,17 @@ gulp.task('rpl:watch', () => {
 	});
 });
 
-gulp.task('serve', ['open:dev', 'watch']);
+// gulp.task('serve', ['open:dev', 'watch']);
+gulp.task('serve', () => {
+	const serverUrl = `http://localhost:${config.port}/pattern-lib`;
+
+	if (argv.o) {
+		runSequence(['open:dev', 'watch']);
+	} else {
+		console.log(`Open ${serverUrl} in your browser.`);
+		runSequence(['connect:dev', 'watch']);
+	}
+});
 
 // Helper tasks
 gulp.task('clean:dist', () => {

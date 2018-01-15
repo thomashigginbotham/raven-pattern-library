@@ -23,6 +23,8 @@ Use your preferred method to download the files.
 
 Run `npm run serve` to start a development server that watches for changes. When you’re ready to publish, use `npm run build` to create a **dist** folder, ready for deployment on another server.
 
+*Note: Use `npm run serve -- -o` to automatically open your browser.*
+
 ## Copyright/License
 
 Raven Pattern Library is freely available under the [MIT license](https://tldrlegal.com/license/mit-license).

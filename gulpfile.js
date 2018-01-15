@@ -5,6 +5,7 @@ const del = require('del');
 const cssom = require('cssom');
 const runSequence = require('run-sequence');
 const gulp = require('gulp');
+const concat = require('gulp-concat');
 const connect = require('gulp-connect');
 const modRewrite = require('connect-modrewrite');
 const open = require('gulp-open');
@@ -31,6 +32,7 @@ gulp.task('default', (callback) => {
 
 gulp.task('watch', (callback) => {
 	runSequence(
+		'clean:temp',
 		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy:dev'],
 		['html:copy:dev', 'scopeStyles'],
 		['html:watch', 'sass:watch', 'js:watch', 'rpl:watch'],
@@ -46,7 +48,12 @@ gulp.task('html:watch', () => {
 
 gulp.task('sass:watch', () => {
 	gulp.watch('scss/**/*.scss', () => {
-		runSequence(['sass:dev', 'sass:copy'], 'scopeStyles', 'livereload');
+		runSequence(
+			'clean:tempCss',
+			['sass:dev', 'sass:copy'],
+			'scopeStyles',
+			'livereload'
+		);
 	});
 });
 
@@ -67,6 +74,14 @@ gulp.task('serve', ['open:dev', 'watch']);
 // Helper tasks
 gulp.task('clean:dist', () => {
 	return del('dist/*');
+});
+
+gulp.task('clean:temp', () => {
+	return del('.tmp/*');
+});
+
+gulp.task('clean:tempCss', () => {
+	return del('.tmp/css/*');
 });
 
 gulp.task('html:compile:dev', () => {
@@ -134,7 +149,8 @@ gulp.task('sass:copy', () => {
 
 gulp.task('scopeStyles', () => {
 	return gulp
-		.src('.tmp/css/main.css')
+		.src('.tmp/css/*.css')
+		.pipe(concat('all.css'))
 		.pipe(transform('utf8', content => prefixCssRules(
 			content,
 			[

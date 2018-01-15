@@ -95,7 +95,7 @@ select {
 	padding: 0;
 	width: $form-field-height / 2;
 	height: $form-field-height / 2;
-	visibility: hidden;
+	opacity: 0;
 
 	+ label {
 		vertical-align: top;
@@ -147,6 +147,11 @@ select {
 		&::before {
 			background-color: $color-neutral-80;
 		}
+	}
+
+	&:focus + label::before,
+	&.focused + label::before {
+		box-shadow: 0 0 0 .25rem lighten($color-brand-secondary, 20%);
 	}
 }
 

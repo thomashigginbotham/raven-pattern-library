@@ -15,6 +15,7 @@
 		padding-left: 0;
 		overflow: hidden;
 		list-style: none;
+		transform: translateX(-.5em);
 	}
 
 	li {
@@ -25,14 +26,18 @@
 		position: relative;
 		display: inline-block;
 		margin-right: $page-padding;
-		padding-top: .5em;
-		padding-bottom: .5em;
+		padding: .5em;
 		text-decoration: none;
 		color: $color-neutral-100;
 
 		&:hover,
 		&:focus {
 			color: $color-brand-primary-95;
+		}
+
+		&:focus,
+		&.focused {
+			box-shadow: inset 0 0 0 .25rem $color-brand-secondary;
 		}
 	}
 

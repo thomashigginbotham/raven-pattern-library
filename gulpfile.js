@@ -26,7 +26,7 @@ gulp.task('default', (callback) => {
 		'clean:dist',
 		['html:compile:dist', 'sass:copy', 'sass:dist', 'js:copy:dist'],
 		'html:copy:dist',
-		'rpl:copy:dist',
+		['rpl:copy:dist', 'copyFontsDir', 'copyImagesDir', 'copyScssDir'],
 		callback
 	);
 });
@@ -139,6 +139,7 @@ gulp.task('sass:dev', () => {
 
 gulp.task('sass:dist', () => {
 	return gulp.src('scss/**/*.scss')
+		.pipe(rename({ suffix: '.min' }))
 		.pipe(sourcemaps.init())
 		.pipe(sass({ outputStyle: 'compressed' })
 			.on('error', sass.logError))
@@ -147,7 +148,6 @@ gulp.task('sass:dist', () => {
 			sourceRoot: '/scss'
 		}))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
-		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/css'));
 });
 
@@ -200,6 +200,24 @@ gulp.task('rpl:copy:dist', () => {
 		.pipe(gulp.dest('dist/pattern-lib'));
 });
 
+gulp.task('copyFontsDir', () => {
+	return gulp
+		.src('images/**/*')
+		.pipe(gulp.dest('dist/images'));
+});
+
+gulp.task('copyImagesDir', () => {
+	return gulp
+		.src('fonts/**/*')
+		.pipe(gulp.dest('dist/fonts'));
+});
+
+gulp.task('copyScssDir', () => {
+	return gulp
+		.src('scss/**/*')
+		.pipe(gulp.dest('dist/scss'));
+});
+
 gulp.task('connect:dev', () => {
 	connect.server({
 		root: ['.tmp', 'pattern-lib'],
@@ -238,8 +256,9 @@ gulp.task('livereload', () => {
  */
 function compileHtml (opts) {
 	const dest = (opts.environment === 'dist') ? 'dist' : '.tmp';
+	const filePattern = (dest === 'dist') ? 'html/*.html' : 'html/**/*.html';
 
-	return gulp.src('html/**/*.html')
+	return gulp.src(filePattern)
 		.pipe(processhtml(opts))
 		.pipe(gulp.dest(dest));
 }

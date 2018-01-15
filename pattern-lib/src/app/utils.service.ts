@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class UtilsService {
+  private _rplConfig: any;
+
   constructor() { }
 
   /**
@@ -143,10 +145,20 @@ export class UtilsService {
    * Returns configuration values from a JSON file.
    */
   getRplConfig(): Promise<any> {
+    if (this._rplConfig) {
+      return Promise.resolve(this._rplConfig);
+    }
+
     const path = 'assets/rpl-config.json';
 
     return new Promise((resolve, reject) => {
-      fetch(path).then(response => resolve(response.json()));
+      fetch(path)
+        .then(response => {
+          this._rplConfig = response.json();
+
+          return this._rplConfig;
+        })
+        .then(config => resolve(config));
     });
   }
 

@@ -45,19 +45,33 @@ export class AppComponent implements OnInit {
    */
   appendUserScripts() {
     // Var for user scripts to check if environment is RPL
-    window['isRpl'] = true;
+    window['RavenPatternLibrary'] = {};
 
     // Create <script> tags for each user script
     this._utilsService.getRplConfig()
       .then(config => {
         if (config.scriptUris && config.scriptUris.length) {
-          config.scriptUris.forEach(uri => {
+          const addScript = (uri: string) => {
             const scriptEl = document.createElement('script');
             const headEl = document.getElementsByTagName('head')[0];
+            const revisedUri = uri.startsWith('/js/')
+              ? uri.replace('/js/', '/assets/ext/js/')
+              : uri;
 
-            scriptEl.src = '/assets/ext/js/' + uri;
+            scriptEl.src = revisedUri;
+
+            if (config.scriptUris.length > 0) {
+              scriptEl.onload = () => addScript(config.scriptUris.shift());
+            } else {
+              scriptEl.onload = () => {
+                window['RavenPatternLibrary'].userScriptsLoaded = true;
+              }
+            }
+
             headEl.appendChild(scriptEl);
-          });
+          }
+
+          addScript(config.scriptUris.shift());
         }
       });
   }

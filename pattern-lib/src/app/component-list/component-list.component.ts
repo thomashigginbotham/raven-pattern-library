@@ -114,8 +114,24 @@ export class ComponentListComponent implements OnInit {
     this._utilsService.getRplConfig()
       .then(config => {
         const userScript = config.initComponentsScript;
+        const runWhenReady = () => {
+          if (
+            !window['RavenPatternLibrary'] ||
+            !window['RavenPatternLibrary'].userScriptsLoaded
+          ) {
+            if (tryLimit > 0) {
+              setTimeout(runWhenReady, 100);
+              tryLimit--;
+            }
 
-        eval(userScript);
+            return;
+          }
+
+          setTimeout(() => eval(userScript), 0);
+        };
+        let tryLimit = 50;
+
+        runWhenReady();
       });
   }
 }

@@ -2,7 +2,7 @@
   "title": "Raven Pattern Library",
   "logoUri": "assets/rpl-logo.svg",
   "scriptUris": [
-    "main.js"
+    "/js/main.js"
   ],
   "initComponentsScript": "myScripts.initComponents()",
   "navigation": [

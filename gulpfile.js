@@ -339,13 +339,11 @@ function prefixCssRules(styles, prefixes) {
 			);
 		}
 
-		// Rule is a media or supports rule
-		const conditionRule = rule;
+		// Handle @media and @supports
+		if (rule.media || rule.conditionText) {
+			let cssText = rule.cssText;
 
-		if (conditionRule.media || conditionRule.conditionText) {
-			let cssText = conditionRule.cssText;
-
-			Array.from(conditionRule.cssRules).forEach(rule => {
+			Array.from(rule.cssRules).forEach(rule => {
 				const styleRule = rule;
 				const newSelectorText = prefixedSelectorText(styleRule.selectorText);
 				const newRuleText = styleRule.cssText.replace(
@@ -359,6 +357,27 @@ function prefixCssRules(styles, prefixes) {
 			return output + cssText;
 		}
 
+		// Handle @font-face
+		if (
+			rule.style &&
+			rule.constructor &&
+			rule.constructor.name === 'CSSFontFaceRule'
+		) {
+			let cssText = '@font-face{';
+
+			for (let n = 0; n < rule.style.length; n++) {
+				const selector = rule.style[n];
+
+				cssText += selector + ':';
+				cssText += rule.style[selector] + ';';
+			}
+
+			cssText += '}';
+
+			return output + cssText;
+		}
+
+		// Unknown CSS. Ignore it.
 		return output;
 	}, '');
 }

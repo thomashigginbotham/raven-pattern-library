@@ -26,7 +26,7 @@ gulp.task('default', (callback) => {
 		'clean:dist',
 		['html:compile:dist', 'sass:copy', 'sass:dist', 'js:copy:dist'],
 		'html:copy:dist',
-		['rpl:copy:dist', 'copyFontsDir', 'copyImagesDir', 'copyScssDir'],
+		['rpl:copy:dist', 'fonts:copy:dist', 'images:copy:dist', 'sass:copy:dist'],
 		callback
 	);
 });
@@ -36,7 +36,15 @@ gulp.task('watch', (callback) => {
 		'clean:temp',
 		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy:dev'],
 		['html:copy:dev', 'scopeStyles'],
-		['html:watch', 'sass:watch', 'js:watch', 'rpl:watch'],
+		['fonts:copy:dev', 'images:copy:dev'],
+		[
+			'html:watch',
+			'sass:watch',
+			'js:watch',
+			'fonts:watch',
+			'images:watch',
+			'rpl:watch'
+		],
 		callback
 	);
 });
@@ -64,13 +72,24 @@ gulp.task('js:watch', () => {
 	});
 });
 
+gulp.task('fonts:watch', () => {
+	gulp.watch('fonts/**/*', () => {
+		runSequence('fonts:copy:dev', 'livereload');
+	});
+});
+
+gulp.task('images:watch', () => {
+	gulp.watch('imags/**/*', () => {
+		runSequence('images:copy:dev', 'livereload');
+	});
+});
+
 gulp.task('rpl:watch', () => {
 	gulp.watch('pattern-lib/src/assets/*', () => {
 		runSequence('rpl:copy:dev', 'livereload');
 	});
 });
 
-// gulp.task('serve', ['open:dev', 'watch']);
 gulp.task('serve', () => {
 	const serverUrl = `http://localhost:${config.port}/pattern-lib`;
 
@@ -200,19 +219,31 @@ gulp.task('rpl:copy:dist', () => {
 		.pipe(gulp.dest('dist/pattern-lib'));
 });
 
-gulp.task('copyFontsDir', () => {
+gulp.task('fonts:copy:dev', () => {
 	return gulp
-		.src('images/**/*')
-		.pipe(gulp.dest('dist/images'));
+		.src('fonts/**/*')
+		.pipe(gulp.dest('.tmp/fonts'));
 });
 
-gulp.task('copyImagesDir', () => {
+gulp.task('fonts:copy:dist', () => {
 	return gulp
 		.src('fonts/**/*')
 		.pipe(gulp.dest('dist/fonts'));
 });
 
-gulp.task('copyScssDir', () => {
+gulp.task('images:copy:dev', () => {
+	return gulp
+		.src('images/**/*')
+		.pipe(gulp.dest('dist/images'));
+});
+
+gulp.task('images:copy:dist', () => {
+	return gulp
+		.src('images/**/*')
+		.pipe(gulp.dest('dist/images'));
+});
+
+gulp.task('sass:copy:dist', () => {
 	return gulp
 		.src('scss/**/*')
 		.pipe(gulp.dest('dist/scss'));

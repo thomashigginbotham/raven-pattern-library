@@ -4,7 +4,6 @@
 const argv = require('yargs').argv;
 const del = require('del');
 const cssom = require('cssom');
-const runSequence = require('run-sequence');
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const connect = require('gulp-connect');
@@ -20,266 +19,9 @@ const config = {
 	port: 9090
 };
 
-// Primary tasks
-gulp.task('default', (callback) => {
-	runSequence(
-		'clean:dist',
-		['html:compile:dist', 'sass:copy', 'sass:dist', 'js:copy:dist'],
-		'html:copy:dist',
-		['rpl:copy:dist', 'fonts:copy:dist', 'images:copy:dist', 'sass:copy:dist'],
-		callback
-	);
-});
-
-gulp.task('watch', (callback) => {
-	runSequence(
-		'clean:temp',
-		['html:compile:dev', 'sass:copy', 'sass:dev', 'js:copy:dev', 'rpl:copy:dev'],
-		['html:copy:dev', 'scopeStyles'],
-		['fonts:copy:dev', 'images:copy:dev'],
-		[
-			'html:watch',
-			'sass:watch',
-			'js:watch',
-			'fonts:watch',
-			'images:watch',
-			'rpl:watch'
-		],
-		callback
-	);
-});
-
-gulp.task('html:watch', () => {
-	gulp.watch('html/**/*.html', () => {
-		runSequence('html:compile:dev', 'html:copy:dev', 'livereload');
-	});
-});
-
-gulp.task('sass:watch', () => {
-	gulp.watch('scss/**/*.scss', () => {
-		runSequence(
-			'clean:tempCss',
-			['sass:dev', 'sass:copy'],
-			'scopeStyles',
-			'livereload'
-		);
-	});
-});
-
-gulp.task('js:watch', () => {
-	gulp.watch('js/**/*.js', () => {
-		runSequence('js:copy:dev', 'livereload');
-	});
-});
-
-gulp.task('fonts:watch', () => {
-	gulp.watch('fonts/**/*', () => {
-		runSequence('fonts:copy:dev', 'livereload');
-	});
-});
-
-gulp.task('images:watch', () => {
-	gulp.watch('imags/**/*', () => {
-		runSequence('images:copy:dev', 'livereload');
-	});
-});
-
-gulp.task('rpl:watch', () => {
-	gulp.watch('pattern-lib/src/assets/*', () => {
-		runSequence('rpl:copy:dev', 'livereload');
-	});
-});
-
-gulp.task('serve', () => {
-	const serverUrl = `http://localhost:${config.port}/pattern-lib`;
-
-	if (argv.o) {
-		runSequence(['open:dev', 'watch']);
-	} else {
-		console.log(`Open ${serverUrl} in your browser.`);
-		runSequence(['connect:dev', 'watch']);
-	}
-});
-
-// Helper tasks
-gulp.task('clean:dist', () => {
-	return del('dist/*');
-});
-
-gulp.task('clean:temp', () => {
-	return del('.tmp/*');
-});
-
-gulp.task('clean:tempCss', () => {
-	return del('.tmp/css/*');
-});
-
-gulp.task('html:compile:dev', () => {
-	const opts = {
-		environment: 'dev',
-		recursive: true
-	};
-
-	return compileHtml(opts);
-});
-
-gulp.task('html:compile:dist', () => {
-	const opts = {
-		environment: 'dist',
-		recursive: true
-	};
-
-	return compileHtml(opts);
-});
-
-gulp.task('html:copy:dev', () => {
-	return gulp
-		.src('.tmp/**/*.html')
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/html'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
-});
-
-gulp.task('html:copy:dist', () => {
-	return gulp
-		.src('dist/**/*.html')
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
-});
-
-gulp.task('sass:dev', () => {
-	return gulp.src('scss/**/*.scss')
-		.pipe(sourcemaps.init())
-		.pipe(sass({ outputStyle: 'expanded' })
-			.on('error', sass.logError))
-		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('.tmp/css'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
-});
-
-gulp.task('sass:dist', () => {
-	return gulp.src('scss/**/*.scss')
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(sourcemaps.init())
-		.pipe(sass({ outputStyle: 'compressed' })
-			.on('error', sass.logError))
-		.pipe(sourcemaps.write('maps', {
-			includeContent: false,
-			sourceRoot: '/scss'
-		}))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
-		.pipe(gulp.dest('dist/css'));
-});
-
-gulp.task('sass:copy', () => {
-	return gulp
-		.src('scss/modules/_vars.scss')
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/scss/modules'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/scss/modules'));
-});
-
-gulp.task('scopeStyles', () => {
-	return gulp
-		.src('.tmp/css/*.css')
-		.pipe(concat('all.css'))
-		.pipe(transform('utf8', content => prefixCssRules(
-			content,
-			[
-				'.main-content .rpl-user-styles'
-			]
-		)))
-		.pipe(rename('rpl-scoped-styles.css'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
-});
-
-gulp.task('js:copy:dev', () => {
-	return gulp
-		.src('js/**/*.js')
-		.pipe(gulp.dest('.tmp/js'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/js'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
-});
-
-gulp.task('js:copy:dist', () => {
-	return gulp
-		.src('js/**/*.js')
-		.pipe(gulp.dest('dist/js'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
-});
-
-gulp.task('rpl:copy:dev', () => {
-	return gulp
-		.src('pattern-lib/src/assets/*')
-		.pipe(gulp.dest('pattern-lib/dist/assets'));
-});
-
-gulp.task('rpl:copy:dist', () => {
-	return gulp
-		.src('pattern-lib/dist/**/*')
-		.pipe(gulp.dest('dist/pattern-lib'));
-});
-
-gulp.task('fonts:copy:dev', () => {
-	return gulp
-		.src('fonts/**/*')
-		.pipe(gulp.dest('.tmp/fonts'));
-});
-
-gulp.task('fonts:copy:dist', () => {
-	return gulp
-		.src('fonts/**/*')
-		.pipe(gulp.dest('dist/fonts'));
-});
-
-gulp.task('images:copy:dev', () => {
-	return gulp
-		.src('images/**/*')
-		.pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('images:copy:dist', () => {
-	return gulp
-		.src('images/**/*')
-		.pipe(gulp.dest('dist/images'));
-});
-
-gulp.task('sass:copy:dist', () => {
-	return gulp
-		.src('scss/**/*')
-		.pipe(gulp.dest('dist/scss'));
-});
-
-gulp.task('connect:dev', () => {
-	connect.server({
-		root: ['.tmp', 'pattern-lib'],
-		port: config.port,
-		middleware: () => {
-			return [
-				modRewrite([
-					'^/pattern-lib(.*\\..{2,4})$ /dist$1 [L]',
-					'^/pattern-lib(.*)$ /dist/index.html [L]',
-					'^/assets(.*)$ /dist/assets$1 [L]'
-				])
-			];
-		},
-		livereload: true
-	});
-});
-
-gulp.task('open:dev', ['connect:dev'], () => {
-	gulp.src(__filename)
-		.pipe(open({ uri: 'http://localhost:' + config.port + '/pattern-lib' }));
-});
-
-gulp.task('livereload', () => {
-	const sources = ['.tmp/**/*.{html,css,js}'];
-
-	gulp.src(sources)
-		.pipe(connect.reload());
-});
-
-
-// Helper functions
+/* ------------------------------------
+ * Helper Functions
+ * ------------------------------------ */
 
 /**
  * Runs processhtml task and saves resulting file.
@@ -381,3 +123,411 @@ function prefixCssRules(styles, prefixes) {
 		return output;
 	}, '');
 }
+
+/* ------------------------------------
+ * Helper tasks
+ * ------------------------------------ */
+
+/**
+ * Deletes all files in the dist directory.
+ */
+gulp.task('clean:dist', () => {
+	return del('dist/*');
+});
+
+/**
+ * Deletes all files in the .tmp directory.
+ */
+gulp.task('clean:temp', () => {
+	return del('.tmp/*');
+});
+
+/**
+ * Deletes CSS in the .tmp directory.
+ */
+gulp.task('clean:tempCss', () => {
+	return del('.tmp/css/*');
+});
+
+/**
+ * Compiles HTML files for dev environment.
+ */
+gulp.task('html:compile:dev', () => {
+	const opts = {
+		environment: 'dev',
+		recursive: true
+	};
+
+	return compileHtml(opts);
+});
+
+/**
+ * Compiles HTML files for production environment.
+ */
+gulp.task('html:compile:dist', () => {
+	const opts = {
+		environment: 'dist',
+		recursive: true
+	};
+
+	return compileHtml(opts);
+});
+
+/**
+ * Copies compiled HTML from dev directory to pattern library assets directory.
+ */
+gulp.task('html:copy:dev', () => {
+	return gulp
+		.src('.tmp/**/*.html')
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/html'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
+});
+
+/**
+ * Copies compiled HTML from dist directory to pattern library assets directory.
+ */
+gulp.task('html:copy:dist', () => {
+	return gulp
+		.src('dist/**/*.html')
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
+});
+
+/**
+ * Transpiles Sass into CSS and saves into dev directory.
+ */
+gulp.task('sass:dev', () => {
+	return gulp.src('scss/**/*.scss')
+		.pipe(sourcemaps.init())
+		.pipe(sass({ outputStyle: 'expanded' })
+			.on('error', sass.logError))
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('.tmp/css'))
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
+});
+
+/**
+ * Transpiles Sass into CSS and saves into dist directory.
+ */
+gulp.task('sass:dist', () => {
+	return gulp.src('scss/**/*.scss')
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(sourcemaps.init())
+		.pipe(sass({ outputStyle: 'compressed' })
+			.on('error', sass.logError))
+		.pipe(sourcemaps.write('maps', {
+			includeContent: false,
+			sourceRoot: '/scss'
+		}))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
+		.pipe(gulp.dest('dist/css'));
+});
+
+/**
+ * Copies Sass variables into pattern library assets.
+ */
+gulp.task('sass:copy', () => {
+	return gulp
+		.src('scss/modules/_vars.scss')
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/scss/modules'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/scss/modules'));
+});
+
+/**
+ * Adds a prefix to all CSS selectors to prevent outside styles from leaking in.
+ */
+gulp.task('scopeStyles', () => {
+	return gulp
+		.src('.tmp/css/*.css')
+		.pipe(concat('all.css'))
+		.pipe(transform('utf8', content => prefixCssRules(
+			content,
+			[
+				'.main-content .rpl-user-styles'
+			]
+		)))
+		.pipe(rename('rpl-scoped-styles.css'))
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
+});
+
+/**
+ * Copies JS files to dev directories.
+ */
+gulp.task('js:copy:dev', () => {
+	return gulp
+		.src('js/**/*.js')
+		.pipe(gulp.dest('.tmp/js'))
+		.pipe(gulp.dest('pattern-lib/src/assets/ext/js'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
+});
+
+/**
+ * Copies JS files to production directories.
+ */
+gulp.task('js:copy:dist', () => {
+	return gulp
+		.src('js/**/*.js')
+		.pipe(gulp.dest('dist/js'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
+});
+
+/**
+ * Copies pattern library source assets to the compiled assets directory.
+ */
+gulp.task('rpl:copy:dev', () => {
+	return gulp
+		.src('pattern-lib/src/assets/*')
+		.pipe(gulp.dest('pattern-lib/dist/assets'));
+});
+
+/**
+ * Copies pattern library files to production directory.
+ */
+gulp.task('rpl:copy:dist', () => {
+	return gulp
+		.src('pattern-lib/dist/**/*')
+		.pipe(gulp.dest('dist/pattern-lib'));
+});
+
+/**
+ * Copies font files to dev directory.
+ */
+gulp.task('fonts:copy:dev', () => {
+	return gulp
+		.src('fonts/**/*')
+		.pipe(gulp.dest('.tmp/fonts'));
+});
+
+/**
+ * Copies font files to production directory.
+ */
+gulp.task('fonts:copy:dist', () => {
+	return gulp
+		.src('fonts/**/*')
+		.pipe(gulp.dest('dist/fonts'));
+});
+
+/**
+ * Copies image files to dev directory.
+ */
+gulp.task('images:copy:dev', () => {
+	return gulp
+		.src('images/**/*')
+		.pipe(gulp.dest('.tmp/images'));
+});
+
+/**
+ * Copies image files to production directory.
+ */
+gulp.task('images:copy:dist', () => {
+	return gulp
+		.src('images/**/*')
+		.pipe(gulp.dest('dist/images'));
+});
+
+/**
+ * Copies Sass files to production directory.
+ */
+gulp.task('sass:copy:dist', () => {
+	return gulp
+		.src('scss/**/*')
+		.pipe(gulp.dest('dist/scss'));
+});
+
+/**
+ * Starts a development web server.
+ */
+gulp.task('connect:dev', done => {
+	connect.server({
+		root: ['.tmp', 'pattern-lib'],
+		port: config.port,
+		middleware: () => {
+			return [
+				modRewrite([
+					'^/pattern-lib(.*\\..{2,4})$ /dist$1 [L]',
+					'^/pattern-lib(.*)$ /dist/index.html [L]',
+					'^/assets(.*)$ /dist/assets$1 [L]'
+				])
+			];
+		},
+		livereload: true
+	});
+
+	done();
+});
+
+/**
+ * Starts a development web server, then opens the pattern library in a browser.
+ */
+gulp.task('open:dev', gulp.parallel('connect:dev', () => {
+	return gulp.src(__filename)
+		.pipe(open({ uri: 'http://localhost:' + config.port + '/pattern-lib' }));
+}));
+
+/**
+ * Reloads open browsers when files change.
+ */
+gulp.task('livereload', () => {
+	const sources = ['.tmp/**/*.{html,css,js}'];
+
+	return gulp.src(sources)
+		.pipe(connect.reload());
+});
+
+/* ------------------------------------
+ * Primary tasks
+ * ------------------------------------ */
+
+/**
+ * Watches HTML files for changes, then compiles them and refreshes the browser
+ * if open.
+ */
+gulp.task('html:watch', done => {
+	gulp.watch(
+		'html/**/*.html',
+		gulp.series(
+			'html:compile:dev',
+			'html:copy:dev',
+			'livereload'
+		)
+	);
+
+	done();
+});
+
+/**
+ * Watches Sass files for changes, then transpiles to CSS and refreshes the
+ * browser if open.
+ */
+gulp.task('sass:watch', done => {
+	gulp.watch(
+		'scss/**/*.scss',
+		gulp.series(
+			'clean:tempCss',
+			gulp.parallel('sass:dev', 'sass:copy'),
+			'scopeStyles',
+			'livereload'
+		)
+	);
+
+	done();
+});
+
+/**
+ * Copies JavaScript files to .tmp directory when they change, then refreshes
+ * the browser if open.
+ */
+gulp.task('js:watch', done => {
+	gulp.watch(
+		'js/**/*.js',
+		gulp.series('js:copy:dev', 'livereload')
+	);
+
+	done();
+});
+
+/**
+ * Copies fonts to .tmp directory when they change, then refreshes the browser
+ * if open.
+ */
+gulp.task('fonts:watch', done => {
+	gulp.watch(
+		'fonts/**/*',
+		gulp.series('fonts:copy:dev', 'livereload')
+	);
+
+	done();
+});
+
+/**
+ * Copies images to .tmp directory when they change, then refreshes the browser
+ * if open.
+ */
+gulp.task('images:watch', done => {
+	gulp.watch(
+		'images/**/*',
+		gulp.series('images:copy:dev', 'livereload')
+	);
+
+	done();
+});
+
+/**
+ * Copies pattern lib assets to .tmp directory when they change, then refreshes
+ * the browser if open.
+ */
+gulp.task('rpl:watch', done => {
+	gulp.watch(
+		'pattern-lib/src/assets/*',
+		gulp.series('rpl:copy:dev', 'livereload')
+	);
+
+	done();
+});
+
+/**
+ * Cleans up temp files, then compiles and watches relevant files for changes.
+ */
+gulp.task(
+	'watch',
+	gulp.series(
+		'clean:temp',
+		gulp.parallel(
+			'html:compile:dev',
+			'sass:copy',
+			'sass:dev',
+			'js:copy:dev',
+			'rpl:copy:dev'
+		),
+		gulp.parallel('html:copy:dev', 'scopeStyles'),
+		gulp.parallel('fonts:copy:dev', 'images:copy:dev'),
+		gulp.parallel(
+			'html:watch',
+			'sass:watch',
+			'js:watch',
+			'fonts:watch',
+			'images:watch',
+			'rpl:watch'
+		)
+	)
+);
+
+/**
+ * Starts a development server and watches for file changes.
+ */
+gulp.task('serve', done => {
+	const serverUrl = `http://localhost:${config.port}/pattern-lib`;
+
+	if (argv.o) {
+		gulp.series('open:dev', 'watch')();
+	} else {
+		console.log(`Open ${serverUrl} in your browser.`);
+		gulp.series('connect:dev', 'watch')();
+	}
+
+	done();
+});
+
+/**
+ * Cleans up dist environment, then compiles files for production.
+ */
+gulp.task(
+	'default',
+	gulp.series(
+		'clean:dist',
+		gulp.parallel(
+			'html:compile:dist',
+			'sass:copy',
+			'sass:dist',
+			'js:copy:dist'
+		),
+		'html:copy:dist',
+		gulp.parallel(
+			'rpl:copy:dist',
+			'fonts:copy:dist',
+			'images:copy:dist',
+			'sass:copy:dist'
+		)
+	)
+);

@@ -9,7 +9,11 @@
   --page-padding: 1.4rem;
 
   /* Config */
-  --logo-height: 58px;
+  --title-bar-height: 58px;
+  --logo-top-offset: 0px;
+  --logo-left-offset: 0px;
+  --logo-width: 75px;
+  --logo-height: 75px;
 
   /* Colors */
   --color-brand-primary: #363669;

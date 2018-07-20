@@ -16,7 +16,7 @@
 
 .app-header__heading {
   margin: 0;
-  height: var(--logo-height, 58px);
+  height: var(--title-bar-height, 58px);
   font-size: 1.4em;
   font-weight: var(--font-weight-normal, 400);
 }
@@ -28,20 +28,28 @@
 
 .app-header__logo {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: var(--logo-top-offset, 0);
+  left: var(--logo-left-offset, 0);
+  width: var(--logo-width, 75px);
+  height: var(--logo-height, 75px);
 }
 
 .app-header__name {
   display: inline-block;
   position: relative;
-  top: calc(var(--logo-height, 58px) / 2);
-  transform: translate(55px, -25%);
+  top: calc(var(--title-bar-height, 58px) / 2);
+  transform: translate(
+    calc(var(--logo-left-offset, 0) + var(--logo-width, 75px) -
+      var(--page-gutter, 2rem) / 2),
+    -35%
+  );
+  padding-right: calc(var(--page-gutter, 2rem) * 1.5 +
+    var(--hamburger-width, 26px));
 }
 
 .app-header__nav-trigger {
   position: absolute;
-  top: calc(var(--logo-height, 58px) / 2);
+  top: calc(var(--title-bar-height, 58px) / 2);
   right: var(--page-gutter, 2rem);
   width: var(--hamburger-width, 26px);
   height: calc(var(--hamburger-bar-height, 5px) * 3 + var(--hamburger-space, 4px) * 2);

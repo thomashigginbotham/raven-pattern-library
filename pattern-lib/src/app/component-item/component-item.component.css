@@ -1,0 +1,7 @@
+/* -- Component Item Styles -- */
+
+:host {
+  position: relative;
+  display: block;
+  overflow: auto;
+}

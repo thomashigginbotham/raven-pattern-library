@@ -5,6 +5,7 @@ RPL is a living style guide and component-driven front-end development resource.
 ## Requirements
 
 * [Node.js/NPM](https://nodejs.org/en/)
+* [Angular CLI](https://github.com/angular/angular-cli/wiki)
 
 ## Getting Started
 

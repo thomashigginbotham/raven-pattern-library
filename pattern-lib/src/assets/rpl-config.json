@@ -1,6 +1,7 @@
 {
   "title": "Raven Pattern Library",
   "logoUri": "assets/rpl-logo.svg",
+  "styleUris": [],
   "scriptUris": [
     "/js/main.js"
   ],

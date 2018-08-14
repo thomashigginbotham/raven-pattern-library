@@ -30,7 +30,7 @@
     "gulp-connect": "^5.5.0",
     "gulp-open": "^3.0.1",
     "gulp-processhtml": "^1.1.0",
-    "gulp-rename": "^1.2.2",
+    "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-transform": "^3.0.5",

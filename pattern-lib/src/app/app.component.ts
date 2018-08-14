@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Include user scripts
-    this.appendUserScripts();
+    this.appendUserStylesAndScripts();
 
     // Scroll to top after route change
     this._router.events.subscribe(e => {
@@ -41,38 +41,70 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * Adds user scripts to <head>.
+   * Adds user style sheets and scripts to <head>.
    */
-  appendUserScripts() {
+  appendUserStylesAndScripts() {
+    this._utilsService.getRplConfig()
+      .then(config => {
+        if (config.styleUris && config.styleUris.length) {
+          this.appendUserStyles(config);
+        }
+
+        if (config.scriptUris && config.scriptUris.length) {
+          this.appendUserScripts(config);
+        }
+      });
+  }
+
+  /**
+   * Adds user style sheets to <head>.
+   * @param config The RPL configuration to use.
+   */
+  appendUserStyles(config: any) {
+    const addStyleSheet = (uri: string) => {
+      const linkEl = document.createElement('link');
+      const headEl = document.getElementsByTagName('head')[0];
+
+      linkEl.rel = 'stylesheet';
+      linkEl.href = uri;
+
+      headEl.appendChild(linkEl);
+    };
+
+    config.styleUris.forEach(uri => {
+      addStyleSheet(uri);
+    });
+  }
+
+  /**
+   * Adds user scripts to <head>.
+   * @param config The RPL configuration to use.
+   */
+  appendUserScripts(config: any) {
     // Var for user scripts to check if environment is RPL
     window['RavenPatternLibrary'] = {};
 
     // Create <script> tags for each user script
-    this._utilsService.getRplConfig()
-      .then(config => {
-        if (config.scriptUris && config.scriptUris.length) {
-          const addScript = (uri: string) => {
-            const scriptEl = document.createElement('script');
-            const headEl = document.getElementsByTagName('head')[0];
-            const revisedUri = uri.startsWith('/js/')
-              ? uri.replace('/js/', '/assets/ext/js/')
-              : uri;
+    const addScript = (uri: string) => {
+      const scriptEl = document.createElement('script');
+      const headEl = document.getElementsByTagName('head')[0];
+      const revisedUri = uri.startsWith('/js/')
+        ? uri.replace('/js/', '/assets/ext/js/')
+        : uri;
 
-            scriptEl.src = revisedUri;
+      scriptEl.src = revisedUri;
 
-            if (config.scriptUris.length > 0) {
-              scriptEl.onload = () => addScript(config.scriptUris.shift());
-            } else {
-              scriptEl.onload = () => {
-                window['RavenPatternLibrary'].userScriptsLoaded = true;
-              }
-            }
-
-            headEl.appendChild(scriptEl);
-          }
-
-          addScript(config.scriptUris.shift());
+      if (config.scriptUris.length > 0) {
+        scriptEl.onload = () => addScript(config.scriptUris.shift());
+      } else {
+        scriptEl.onload = () => {
+          window['RavenPatternLibrary'].userScriptsLoaded = true;
         }
-      });
+      }
+
+      headEl.appendChild(scriptEl);
+    }
+
+    addScript(config.scriptUris.shift());
   }
 }

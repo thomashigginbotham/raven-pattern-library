@@ -34,6 +34,7 @@ import { PrismComponent } from './prism/prism.component';
 import { ButtonListItemComponent } from './button-list-item/button-list-item.component';
 import { TypeListItemComponent } from './type-list-item/type-list-item.component';
 import { SafeUriPipe } from './shared/safe-uri.pipe';
+import { StickySidebarDirective } from './shared/directives/sticky-sidebar.directive';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { SafeUriPipe } from './shared/safe-uri.pipe';
     PrismComponent,
     ButtonListItemComponent,
     TypeListItemComponent,
-    SafeUriPipe
+    SafeUriPipe,
+    StickySidebarDirective
   ],
   imports: [
     BrowserModule,

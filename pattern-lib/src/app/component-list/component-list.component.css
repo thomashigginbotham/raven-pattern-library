@@ -46,3 +46,9 @@
     width: 100%;
   }
 }
+
+@media (min-width: 1024px) {
+  .component-item:last-child {
+    margin-bottom: 0;
+  }
+}

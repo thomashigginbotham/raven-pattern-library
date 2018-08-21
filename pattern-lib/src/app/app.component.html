@@ -1,8 +1,11 @@
 <app-header (onExpandNav)="expandNav($event)"></app-header>
-<app-navigation
-  (onExpandNav)="expandNav($event)"
-  [expanded]="navIsExpanded"></app-navigation>
 
-<router-outlet></router-outlet>
+<main [ngClass]="{'nav-is-expanded': navIsExpanded}">
+  <app-navigation
+    (onExpandNav)="expandNav($event)"
+    [expanded]="navIsExpanded"></app-navigation>
+
+  <router-outlet></router-outlet>
+</main>
 
 <app-footer></app-footer>

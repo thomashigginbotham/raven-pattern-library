@@ -101,3 +101,10 @@ pre {
   padding: var(--page-gutter) var(--page-gutter) 0;
   max-width: var(--page-max-width);
 }
+
+@media (min-width: 1024px) {
+  .nav-is-expanded .main-content__wrapper {
+    padding-right: calc(var(--page-min-width) + var(--page-gutter) * 2);
+    max-width: calc(var(--page-max-width) - var(--page-min-width) - var(--page-gutter));
+  }
+}

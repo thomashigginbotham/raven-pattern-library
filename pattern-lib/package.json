@@ -22,9 +22,11 @@
     "@angular/platform-browser-dynamic": "^6.0.9",
     "@angular/router": "^6.0.9",
     "core-js": "^2.5.7",
+    "css-element-queries": "^1.0.2",
     "ntc": "0.0.1",
     "prismjs": "^1.15.0",
     "rxjs": "^6.2.2",
+    "sticky-sidebar": "^3.3.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

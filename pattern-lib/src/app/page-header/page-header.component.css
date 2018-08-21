@@ -38,6 +38,10 @@
 }
 
 @media (min-width: 1024px) {
+  .page-header {
+    margin-top: calc(var(--page-padding, 1.4rem) * -1 - 1px);
+  }
+
   .page-header__heading,
   .page-header__description {
     width: calc(100% - var(--page-min-width, 320px) - var(--page-gutter, 2rem));

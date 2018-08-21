@@ -24,7 +24,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/css-element-queries/src/ResizeSensor.js",
+              "node_modules/sticky-sidebar/dist/sticky-sidebar.min.js"
+            ]
           },
           "configurations": {
             "production": {

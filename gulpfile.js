@@ -248,7 +248,7 @@ gulp.task('scopeStyles', () => {
 		)))
 		.pipe(rename('rpl-scoped-styles.css'))
 		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
-		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
+		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
 });
 
 /**

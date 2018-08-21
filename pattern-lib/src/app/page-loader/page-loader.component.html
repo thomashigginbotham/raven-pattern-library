@@ -7,11 +7,15 @@
     'maximize': iframeIsMaximized
   }">
   <div class="main-content__wrapper">
-    <button class="component-loader__maximize-button"
-      (click)="toggleMaximize()">{{maximizeText}}</button>
+    <div class="component-loader__buttons">
+      <button class="component-loader__maximize-button"
+        (click)="toggleMaximize()">{{maximizeText}}</button>
+      <button class="component-loader__open-button"
+        (click)="openPage()">Open Page</button>
+    </div>
 
     <div class="iframe-wrapper">
-      <iframe [src]="pageUri" frameborder="0"></iframe>
+      <iframe [src]="pageUri | safeUri" frameborder="0"></iframe>
     </div>
   </div>
 </section>

@@ -33,6 +33,7 @@ import { CustomPageComponent } from './custom-page/custom-page.component';
 import { PrismComponent } from './prism/prism.component';
 import { ButtonListItemComponent } from './button-list-item/button-list-item.component';
 import { TypeListItemComponent } from './type-list-item/type-list-item.component';
+import { SafeUriPipe } from './shared/safe-uri.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { TypeListItemComponent } from './type-list-item/type-list-item.component
     CustomPageComponent,
     PrismComponent,
     ButtonListItemComponent,
-    TypeListItemComponent
+    TypeListItemComponent,
+    SafeUriPipe
   ],
   imports: [
     BrowserModule,

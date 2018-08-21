@@ -12,13 +12,12 @@ import { UtilsService } from '../utils.service';
 export class PageLoaderComponent implements OnInit {
   heading: string;
   description: string;
-  pageUri: SafeResourceUrl;
+  pageUri: string;
   iframeIsMaximized: boolean;
   maximizeText: string;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _domSanitizer: DomSanitizer,
     private _utilsService: UtilsService
   ) { }
 
@@ -42,13 +41,9 @@ export class PageLoaderComponent implements OnInit {
         .find(value => value.uriKey === uriKey.toLowerCase());
 
       if (configValues) {
-        const sanitizedUri = this._domSanitizer.bypassSecurityTrustResourceUrl(
-          configValues.uri
-        );
-
         this.heading = configValues.heading;
         this.description = configValues.description;
-        this.pageUri = sanitizedUri;
+        this.pageUri = configValues.uri;
       }
     });
   }
@@ -59,6 +54,13 @@ export class PageLoaderComponent implements OnInit {
   toggleMaximize() {
     this.iframeIsMaximized = !this.iframeIsMaximized;
     this.setMaximizeText();
+  }
+
+  /**
+   * Opens the page in a new window/tab.
+   */
+  openPage() {
+    window.open(this.pageUri);
   }
 
   /**

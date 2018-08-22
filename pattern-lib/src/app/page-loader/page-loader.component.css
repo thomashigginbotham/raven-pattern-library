@@ -23,7 +23,7 @@ iframe {
   border-bottom-width: 0;
   font-weight: var(--font-weight-bold, 700);
   color: var(--color-black, #111);
-  background-color: var(--color-neutral-80, #ccc);
+  background-color: var(--color-neutral-95, #eee);
   cursor: pointer;
   outline: none;
 }

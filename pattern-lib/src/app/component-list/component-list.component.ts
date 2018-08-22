@@ -54,10 +54,9 @@ export class ComponentListComponent implements OnInit {
     this.webComponents = [];
 
     this.list.split(',').forEach(name => {
-      const trimmedName = name.trim();
-      const path = `assets/ext/html/components/${trimmedName}.html`;
+      const componentId = name.trim();
 
-      componentPromises.push(this.getComponent(path));
+      componentPromises.push(this.getComponent(componentId));
     });
 
     return Promise.all(componentPromises).then(webComponents => {
@@ -69,14 +68,17 @@ export class ComponentListComponent implements OnInit {
 
   /**
    * Returns a WebComponent object based on its HTML content.
-   * @param path The path to the HTML file.
+   * @param id An identifier for the component.
    */
-  getComponent(path: string): Promise<WebComponent> {
+  getComponent(id: string): Promise<WebComponent> {
     return new Promise((resolve, reject) => {
+      const path = `assets/ext/html/components/${id}.html`;
+
       this.getComponentHtml(path).then(html => {
         const commentData = this._utilsService.getCommentData(html);
 
         resolve({
+          id,
           name: commentData['name'],
           summary: commentData['summary'],
           html: this.stripComponentComments(html)

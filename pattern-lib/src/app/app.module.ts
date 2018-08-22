@@ -35,6 +35,7 @@ import { ButtonListItemComponent } from './button-list-item/button-list-item.com
 import { TypeListItemComponent } from './type-list-item/type-list-item.component';
 import { SafeUriPipe } from './shared/safe-uri.pipe';
 import { StickySidebarDirective } from './shared/directives/sticky-sidebar.directive';
+import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-scroller.directive';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { StickySidebarDirective } from './shared/directives/sticky-sidebar.direc
     ButtonListItemComponent,
     TypeListItemComponent,
     SafeUriPipe,
-    StickySidebarDirective
+    StickySidebarDirective,
+    UrlFragmentScrollerDirective
   ],
   imports: [
     BrowserModule,

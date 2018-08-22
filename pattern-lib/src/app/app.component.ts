@@ -21,6 +21,20 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Include user scripts
     this.appendUserStylesAndScripts();
+
+    // Scroll to top after route change
+    this._router.events.subscribe((e) => {
+      if (!(e instanceof NavigationEnd)) {
+        return;
+      }
+
+      if (e.urlAfterRedirects.includes('#')) {
+        // Don't scroll if URL contains a fragment
+        return;
+      }
+
+      window.scrollTo(0, 0);
+    });
   }
 
   /**

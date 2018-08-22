@@ -71,7 +71,12 @@ import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-s
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(
+      appRoutes,
+      {
+        scrollPositionRestoration: 'disabled'
+      }
+    )
   ],
   providers: [
     UtilsService

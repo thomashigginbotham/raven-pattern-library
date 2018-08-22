@@ -20,6 +20,15 @@
               <li *ngFor="let navChild of navItem.children" routerLinkActive="active">
                 <a [routerLink]="[navChild.uri]"
                   (click)="closeNavIfLargeViewport()">{{navChild.title}}</a>
+
+                <ul *ngIf="isComponentLink(navChild) && isActive(navChild.uri)"
+                  class="app-nav__component-links">
+                  <li *ngFor="let componentData of getComponentList(navChild)">
+                    <a [routerLink]="[]"
+                      [fragment]="componentData.uri"
+                      (click)="closeNavIfLargeViewport()">{{componentData.title}}</a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>

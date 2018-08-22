@@ -50,7 +50,8 @@ export class ComponentLoaderComponent implements OnInit {
       if (configValues) {
         this.heading = configValues.heading;
         this.description = configValues.description;
-        this.list = configValues.list;
+        this.list = configValues.list
+          .map((item: { uri: string }) => item.uri);
       }
     });
   }

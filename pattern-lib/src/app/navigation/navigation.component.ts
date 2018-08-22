@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { UtilsService } from '../utils.service';
 
@@ -25,8 +25,10 @@ export class NavigationComponent implements OnInit {
 
   navCssClasses: string[] = ['app-nav'];
   navData: {}[];
+  componentData: {}[];
 
   constructor(
+    private _router: Router,
     private _utilsService: UtilsService
   ) { }
 
@@ -34,6 +36,7 @@ export class NavigationComponent implements OnInit {
     // Get navigation
     this._utilsService.getRplConfig().then(config => {
       this.navData = config.navigation;
+      this.componentData = config.components;
     });
 
     // Expand navigation by default on large viewports
@@ -42,6 +45,22 @@ export class NavigationComponent implements OnInit {
 
   onResize(event: Event) {
     this.expandNavByWinSize();
+  }
+
+  /**
+   * Returns a list of components belonging to a navigation item.
+   * @param navItem The navigation item to use.
+   */
+  getComponentList(navItem: { uri: string }): { title: string, uri: string }[] {
+    const uriParts = navItem.uri.split('/');
+    const uriKey = uriParts[uriParts.length - 1];
+
+    const componentItem = this.componentData
+      .find((item: { uriKey: string }) => {
+        return item.uriKey === uriKey;
+      });
+
+    return componentItem['list'];
   }
 
   /**
@@ -98,6 +117,22 @@ export class NavigationComponent implements OnInit {
       this._navIsExpanded = false;
       this.updateCssAndEmit();
     }
+  }
+
+  /**
+   * Returns whether a navigation item links to a component.
+   * @param navItem The navigation item.
+   */
+  isComponentLink(navItem: { uri: string }): boolean {
+    return navItem.uri.startsWith('components/');
+  }
+
+  /**
+   * Returns whether a URI is the active route.
+   * @param uri The URI to test.
+   */
+  isActive(uri: string): boolean {
+    return this._router.isActive(uri, false);
   }
 
   /**

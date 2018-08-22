@@ -78,30 +78,30 @@
       "heading": "Page Structure",
       "description": "Common page sections that provide branding, navigation, or important information",
       "list": [
-        "site-header",
-        "/variants/site-navigation-about",
-        "site-footer"
+        { "title": "Site Header", "uri": "site-header" },
+        { "title": "Site Navigation", "uri": "/variants/site-navigation-about" },
+        { "title": "Site Footer", "uri": "site-footer" }
       ]
     }, {
       "uriKey": "lists",
       "heading": "Lists",
       "description": "Components that display listings of content.",
       "list": [
-        "link-list"
+        { "title": "Link List", "uri": "link-list" }
       ]
     }, {
       "uriKey": "callouts",
       "heading": "Call-outs",
       "description": "Call-outs are small blocks of content or imagery that draw user’s attention.",
       "list": [
-        "callout-link-list"
+        { "title": "Call-out Link List", "uri": "callout-link-list" }
       ]
     }, {
       "uriKey": "images",
       "heading": "Images",
       "description": "Components with a primary focus on imagery.",
       "list": [
-        "thumbnail-grid"
+        { "title": "Thumbnail Grid", "uri": "thumbnail-grid" }
       ]
     }
   ],

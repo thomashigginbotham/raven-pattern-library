@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { TypographyComponent } from './typography/typography.component';
 import { ColorComponent } from './color/color.component';
 import { ButtonsComponent } from './buttons/buttons.component';
-import { FormsComponent } from './forms/forms.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { CustomPageComponent } from './custom-page/custom-page.component';
@@ -17,9 +16,6 @@ export const appRoutes: Routes = [
   }, {
     path: 'styles/buttons',
     component: ButtonsComponent
-  }, {
-    path: 'styles/forms',
-    component: FormsComponent
   }, {
     path: 'components/:id',
     component: ComponentLoaderComponent

@@ -109,3 +109,13 @@ pre {
     max-width: calc(var(--page-max-width) - var(--page-min-width) - var(--page-gutter));
   }
 }
+
+/* Layout */
+@media (min-width: 768px)
+{
+  .rpl-col-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: var(--page-gutter, 2rem);
+  }
+}

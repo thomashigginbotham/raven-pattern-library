@@ -14,13 +14,11 @@ import { appRoutes } from './app.routes';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ColorComponent } from './color/color.component';
 import { ButtonsComponent } from './buttons/buttons.component';
-import { FormsComponent } from './forms/forms.component';
 import { TypeListComponent } from './type-list/type-list.component';
 import { ColorListComponent } from './color-list/color-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageContentComponent } from './page-content/page-content.component';
 import { ButtonListComponent } from './button-list/button-list.component';
-import { FormListComponent } from './form-list/form-list.component';
 import { ComponentListComponent } from './component-list/component-list.component';
 
 import { SafeHtmlPipe } from './shared/safehtml.pipe';
@@ -44,13 +42,11 @@ import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-s
     NavigationComponent,
     ColorComponent,
     ButtonsComponent,
-    FormsComponent,
     TypeListComponent,
     ColorListComponent,
     FooterComponent,
     PageContentComponent,
     ButtonListComponent,
-    FormListComponent,
     ComponentListComponent,
     SafeHtmlPipe,
     ComponentItemComponent,

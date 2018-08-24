@@ -195,6 +195,27 @@ select {
 			background-color: $color-neutral-80;
 		}
 	}
+
+	&.invalid + label {
+		&::before {
+			border-color: $color-utility-error;
+		}
+	}
+
+	&.invalid:checked + label {
+		&::before {
+			background-color: $color-utility-error;
+		}
+	}
+
+	&.invalid:focus,
+	&.invalid.focused {
+		+ label {
+			&::before {
+				box-shadow: 0 0 0 .25rem lighten($color-utility-error, 20%);
+			}
+		}
+	}
 }
 
 [type=radio] {
@@ -231,6 +252,27 @@ select {
 	&:checked.disabled + label {
 		&::after {
 			background-color: $color-neutral;
+		}
+	}
+
+	&.invalid + label {
+		&::before {
+			border-color: $color-utility-error;
+		}
+	}
+
+	&.invalid + label {
+		&::after {
+			background-color: $color-utility-error;
+		}
+	}
+
+	&.invalid:focus,
+	&.invalid.focused {
+		+ label {
+			&::before {
+				box-shadow: 0 0 0 .25rem lighten($color-utility-error, 20%);
+			}
 		}
 	}
 }

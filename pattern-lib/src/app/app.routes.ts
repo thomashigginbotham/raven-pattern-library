@@ -3,7 +3,6 @@ import { TypographyComponent } from './typography/typography.component';
 import { ColorComponent } from './color/color.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsComponent } from './forms/forms.component';
-import { TablesComponent } from './tables/tables.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { CustomPageComponent } from './custom-page/custom-page.component';
@@ -21,9 +20,6 @@ export const appRoutes: Routes = [
   }, {
     path: 'styles/forms',
     component: FormsComponent
-  }, {
-    path: 'styles/tables',
-    component: TablesComponent
   }, {
     path: 'components/:id',
     component: ComponentLoaderComponent

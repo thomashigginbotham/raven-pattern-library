@@ -13,12 +13,10 @@ import { TypographyComponent } from './typography/typography.component';
 import { appRoutes } from './app.routes';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ColorComponent } from './color/color.component';
-import { ButtonsComponent } from './buttons/buttons.component';
 import { TypeListComponent } from './type-list/type-list.component';
 import { ColorListComponent } from './color-list/color-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageContentComponent } from './page-content/page-content.component';
-import { ButtonListComponent } from './button-list/button-list.component';
 import { ComponentListComponent } from './component-list/component-list.component';
 
 import { SafeHtmlPipe } from './shared/safehtml.pipe';
@@ -27,7 +25,6 @@ import { ComponentLoaderComponent } from './component-loader/component-loader.co
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { CustomPageComponent } from './custom-page/custom-page.component';
 import { PrismComponent } from './prism/prism.component';
-import { ButtonListItemComponent } from './button-list-item/button-list-item.component';
 import { TypeListItemComponent } from './type-list-item/type-list-item.component';
 import { SafeUriPipe } from './shared/safe-uri.pipe';
 import { StickySidebarDirective } from './shared/directives/sticky-sidebar.directive';
@@ -41,12 +38,10 @@ import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-s
     TypographyComponent,
     NavigationComponent,
     ColorComponent,
-    ButtonsComponent,
     TypeListComponent,
     ColorListComponent,
     FooterComponent,
     PageContentComponent,
-    ButtonListComponent,
     ComponentListComponent,
     SafeHtmlPipe,
     ComponentItemComponent,
@@ -54,7 +49,6 @@ import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-s
     PageLoaderComponent,
     CustomPageComponent,
     PrismComponent,
-    ButtonListItemComponent,
     TypeListItemComponent,
     SafeUriPipe,
     StickySidebarDirective,

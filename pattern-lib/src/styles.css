@@ -96,6 +96,17 @@ pre {
   overflow: auto;
 }
 
+figure {
+  margin: 0 0 1em;
+}
+
+figcaption {
+  margin-top: 1em;
+  font-size: .8em;
+  font-style: italic;
+  color: var(--color-neutral-45, #777);
+}
+
 /* Main Content */
 .main-content__wrapper {
   margin: 0 auto;
@@ -111,6 +122,16 @@ pre {
 }
 
 /* Layout */
+.rpl-col-auto {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(var(--page-gutter, 2rem) * -1);
+}
+
+.rpl-col-auto > * {
+  margin-left: var(--page-gutter, 2rem);
+}
+
 @media (min-width: 768px)
 {
   .rpl-col-2 {

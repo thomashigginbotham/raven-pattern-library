@@ -19,6 +19,7 @@ button,
 	text-align: center;
 	text-decoration: none;
 	line-height: $button-height;
+	font-size: inherit;
 	color: $color-neutral-100;
 	background-color: $color-brand-secondary-70;
 	transition: background-color 150ms ease-in-out;

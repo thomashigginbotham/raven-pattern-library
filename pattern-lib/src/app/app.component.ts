@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { UtilsService } from './utils.service';
+import { config } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +18,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
+    private _title: Title,
     private _utilsService: UtilsService
   ) { }
 
@@ -35,6 +40,22 @@ export class AppComponent implements OnInit {
 
       window.scrollTo(0, 0);
     });
+
+    // Set page title
+    this._router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => this._activatedRoute),
+        map(route => {
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+
+          return route;
+        }),
+        filter(route => route.outlet === 'primary'),
+        mergeMap(route => route.data)
+      ).subscribe(data => this.setPageTitle(data['title']));
   }
 
   /**
@@ -43,6 +64,91 @@ export class AppComponent implements OnInit {
    */
   expandNav(expand: boolean) {
     this.navIsExpanded = expand;
+  }
+
+  /**
+   * Updates the page title using a string with format specifiers.
+   * @param titleFormat The format of the page's title.
+   */
+  setPageTitle(titleFormat: string) {
+    const uriKey = this._utilsService.getUriLastSegment(this._router);
+    let pageTitle = titleFormat;
+
+    this._utilsService.getRplConfig()
+      .then(config => {
+        const specifierFuncs = {
+          'siteTitle': () => config.title,
+          'componentTitle': this.getComponentHeading,
+          'pageTitle': this.getPageHeading,
+          'customPageTitle': this.getCustomPageTitle
+        };
+
+        Object.entries(specifierFuncs).forEach(([specifier, func]) => {
+          const regex = new RegExp('\\{\\{\\s*' + specifier + '\\s*\\}\\}', 'i');
+          const matches = titleFormat.match(regex);
+
+          if (matches) {
+            pageTitle = pageTitle
+              .replace(matches[0], func.apply(this, [config, uriKey]));
+          }
+        });
+
+        this._title.setTitle(pageTitle);
+      });
+  }
+
+  /**
+   * Get's a component's heading from its URI key.
+   * @param config The RPL configuration object.
+   * @param uriKey The component's URI key (as set in config).
+   */
+  getComponentHeading(config: any, uriKey: string) {
+    const curComponent = config.components
+      .find(component => component.uriKey === uriKey);
+
+    return curComponent ? curComponent.heading : '';
+  }
+
+  /**
+   * Returns a page's heading from its URI key.
+   * @param config The RPL configuration object.
+   * @param uriKey The page's URI key (as set in config).
+   */
+  getPageHeading(config: any, uriKey: string) {
+    const curPage = config.pages
+      .find(page => page.uriKey === uriKey);
+
+    return curPage ? curPage.heading : '';
+  }
+
+  /**
+   * Return's a custom page's title for the current page.
+   * @param config The RPL configuration object.
+   */
+  getCustomPageTitle(config: any) {
+    const uriPath = this._utilsService.getUriPath(this._router).toLowerCase();
+    let customPage: any = null;
+
+    for (let n = 0; n < config.navigation.length; n++) {
+      const item = config.navigation[n];
+
+      if ('/' + item.uri.toLowerCase() === uriPath) {
+        customPage = item;
+        break;
+      }
+
+      if (item['children']) {
+        const childItem = item.children
+          .find(child => '/' + child.uri.toLowerCase() === uriPath);
+
+        if (childItem) {
+          customPage = childItem;
+          break;
+        }
+      }
+    }
+
+    return customPage ? customPage.title : '';
   }
 
   /**

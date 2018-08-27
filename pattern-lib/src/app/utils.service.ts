@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UtilsService {
@@ -199,6 +200,27 @@ export class UtilsService {
         reject(ex);
       }
     });
+  }
+
+  /**
+   * Returns the last segment of the current URL path.
+   * @param router The current router.
+   */
+  getUriLastSegment(router: Router) {
+    const uriPathNoFragment = this.getUriPath(router);
+    const uriSegment = uriPathNoFragment.split('/').pop();
+
+    return uriSegment;
+  }
+
+  /**
+   * Returns the current URL path.
+   * @param router The current router;
+   */
+  getUriPath(router: Router) {
+    const uriPathNoFragment = router.url.split('#').shift();
+
+    return uriPathNoFragment;
   }
 
   /**

@@ -200,7 +200,7 @@ export class AppComponent implements OnInit {
       const scriptEl = document.createElement('script');
       const headEl = document.getElementsByTagName('head')[0];
       const revisedUri = uri.startsWith('/js/')
-        ? uri.replace('/js/', '/assets/ext/js/')
+        ? uri.replace('/js/', 'assets/ext/js/')
         : uri;
 
       scriptEl.src = revisedUri;

@@ -43,10 +43,6 @@ export class NavigationComponent implements OnInit {
     setTimeout(() => this.expandNavByWinSize(), 0);
   }
 
-  onResize(event: Event) {
-    this.expandNavByWinSize();
-  }
-
   /**
    * Returns a list of components belonging to a navigation item.
    * @param navItem The navigation item to use.
@@ -112,7 +108,7 @@ export class NavigationComponent implements OnInit {
   /**
    * Collapses the navigation if the viewport is small.
    */
-  closeNavIfLargeViewport() {
+  closeNavIfSmallViewport() {
     if (!this.isViewportLarge()) {
       this._navIsExpanded = false;
       this.updateCssAndEmit();

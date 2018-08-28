@@ -139,7 +139,7 @@ gulp.task('clean:dist', () => {
  * Deletes all files in the .tmp directory.
  */
 gulp.task('clean:temp', () => {
-	return del('.tmp/*');
+	return del(['.tmp/*', 'pattern-lib/dist/assets/ext/*']);
 });
 
 /**
@@ -495,10 +495,10 @@ gulp.task('serve', done => {
 	const serverUrl = `http://localhost:${config.port}/pattern-lib`;
 
 	if (argv.o) {
-		gulp.series('open:dev', 'watch')();
+		gulp.series('watch', 'open:dev')();
 	} else {
 		console.log(`Open ${serverUrl} in your browser.`);
-		gulp.series('connect:dev', 'watch')();
+		gulp.series('watch', 'connect:dev')();
 	}
 
 	done();

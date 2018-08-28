@@ -5,7 +5,6 @@ RPL is a living style guide and component-driven front-end development resource.
 ## Requirements
 
 * [Node.js/NPM](https://nodejs.org/en/)
-* [Angular CLI](https://github.com/angular/angular-cli/wiki)
 
 ## Getting Started
 
@@ -18,13 +17,12 @@ Use your preferred method to download the files.
 
 1. From the command line, change to the directory where the files were downloaded.
 1. Run `npm install`.
-1. Run `npm run build-ng`.
 
 ### Usage
 
-Run `npm run serve` to start a development server that watches for changes. When you’re ready to publish, use `npm run build` to create a **dist** folder, ready for deployment on another server.
+Run `npm run serve` to start a development server that watches for changes. (Note: using `npm run serve -- -o` will automatically open your browser to the correct URL.)
 
-*Note: Use `npm run serve -- -o` to automatically open your browser.*
+When you’re ready to publish, use `npm run build` to create a **dist** folder, ready for deployment on another server.
 
 ## Copyright/License
 

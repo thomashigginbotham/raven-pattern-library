@@ -3,19 +3,19 @@
 // No styleguide reference.
 
 .site-header {
-	padding: $page-gutter $page-padding;
-	color: $color-neutral-100;
-	background-color: $color-brand-primary;
+  padding: $page-gutter $page-padding;
+  color: $color-neutral-100;
+  background-color: $color-brand-primary;
 
-	h1 {
-		margin: 0;
-		font-size: $font-size-x-large;
-		font-weight: $font-weight-normal;
-		line-height: $line-height-x-large;
-	}
+  h1 {
+    margin: 0;
+    font-size: $font-size-x-large;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-x-large;
+  }
 
-	a {
-		text-decoration: none;
-		color: $color-neutral-100;
-	}
+  a {
+    text-decoration: none;
+    color: $color-neutral-100;
+  }
 }

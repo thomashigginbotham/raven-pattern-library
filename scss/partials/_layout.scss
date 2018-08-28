@@ -4,54 +4,54 @@
 
 // Keep Site Footer at the bottom
 .page-wrapper {
-	position: relative;
-	box-sizing: border-box;
-	padding-bottom: calc(#{$page-padding * 2} + #{$line-height-normal});
-	min-height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: calc(#{$page-padding * 2} + #{$line-height-normal});
+  min-height: 100%;
 
-	.site-footer {
-		box-sizing: border-box;
-		position: absolute;
-		bottom: 0;
-		width: 100%;
-	}
+  .site-footer {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
 }
 
 // Center main content
 .page-body {
-	margin: $page-gutter auto;
-	padding-right: $page-padding;
-	padding-left: $page-padding;
-	max-width: $page-max-width;
+  margin: $page-gutter auto;
+  padding-right: $page-padding;
+  padding-left: $page-padding;
+  max-width: $page-max-width;
 }
 
 // Add maximum width to wrapped content
 .content-wrapper {
-	box-sizing: border-box;
-	margin: 0 auto;
-	padding-right: $page-padding;
-	padding-left: $page-padding;
-	max-width: $page-max-width;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-right: $page-padding;
+  padding-left: $page-padding;
+  max-width: $page-max-width;
 }
 
 // Sidebar on right for larger viewports
 @media (min-width: $page-size-medium) {
-	.page-body {
-		@include row(100% 250px);
-	}
+  .page-body {
+    @include row(100% 250px);
+  }
 }
 
 @media (min-width: $page-size-large) {
-	.page-body {
-		@include row(100% 350px);
-	}
+  .page-body {
+    @include row(100% 350px);
+  }
 }
 
 // Component margins
 .thumbnail-grid {
-	margin-bottom: $page-gutter;
+  margin-bottom: $page-gutter;
 
-	@media (min-width: $page-size-medium) {
-		margin-bottom: 0;
-	}
+  @media (min-width: $page-size-medium) {
+    margin-bottom: 0;
+  }
 }

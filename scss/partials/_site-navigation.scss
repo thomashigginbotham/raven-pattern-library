@@ -3,68 +3,68 @@
 // No styleguide reference.
 
 .site-navigation {
-	padding: 0 $page-padding;
-	font-size: $font-size-large;
-	line-height: $line-height-large;
-	color: $color-neutral-100;
-	background-color: $color-brand-primary-65;
+  padding: 0 $page-padding;
+  font-size: $font-size-large;
+  line-height: $line-height-large;
+  color: $color-neutral-100;
+  background-color: $color-brand-primary-65;
 
-	.menu {
-		margin-bottom: 0;
-		margin-left: 0;
-		padding-left: 0;
-		overflow: hidden;
-		list-style: none;
-		transform: translateX(-.5em);
-	}
+  .menu {
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-left: 0;
+    overflow: hidden;
+    list-style: none;
+    transform: translateX(-.5em);
+  }
 
-	li {
-		display: inline;
-	}
+  li {
+    display: inline;
+  }
 
-	a {
-		position: relative;
-		display: inline-block;
-		margin-right: $page-padding;
-		padding: .5em;
-		text-decoration: none;
-		color: $color-neutral-100;
+  a {
+    position: relative;
+    display: inline-block;
+    margin-right: $page-padding;
+    padding: .5em;
+    text-decoration: none;
+    color: $color-neutral-100;
 
-		&:hover,
-		&:focus {
-			color: $color-brand-primary-95;
-		}
+    &:hover,
+    &:focus {
+      color: $color-brand-primary-95;
+    }
 
-		&:focus,
-		&.focused {
-			box-shadow: inset 0 0 0 .25rem $color-brand-secondary;
-		}
-	}
+    &:focus,
+    &.focused {
+      box-shadow: inset 0 0 0 .25rem $color-brand-secondary;
+    }
+  }
 
-	li:last-child {
-		a {
-			margin-right: 0;
-		}
-	}
+  li:last-child {
+    a {
+      margin-right: 0;
+    }
+  }
 
-	li.active {
-		a {
-			border-top-color: $color-brand-primary;
-			border-bottom-color: $color-neutral-100;
+  li.active {
+    a {
+      border-top-color: $color-brand-primary;
+      border-bottom-color: $color-neutral-100;
 
-			&::after {
-				$indicator-size: 1em;
+      &::after {
+        $indicator-size: 1em;
 
-				content: '';
-				position: absolute;
-				bottom: $indicator-size / -2;
-				left: calc(50% - #{$indicator-size / 2});
-				display: block;
-				width: $indicator-size;
-				height: $indicator-size;
-				background-color: $color-neutral-100;
-				transform: rotate(45deg);
-			}
-		}
-	}
+        content: '';
+        position: absolute;
+        bottom: $indicator-size / -2;
+        left: calc(50% - #{$indicator-size / 2});
+        display: block;
+        width: $indicator-size;
+        height: $indicator-size;
+        background-color: $color-neutral-100;
+        transform: rotate(45deg);
+      }
+    }
+  }
 }

@@ -4,35 +4,35 @@
 
 // Default styles.
 table {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 th {
-	padding: $line-height-normal / 4 $line-height-normal / 2;
-	text-align: left;
-	font-weight: $font-weight-bold;
+  padding: $line-height-normal / 4 $line-height-normal / 2;
+  text-align: left;
+  font-weight: $font-weight-bold;
 }
 
 td {
-	padding: $line-height-normal / 4 $line-height-normal / 2;
-	border-right: 1px solid $color-neutral-80;
-	vertical-align: top;
+  padding: $line-height-normal / 4 $line-height-normal / 2;
+  border-right: 1px solid $color-neutral-80;
+  vertical-align: top;
 
-	&:last-child {
-		border-right: 0;
-	}
+  &:last-child {
+    border-right: 0;
+  }
 }
 
 thead {
-	th {
-		border-bottom: 1px solid $color-neutral-80;
-	}
+  th {
+    border-bottom: 1px solid $color-neutral-80;
+  }
 }
 
 tbody {
-	tr:first-child {
-		td {
-			padding-top: $line-height-normal / 2;
-		}
-	}
+  tr:first-child {
+    td {
+      padding-top: $line-height-normal / 2;
+    }
+  }
 }

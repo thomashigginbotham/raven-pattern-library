@@ -179,7 +179,6 @@ gulp.task('html:compile:dist', () => {
 gulp.task('html:copy:dev', () => {
 	return gulp
 		.src('.tmp/**/*.html')
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/html'))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
 });
 
@@ -202,7 +201,6 @@ gulp.task('sass:dev', () => {
 			.on('error', sass.logError))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('.tmp/css'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
 });
 
@@ -229,7 +227,6 @@ gulp.task('sass:dist', () => {
 gulp.task('sass:copy', () => {
 	return gulp
 		.src('scss/modules/_vars.scss')
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/scss/modules'))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/scss/modules'));
 });
 
@@ -247,7 +244,6 @@ gulp.task('scopeStyles', () => {
 			]
 		)))
 		.pipe(rename('rpl-scoped-styles.css'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/css'))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
 });
 
@@ -258,7 +254,6 @@ gulp.task('js:copy:dev', () => {
 	return gulp
 		.src('js/**/*.js')
 		.pipe(gulp.dest('.tmp/js'))
-		.pipe(gulp.dest('pattern-lib/src/assets/ext/js'))
 		.pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
 });
 
@@ -459,7 +454,7 @@ gulp.task('images:watch', done => {
  */
 gulp.task('rpl:watch', done => {
 	gulp.watch(
-		['pattern-lib/src/assets/*', 'pattern-lib/config/*'],
+		'pattern-lib/src/assets/*',
 		gulp.series('rpl:copy:dev', 'livereload')
 	);
 

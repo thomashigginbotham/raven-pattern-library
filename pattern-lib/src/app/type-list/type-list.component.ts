@@ -11,7 +11,7 @@ import { UtilsService } from '../utils.service';
   selector: 'app-type-list',
   templateUrl: './type-list.component.html',
   styleUrls: [
-    '../../assets/rpl-reset.css',
+    '../shared/css/reset.css',
     './type-list.component.css'
   ]
 })

@@ -2,7 +2,7 @@
 
 # compiled output
 /tmp
-/dist
+/dist/assets/ext
 /out-tsc
 
 # dependencies

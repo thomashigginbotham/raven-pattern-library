@@ -459,7 +459,7 @@ gulp.task('images:watch', done => {
  */
 gulp.task('rpl:watch', done => {
 	gulp.watch(
-		'pattern-lib/src/assets/*',
+		['pattern-lib/src/assets/*', 'pattern-lib/config/*'],
 		gulp.series('rpl:copy:dev', 'livereload')
 	);
 

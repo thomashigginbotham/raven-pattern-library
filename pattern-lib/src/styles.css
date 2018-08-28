@@ -1,4 +1,4 @@
-/* -- Global Styles -- */
+/* -- Global Pattern Library Styles -- */
 
 :root {
   /* Layout */
@@ -17,7 +17,7 @@
 
   /* Colors */
   --color-brand-primary: #363669;
-  --color-brand-primary-60: #5c5c99;
+  --color-brand-primary-50: #5c5c99;
 
   --color-neutral-05: #111;
   --color-neutral-45: #777;
@@ -30,6 +30,26 @@
   /* Color Aliases */
   --color-black: var(--color-neutral-05);
   --color-white: var(--color-neutral-100);
+
+  /* Element/component Colors */
+  --color-body: var(--color-black, #111);
+  --bg-color-body: var(--color-white, #fff);
+
+  --color-links: var(--color-brand-primary-50, #5c5c99);
+  --color-text-light: var(--color-neutral-45, #777);
+
+  --color-divider: var(--color-neutral-80, #ccc);
+
+  --color-page-header: var(--color-neutral-45, #777);
+  --bg-color-page-header: var(--color-neutral-97, #f7f7f7);
+  --color-page-header-heading: var(--color-brand-primary, #363669);
+
+  --color-component: var(--color-body, #111);
+  --bg-color-component: var(--color-neutral-95, #eee);
+
+  --color-nav: var(--color-brand-primary, #363669);
+  --color-nav-light: var(--color-brand-primary-50, #5c5c99);
+  --bg-color-nav: var(--color-neutral-95, #eee);
 
   /* Fonts */
   --font-family-body: 'Hind Guntur';
@@ -64,13 +84,13 @@ body {
   padding: 0;
   overflow-x: hidden;
   font: var(--font-size-normal)/var(--font-line-height-normal) var(--font-family-body);
-  color: var(--color-black);
-  background-color: var(--color-white);
+  color: var(--color-body);
+  background-color: var(--bg-color-body);
   tab-size: 4;
 }
 
 a {
-  color: var(--color-brand-primary-60, #5c5c99);
+  color: var(--color-links);
 }
 
 h2,

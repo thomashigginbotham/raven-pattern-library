@@ -1,7 +1,6 @@
 /* -- Type List Item Styles -- */
 
 .type-list__item {
-  margin-bottom: calc(var(--page-gutter, 2rem) * 1.5);
   overflow: hidden;
 }
 

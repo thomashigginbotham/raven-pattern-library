@@ -19,13 +19,13 @@
 .app-nav__inner {
   box-sizing: border-box;
   padding: var(--page-padding, 1.4rem);
-  color: var(--color-brand-primary, #363669);
-  background-color: var(--color-neutral-95, #eee);
+  color: var(--color-nav, #363669);
+  background-color: var(--bg-color-nav, #eee);
 }
 
 .app-nav a {
   text-decoration: none;
-  color: var(--color-brand-primary, #363669);
+  color: var(--color-nav, #363669);
 }
 
 .app-nav .active > a {
@@ -40,7 +40,7 @@
   margin-bottom: var(--page-padding, 1.4rem);
   padding-bottom: var(--page-padding, 1.4rem);
   height: calc(var(--hamburger-bar-height, 5px) * 3 + var(--hamburger-space, 4px) * 2);
-  border-bottom: 1px solid var(--color-neutral-80, #ccc);
+  border-bottom: 1px solid var(--color-divider, #ccc);
   line-height: 0;
   cursor: pointer;
 }
@@ -74,13 +74,13 @@
 }
 
 .app-nav__sublinks a {
-  color: var(--color-brand-primary-60, #5c5c99);
+  color: var(--color-nav-light, #5c5c99);
 }
 
 .app-nav__component-links {
   margin: .5em .25em;
   padding-left: 1em;
-  border-left: 1px solid var(--color-neutral-80, #ccc);
+  border-left: 1px solid var(--color-divider, #ccc);
   list-style: none;
 }
 
@@ -108,9 +108,7 @@
   }
 
   .app-nav__inner {
-    /* margin-top: var(--page-padding, 1.4rem);
-    margin-bottom: var(--page-gutter, 2rem); */
-    border: 1px solid var(--color-neutral-80, #ccc);
+    border: 1px solid var(--color-divider, #ccc);
   }
 
   .app-nav__header {
@@ -122,7 +120,7 @@
   .app-nav:not(.active) .app-nav__header {
     margin-bottom: 0;
     padding-bottom: 0;
-    border-color: var(--color-neutral-95, #eee);
+    border-color: var(--bg-color-nav, #eee);
   }
 
   .app-nav:not(.active) .app-nav__links {
@@ -150,7 +148,7 @@
   transition-duration: 220ms;
   font-size: 0;
   line-height: 0;
-  background-color: var(--color-brand-primary-60, #5c5c99);
+  background-color: var(--color-nav-light, #5c5c99);
 }
 
 .active .hamburger-icon {
@@ -166,7 +164,7 @@
   width: var(--hamburger-width, 26px);
   height: var(--hamburger-bar-height, 5px);
   border-radius: var(--hamburger-bar-height, 5px);
-  background-color: var(--color-brand-primary-60, #5c5c99);
+  background-color: var(--color-nav-light, #5c5c99);
 }
 
 .hamburger-icon::before {

@@ -6,8 +6,9 @@
 
 .component-item__wrapper {
   padding: var(--page-padding, 1.4rem);
-  border: 1px solid var(--color-neutral-80, #ccc);
-  background-color: var(--color-neutral-95, #eee);
+  border: 1px solid var(--color-divider, #ccc);
+  color: var(--color-component, #111);
+  background-color: var(--bg-color-component, #eee);
 }
 
 .component-item__demo-wrapper {

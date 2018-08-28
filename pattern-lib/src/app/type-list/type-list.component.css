@@ -1,5 +1,14 @@
 /* -- Type List Styles -- */
 
+app-type-list-item {
+  display: block;
+  margin-bottom: var(--page-gutter, 2rem);
+}
+
+.type-list-lists app-type-list-item:last-child {
+  margin-bottom: 0;
+}
+
 /* Large Viewports */
 @media (min-width: 1024px) {
   .type-list-headings,
@@ -21,6 +30,7 @@
 
   .type-list-lists app-type-list-item {
     flex: 0 0 calc(33.333% - 2/3 * var(--page-gutter, 2rem));
+    margin-bottom: 0;
     width: 0;
     overflow: hidden;
   }

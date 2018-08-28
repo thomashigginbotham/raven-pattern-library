@@ -3,9 +3,9 @@
 .page-header {
   padding-top: var(--page-padding, 1.4rem);
   padding-bottom: calc(var(--page-padding, 1.4rem) - var(--font-size-x-small, 12px) / 2);
-  border-bottom: 1px solid var(--color-neutral-80, #ccc);
-  color: var(--color-neutral-45, #777);
-  background-color: var(--color-neutral-97, #f7f7f7);
+  border-bottom: 1px solid var(--color-divider, #ccc);
+  color: var(--color-page-header, #777);
+  background-color: var(--bg-color-page-header, #f7f7f7);
 }
 
 .page-header__wrapper {
@@ -17,7 +17,7 @@
 
 .page-header__heading {
   margin: 0;
-  color: var(--color-brand-primary, #363669);
+  color: var(--color-page-header-heading, #363669);
 }
 
 .page-header__group {

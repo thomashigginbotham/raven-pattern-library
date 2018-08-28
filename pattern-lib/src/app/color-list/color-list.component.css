@@ -11,7 +11,7 @@
   margin-bottom: var(--page-gutter, 2rem);
   margin-left: calc(var(--page-gutter, 2rem) / 2);
   font-size: var(--font-size-x-small, 12px);
-  color: var(--color-neutral-45, #777);
+  color: var(--color-text-light, #777);
 }
 
 .color-item__swatch {

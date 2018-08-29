@@ -27,7 +27,7 @@
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-connect": "^5.5.0",
+    "gulp-connect": "^5.6.1",
     "gulp-open": "^3.0.1",
     "gulp-processhtml": "^1.1.0",
     "gulp-rename": "^1.4.0",

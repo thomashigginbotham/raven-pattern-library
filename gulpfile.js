@@ -49,9 +49,26 @@ function prefixCssRules(styles, prefixes) {
     return '';
   }
 
+  // Add rules to override some styles on html and body elements
+  sheet.cssRules.push({
+    selectorText: 'html,body',
+    cssText: 'html,body{margin:0;padding:0;width:auto;height:auto}',
+    style: {
+      0: 'margin',
+      1: 'padding',
+      2: 'width',
+      3: 'height',
+      length: 4,
+      margin: '0',
+      padding: '0',
+      width: 'auto',
+      height: 'auto'
+    }
+  });
+
   const ruleList = sheet.cssRules;
 
-  return Array.from(ruleList).reduce((output, rule) => {
+  let prefixedRules = Array.from(ruleList).reduce((output, rule) => {
     const styleRule = rule;
     const prefixedSelectorText = (selectorText) => {
       return selectorText.split(',')
@@ -122,6 +139,8 @@ function prefixCssRules(styles, prefixes) {
     // Unknown CSS. Ignore it.
     return output;
   }, '');
+
+  return prefixedRules;
 }
 
 /* ------------------------------------

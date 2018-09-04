@@ -18,6 +18,7 @@ export class NavigationComponent implements OnInit {
   @Input('expanded') set navIsExpanded(value: boolean) {
     this._navIsExpanded = value;
     this.updateCssClasses();
+    this.triggerWindowResize();
   }
   get navIsExpanded(): boolean {
     return this._navIsExpanded;
@@ -113,6 +114,16 @@ export class NavigationComponent implements OnInit {
       this._navIsExpanded = false;
       this.updateCssAndEmit();
     }
+  }
+
+  /**
+   * Triggers a window.resize() event.
+   */
+  triggerWindowResize() {
+    const resizeEvent = document.createEvent('HTMLEvents');
+
+    resizeEvent.initEvent('resize', true, false);
+    window.dispatchEvent(resizeEvent);
   }
 
   /**

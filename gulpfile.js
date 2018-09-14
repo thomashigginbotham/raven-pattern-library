@@ -291,7 +291,7 @@ gulp.task('js:copy:dist', () => {
  */
 gulp.task('rpl:copy:dev', () => {
   return gulp
-    .src('pattern-lib/src/assets/*')
+    .src('pattern-lib/src/assets/**/*')
     .pipe(gulp.dest('pattern-lib/dist/assets'));
 });
 
@@ -473,7 +473,7 @@ gulp.task('images:watch', done => {
  */
 gulp.task('rpl:watch', done => {
   gulp.watch(
-    'pattern-lib/src/assets/*',
+    'pattern-lib/src/assets/**/*',
     gulp.series('rpl:copy:dev', 'livereload')
   );
 

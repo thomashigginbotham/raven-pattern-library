@@ -1,0 +1,65 @@
+<!--
+Name: Introduction/Getting Started
+Summary: How files are organized and how to work with them.
+-->
+<p>If you aren’t familiar with Node, Sass, or task runners like Gulp, then some of the files in the pattern library may seem intimidating, but as long as you know a little HTML and CSS, you shouldn’t have any difficulty putting RPL to good use.</p>
+
+<h3>Quick Links</h3>
+
+<ul>
+  <li><a href="./introduction/getting-started#structure">About the folder structure</a></li>
+  <li><a href="./introduction/getting-started#workflow">Development workflow</a></li>
+</ul>
+
+<h3 id="structure">Folder Structure</h3>
+
+<p>Most of your time will be spent editing HTML and CSS for your website and its components. These files are found in the <em>html</em> directory and <em>scss</em> directory respectively. Let’s take a look at how they’re organized.</p>
+
+<h4>The <em>html</em> Folder</h4>
+
+<p>Your HTML pages are found in the root of the <em>html</em> directory. Out of the box, you should see an <em>index.html</em> file and a couple others.</p>
+<p>Your <em>index.html</em> file is your home page. If you open it in a code editor, you will notice some strange HTML comments that start with the word <em>build</em>. These comments are parsed by a <a href="https://www.npmjs.com/package/gulp-processhtml">Gulp plugin called processhtml</a>. You don’t have to know the specifics of how it works, but be aware that this is how RPL adds your reusable components into your pages.</p>
+
+<div class="rpl-note">
+  <p>Whenever your see an HTML comment that starts with <strong>build:include</strong>, it will be replaced with HTML from another file.</p>
+</div>
+
+<p>The actual components used by your HTML pages are placed in the <em>components</em> directory. Depending on how many components are used by your website, you may want to create additional subdirectories to help organize your components.</p>
+
+<div class="rpl-note">
+  <p>Just as with your HTML pages, your components can also include components using the same <strong>build:include</strong> HTML comments.</p>
+</div>
+
+<h4>The <em>scss</em> Folder</h4>
+
+<p>You may be wondering why the folder is called <em>scss</em> instead of <em>css</em>. That’s because RPL uses Sass, a CSS pre-processor. You can learn more about <a href="https://sass-lang.com/">Sass at its website</a>.</p>
+<p>If you don’t know Sass, don’t panic. Your CSS knowledge is more than enough to use RPL, and most of the Sass that you see out of the box is easily understood.</p>
+<p>The <em>main.scss</em> file is used to import all the other Sass files. So anytime you create a new Sass file, make sure to update <em>main.scss</em>.</p>
+<p>If you look in the <em>partials</em> directory, you will find more Sass files. Some of these files are used for general styling (e.g. resets, layout, etc.), and some are specific to your components. When you create a new component, it’s a good idea to create a new Sass file for it too.</p>
+
+<div class="rpl-note">
+  <p>Files in the <em>/scss/partials</em> directory begin with an underscore. This is a common Sass convention for partial files and allows you to import them without the underscore or the <em>.scss</em> extension.</p>
+</div>
+
+<p>For you Sass afficionados, you can create your own variables, functions, and mixins, and add them to the <em>modules</em> directory.</p>
+
+<h4>The <em>pattern-lib</em> Folder</h4>
+
+<p>The pattern library application files are found in the <em>/pattern-lib</em> directory. There are a few files here (specifically in the <em>/pattern-lib/src/assets</em> directory that you will want to modify, but for the most part, you will not need to make any changes to the files here.</p>
+<p>If you are an Angular/TypeScript developer and are interested in extending the functionality of the pattern library, feel free to make changes, but no documentation is provided of yet.</p>
+
+<h4>Other Folders</h4>
+
+<p>In addition to the <em>html</em> and <em>scss</em> directories, you will see directories for fonts, images, and js (JavaScript). Add appropriate files to these directories and reference them from your components and HTML pages.</p>
+
+<p>See the <a href="./introduction/working-with-js">Working with JavaScript</a> page for more information about adding JavaScript files to your project.</p>
+
+<h3 id="workflow">Workflow</h3>
+
+<p>During development, you can edit your HTML and other assets, and the pattern library will automatically refresh in your browser every time you save. If, for some reason, things aren’t working as expected, double-check your file names and paths. A simple typo could be the problem. If that doesn’t work, try stopping and restarting the server (<kbd>ctrl + c</kbd> then <code>npm run serve</code>).</p>
+
+<p>When you are done developing, it’s time to generate your production files. Do this by stopping the development server if it is running (<kbd>ctrl + c</kbd>). Then run <code>npm run build</code>. This will cause a <em>dist</em> folder to be created at the root of the pattern library. It will contain your optimized, production-ready files.</p>
+
+<hr>
+
+<p><a href="./introduction/update-base-styles">Continue to Updating Base Styles</a></p>

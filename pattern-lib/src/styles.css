@@ -7,6 +7,7 @@
   --page-desktop-width: 1024px;
   --page-gutter: 2rem;
   --page-padding: 1.4rem;
+  --spacer: 1rem;
 
   /* Config */
   --title-bar-height: 58px;
@@ -79,6 +80,7 @@
   --hamburger-space: 4px;
 }
 
+/* General Styles */
 body {
   margin: 0;
   padding: 0;
@@ -111,6 +113,20 @@ h3 {
   line-height: var(--font-line-height-large);
 }
 
+hr {
+  margin: var(--page-gutter) 0;
+  border: 0;
+  height: 1px;
+  background-color: var(--color-neutral-80);
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
 pre {
   max-height: 75vh;
   overflow: auto;
@@ -125,6 +141,37 @@ figcaption {
   font-size: .8em;
   font-style: italic;
   color: var(--color-neutral-45, #777);
+}
+
+table {
+  margin-bottom: var(--page-gutter);
+  border-collapse: collapse;
+}
+
+th {
+  padding: var(--spacer);
+  text-align: left;
+  vertical-align: top;
+  font-weight: var(--font-weight-bold);
+}
+
+td {
+  padding: var(--spacer);
+  border-right: 1px solid var(--color-neutral-80);
+  vertical-align: top;
+}
+
+td:last-child {
+  border-right: 0;
+}
+
+thead th {
+  border-bottom: 1px solid var(--color-neutral-80);
+}
+
+tbody tr:first-child th,
+tbody tr:first-child td {
+  padding-top: calc(var(--spacer) * 2);
 }
 
 /* Main Content */
@@ -159,4 +206,20 @@ figcaption {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: var(--page-gutter, 2rem);
   }
+}
+
+/* Documentation */
+.rpl-note {
+  margin-bottom: var(--spacer);
+  padding: var(--spacer);
+  border: 1px solid var(--color-neutral-80);
+  background-color: var(--color-neutral-97);
+}
+
+.rpl-note > :first-child {
+  margin-top: 0;
+}
+
+.rpl-note > :last-child {
+  margin-bottom: 0;
 }

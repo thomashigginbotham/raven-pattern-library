@@ -1,0 +1,34 @@
+<!--
+Name: Introduction/Vendor Assets
+Summary: Adding third-party styles and scripts.
+-->
+<p>Many websites make use of jQuery, Bootstrap, and other dependecies, and if you fit this scenario, you may be wandering how to incorporate those assets into your pattern library.</p>
+
+<h3>Quick Links</h3>
+
+<ul>
+  <li><a href="./introduction/vendor-assets#copy">Copying vendor assets</a></li>
+  <li><a href="./introduction/vendor-assets#cdn">Using a CDN</a></li>
+  <li><a href="./introduction/vendor-assets#npm">Using NPM</a></li>
+</ul>
+
+<h3 id="copy">Copying Files</h3>
+
+<p>By far, the easiest way to incorporate third-party assets into your codebase is to simply copy their files into the appropriate directories in RPL.</p>
+<p>For style sheets, this is simple. Add those files to a directory, like <em>/scss/vendor</em>, and make sure to import the new file from <em>/scss/main.scss</em>. If the style sheeet isn’t a Sass file, just rename it with the <em>.scss</em> extension. CSS is valid Sass, so there’s no need for any changes.</p>
+<p>For JavaScript files, add them to your <em>/js</em> directory, then reference them in your HTML pages. For the JS to work on individual components within the pattern library, you’ll need to tell RPL about these files. Open the JSON configuration file at <em>/pattern-lib/src/assets/rpl-config.json</em>. You should see a <code>scriptUris</code> key that accepts an array of JS URIs. Add the location of your script(s) to the array, and you’ll be good to go.</p>
+
+<h3 id="cdn">Using a CDN</h3>
+
+<p>To use a content delivery network, the process is similar to copying the files directly. For JavaScript files, the process is the same: update the <em>rpl-config.json</em> file to include the URL to your script on the CDN. This will make the pattern library aware of the script so that it will be available to individual components. Your HTML pages will also require &lt;script&gt; tags that reference the CDN.</p>
+<p>For style sheets from a CDN, you will need to update the <code>styleUris</code> array in <em>rpl-config.json</em> so that RPL knows about the styles you want to use. You will need to include a &lt;link&gt; tag that references those style sheets in your HTML pages as well.</p>
+
+<h3 id="npm">Using NPM</h3>
+
+<p>NPM is the most flexible method of including third-party assets, but may be difficult for some to implement. Install the third-party package using <code>npm install <em>name-of-package</em> --save</code>, and the files will be available in your <em>node_modules</em> directory.</p>
+<p>Afterward, update your <em>rpl-config.json</em> file in the same way as the CDN instructions above.</p>
+<p>An important caveat to be aware of is that the pattern library will not know to include these files during its production build process. You will need to manually update <em>/gulpfile.js</em> so that it copies files from <em>node_modules</em> to appropriate directories.</p>
+
+<hr>
+
+<p><a href="./introduction/working-with-js">Continue to Working with JavaScript</a></p>

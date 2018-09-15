@@ -1,0 +1,71 @@
+<!--
+Name: Introduction/Customization
+Summary: Make RPL your own.
+-->
+<p>So purple isn’t your thing? No worries, All the colors and branding within the pattern library are customizable. We make use of CSS variables to give you quick styling options, but you can take it even further and overwrite any CSS used by RPL.</p>
+
+<h3>Quick Links</h3>
+
+<ul>
+  <li><a href="./introduction/customization#logo">How to change the logo and heading</a></li>
+  <li><a href="./introduction/customization#css">Overwriting RPL’s CSS</a></li>
+</ul>
+
+<h3 id="logo">Change the Logo and Heading</h3>
+
+<p>Chances are you’d rather use your own logo and name at the top of your pattern library. We make use of a JSON configuration file found at <em>/pattern-lib/src/assets/rpl-config.json</em> for these types of settings.</p>
+<p>Change the <code>title</code> and <code>logoUri</code> values to something appropriate. An SVG image works best for the logo, and it should be 75×75 px for best results. However, the logo dimensions and its top/left offset can be adjusted with CSS variables (see below).</p>
+
+<h3 id="css">Add Custom CSS</h3>
+
+<p>RPL comes with a special style sheet that you can use to overwrite the CSS used by the pattern library. This gives you complete stylistic control over how RPL looks.</p>
+<p>As with most of RPL’s customization, you’ll find the file in the <em>/pattern-lib/src/assets</em> directory. The file you want to update is <em>custom.css</em>.</p>
+
+<h4>Common CSS Variables</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>--color-brand-primary</td>
+      <td>The color used by the header at the top as well as by headings and links.</td>
+    </tr>
+
+    <tr>
+      <td>--color-brand-primary-50</td>
+      <td>A lighter version of the primary color.</td>
+    </tr>
+
+    <tr>
+      <td>--color-body</td>
+      <td>The default text color (use your website’s color for best results).</td>
+    </tr>
+
+    <tr>
+      <td>--color-text-light</td>
+      <td>Muted text (should be similar to --color-body but less noticeable).</td>
+    </tr>
+
+    <tr>
+      <td>--bg-color-body</td>
+      <td>The background color (use your website’s background color for best results).</td>
+    </tr>
+
+    <tr>
+      <td>--color-links</td>
+      <td>Color to use for hyperlinks.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For a full list of the available CSS variables, see <em>/pattern-lib/src/styles.css</em></p>
+
+<hr>
+
+<p><a href="./introduction/custom-pages">Contine to Custom Pages</a></p>

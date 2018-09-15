@@ -12,8 +12,32 @@
       "uri": "introduction",
       "children": [
         {
-          "title": "Coding Style",
-          "uri": "introduction/coding-style"
+          "title": "Overview",
+          "uri": "introduction/overview"
+        }, {
+          "title": "Getting Started",
+          "uri": "introduction/getting-started"
+        }, {
+          "title": "Updating Base Styles",
+          "uri": "introduction/update-base-styles"
+        }, {
+          "title": "Updating Components",
+          "uri": "introduction/update-components"
+        }, {
+          "title": "Vendor/Third-party Assets",
+          "uri": "introduction/vendor-assets"
+        }, {
+          "title": "Working with JavaScript",
+          "uri": "introduction/working-with-js"
+        }, {
+          "title": "Customization",
+          "uri": "introduction/customization"
+        }, {
+          "title": "Custom Pages",
+          "uri": "introduction/custom-pages"
+        }, {
+          "title": "Ideas",
+          "uri": "introduction/ideas"
         }
       ]
     }, {

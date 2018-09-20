@@ -18,9 +18,9 @@ export class ColorListComponent implements OnInit {
 
   ngOnInit() {
     // Bind colors
-    this.getColorDetails(
-      ['brand-primary', 'brand-secondary', 'brand-tertiary', 'brand-quaternary']
-    ).then(colors => this.brandColors = colors);
+    this.getColorDetails(['brand']).then(
+      colors => this.brandColors = colors
+    );
 
     this.getColorDetails(['accent']).then(
       colors => this.accentColors = colors

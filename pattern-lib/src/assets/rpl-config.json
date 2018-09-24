@@ -6,6 +6,7 @@
     "/js/main.js"
   ],
   "initComponentsScript": "myScripts.initComponents()",
+  "destroyComponentsScript": "myScripts.destroyComponents()",
   "navigation": [
     {
       "title": "Introduction",

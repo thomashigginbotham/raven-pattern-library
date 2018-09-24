@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, OnInit }
+import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy }
   from '@angular/core';
 
 import { WebComponent } from './component.model';
@@ -12,7 +12,7 @@ import { UtilsService } from '../utils.service';
     './component-list.component.css',
   ]
 })
-export class ComponentListComponent implements OnInit {
+export class ComponentListComponent implements OnInit, OnDestroy {
   private _list: string;
   @ViewChild('wrapper') wrapper: ElementRef;
   wrapperCssClass: string = 'component-list';
@@ -24,7 +24,13 @@ export class ComponentListComponent implements OnInit {
 
   @Input()
   set list(value: string) {
+    if (typeof this._list !== 'undefined') {
+      // Allow user scripts to clean up old components
+      this.runUserScripts({ destroy: true });
+    }
+
     this._list = value;
+
     this.bindComponents()
       .then(components => {
         if (components && components.length) {
@@ -40,6 +46,11 @@ export class ComponentListComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
+
+  ngOnDestroy() {
+    // Allow user scripts to run possible clean-up
+    this.runUserScripts({ destroy: true });
+  }
 
   /**
    * Clears the current web components, then gets new ones from the list
@@ -111,11 +122,16 @@ export class ComponentListComponent implements OnInit {
 
   /**
    * Executes script in config's initComponentsScript value.
+   * @param options Options related to user scripts.
+   * @param options.destroy Whether to run destruction scripts instead of
+   *                        initialization scripts.
    */
-  runUserScripts() {
+  runUserScripts(options: { destroy: boolean } = null) {
     this._utilsService.getRplConfig()
       .then(config => {
-        const userScript = config.initComponentsScript;
+        const userScript = (options && options.destroy) ?
+         config.destroyComponentsScript :
+         config.initComponentsScript;
         const runWhenReady = () => {
           if (
             !window['RavenPatternLibrary'] ||

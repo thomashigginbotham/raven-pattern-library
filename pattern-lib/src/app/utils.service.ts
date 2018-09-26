@@ -118,19 +118,39 @@ export class UtilsService {
    * @param html The HTML to search for comment data.
    */
   getCommentData(html: string): object {
-    const matches = html.match(/<!--\s*\r?\nName:\s*(.+)\r?\nSummary:\s*([\s\S]+?)(\r?\nDepends:\s*([\s\S]+?))?-->/);
+    const commentMatches = html.match(/^\s*<!--\s*\r?\nName:[\s\S]+-->/);
 
-    if (!matches || matches.length < 3) {
+    if (!commentMatches || commentMatches.length === 0) {
       return null;
     }
 
-    return {
-      name: matches[1],
-      summary: matches[2].replace(/\s{2,}/g, ' ').trim(),
-      depends: (matches.length < 5 || !matches[4]) ?
-        null :
-        matches[4].split(',').map(x => x.trim())
-    };
+    const commentKeys = [
+      { key: 'name', value: 'Name' },
+      { key: 'summary', value: 'Summary' },
+      { key: 'depends', value: 'Depends' },
+      { key: 'background', value: 'Background' }
+    ];
+    const regexStopWords = commentKeys.map(commentKey => {
+      return `(${commentKey.value}:)`;
+    });
+    const commentData = {};
+
+    commentKeys.forEach(commentKey => {
+      const regexString = `${commentKey.value}:[\\s\\S]+?(?=${regexStopWords.join('|')}|(-->))`;
+      const regex = new RegExp(regexString);
+      const definition = commentMatches[0].match(regex);
+
+      if (definition) {
+        const keyValue = definition[0].split(':');
+        const value = keyValue[1].trim().replace(/\s{2,}/g, ' ');
+
+        commentData[commentKey.key] = value;
+      } else {
+        commentData[commentKey.key] = null;
+      }
+    });
+
+    return commentData;
   }
 
   /**

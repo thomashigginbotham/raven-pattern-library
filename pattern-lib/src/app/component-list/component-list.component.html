@@ -13,6 +13,7 @@
 
         <div class="component-item__demo-render rpl-user-styles">
           <app-component-item
+            [style]="getComponentBackground(webComponent.background) | safeStyle"
             [html]="webComponent.demoHtml | safeHtml"></app-component-item>
         </div>
       </div>

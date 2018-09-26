@@ -88,10 +88,13 @@ export class ComponentListComponent implements OnInit, OnDestroy {
 
       this.getComponentHtml(path).then(html => {
         const commentData = this._utilsService.getCommentData(html);
+        const depends = commentData['depends'] ?
+          commentData['depends'].split(',').map(x => x.trim()) :
+          null;
 
         this.embedDependencies(
           html,
-          commentData['depends'],
+          depends,
           basePath
         ).then(htmlWithDependencies => {
           resolve({
@@ -99,6 +102,7 @@ export class ComponentListComponent implements OnInit, OnDestroy {
             name: commentData['name'],
             summary: commentData['summary'],
             depends: commentData['depends'],
+            background: commentData['background'],
             html: this.stripComponentComments(html),
             demoHtml: htmlWithDependencies
           });
@@ -117,6 +121,18 @@ export class ComponentListComponent implements OnInit, OnDestroy {
         response.text().then(text => resolve(text));
       });
     });
+  }
+
+  /**
+   * Returns a CSS background rule if a style value is provided.
+   * @param backgroundStyle A CSS background style value.
+   */
+  getComponentBackground(backgroundStyle: string) {
+    if (backgroundStyle) {
+      return `background: ${backgroundStyle}`;
+    }
+
+    return '';
   }
 
   /**

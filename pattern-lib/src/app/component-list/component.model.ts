@@ -3,6 +3,7 @@ export interface WebComponent {
   name: string,
   summary: string,
   depends: string[],
+  background: string,
   html: string,
   demoHtml: string
 }

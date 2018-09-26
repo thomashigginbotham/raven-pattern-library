@@ -20,13 +20,14 @@ import { PageContentComponent } from './page-content/page-content.component';
 import { ComponentListComponent } from './component-list/component-list.component';
 
 import { SafeHtmlPipe } from './shared/safehtml.pipe';
+import { SafeStylePipe } from './shared/safe-style.pipe';
+import { SafeUriPipe } from './shared/safe-uri.pipe';
 import { ComponentItemComponent } from './component-item/component-item.component';
 import { ComponentLoaderComponent } from './component-loader/component-loader.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { CustomPageComponent } from './custom-page/custom-page.component';
 import { PrismComponent } from './prism/prism.component';
 import { TypeListItemComponent } from './type-list-item/type-list-item.component';
-import { SafeUriPipe } from './shared/safe-uri.pipe';
 import { StickySidebarDirective } from './shared/directives/sticky-sidebar.directive';
 import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-scroller.directive';
 
@@ -44,13 +45,14 @@ import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-s
     PageContentComponent,
     ComponentListComponent,
     SafeHtmlPipe,
+    SafeStylePipe,
+    SafeUriPipe,
     ComponentItemComponent,
     ComponentLoaderComponent,
     PageLoaderComponent,
     CustomPageComponent,
     PrismComponent,
     TypeListItemComponent,
-    SafeUriPipe,
     StickySidebarDirective,
     UrlFragmentScrollerDirective
   ],

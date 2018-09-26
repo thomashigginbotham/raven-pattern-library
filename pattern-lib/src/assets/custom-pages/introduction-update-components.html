@@ -74,6 +74,8 @@ Summary: How to create and update components.
 
 <h3 id="advanced">Advanced Usage</h3>
 
+<h4>Component Dependencies</h4>
+
 <p>Sometimes, it’s necessary for multiple components to share the same resources. For example, you may have an SVG image that is referenced by multiple components. It wouldn’t make sense to include that SVG in every component. So, instead, we can add that SVG as a dependency of those components.</p>
 <p>We start by creating a file for the dependency, such as <em>/html/components/dependencies/icons.svg</em>. Then, we reference that file from a component by adding it to the HTML comments at the top.</p>
 
@@ -90,6 +92,23 @@ Depends: dependencies/icons.svg,
 <div class="rpl-note">
   <p>Note: Dependencies are hidden when viewed in the pattern library, as they are not part of the component itself, but a shared resource.</p>
 </div>
+
+<h4>Component Backgrounds</h4>
+
+<p>By default, components are placed on a checkerboard background, which is helpful for showing what areas of a component are transparent. But, in some cases, a component may be difficult to see against this background, or maybe it will never be used except against a specific colored background. In these cases, you may specify a background color to use for the component by adding a <strong>Background</strong> value to the HTML comments.</p>
+
+<div class="rpl-note"><pre><code>&lt!--
+Name: Sample Component with Background
+Summary: This component has has a red background when viewed in RPL.
+Background: #f00
+--&gt;</code></pre></div>
+
+<p>Backgrounds are only applied when the component is viewed in RPL. If the component should always have a background, apply it using your style sheets.</p>
+
+<p>Backgrounds also propagate to parent components. If this causes a problem, you can apply the default checkerboard background to the parent component by setting the background value to <strong>revert</strong>.</p>
+
+<p>See the <a href="components/lists">Link List sample component</a> for an example of how to apply a background.</p>
+
 <hr>
 
 <p><a href="./introduction/customization">Continue to Customization</a></p>

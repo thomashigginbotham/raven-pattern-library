@@ -11,11 +11,12 @@ Summary: How to create and update components.
   <li><a href="./introduction/update-components#create">Creating new components</a></li>
   <li><a href="./introduction/update-components#add-to-menu">Adding components to the menu</a></li>
   <li><a href="./introduction/update-components#add-to-page">Adding components to an HTML page</a></li>
+  <li><a href="./introduction/update-components#advanced">Advanced Usage</a></li>
 </ul>
 
 <h3 id="update">Update a Component</h3>
 
-<p>Your components are found in the <em>/html/components</em> directory. To make updates, you can simply open the HTML file and make your changes. Bing, bang boom!</p>
+<p>Your components are found in the <em>/html/components</em> directory. To make updates, you can simply open the HTML file and make your changes. Bing, bang, boom!</p>
 
 <h3 id="create">Create a Component</h3>
 
@@ -71,6 +72,24 @@ Summary: How to create and update components.
 
 <div class="rpl-note"><code>&lt;!-- build:include children/child-component.html --&gt;&lt;!-- /build --&gt;</code></div>
 
+<h3 id="advanced">Advanced Usage</h3>
+
+<p>Sometimes, it’s necessary for multiple components to share the same resources. For example, you may have an SVG image that is referenced by multiple components. It wouldn’t make sense to include that SVG in every component. So, instead, we can add that SVG as a dependency of those components.</p>
+<p>We start by creating a file for the dependency, such as <em>/html/components/dependencies/icons.svg</em>. Then, we reference that file from a component by adding it to the HTML comments at the top.</p>
+
+<div class="rpl-note"><pre><code>&lt!--
+Name: Sample Component with Dependencies
+Summary: This component has dependencies on an SVG and an HTML file.
+Depends: dependencies/icons.svg,
+         dependencies/sample.html
+--&gt;</code></pre></div>
+
+<p>Notice that there can be multiple dependencies, separated by commas. See the <a href="components/callouts">Call-out sample component</a> for an example of this concept in action.</p>
+
+
+<div class="rpl-note">
+  <p>Note: Dependencies are hidden when viewed in the pattern library, as they are not part of the component itself, but a shared resource.</p>
+</div>
 <hr>
 
-<p><a href="./introduction/customization">Contine to Customization</a></p>
+<p><a href="./introduction/customization">Continue to Customization</a></p>

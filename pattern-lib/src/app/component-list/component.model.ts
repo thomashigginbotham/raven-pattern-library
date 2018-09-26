@@ -2,5 +2,7 @@ export interface WebComponent {
   id: string,
   name: string,
   summary: string,
-  html: string
+  depends: string[],
+  html: string,
+  demoHtml: string
 }

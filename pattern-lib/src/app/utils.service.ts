@@ -118,7 +118,7 @@ export class UtilsService {
    * @param html The HTML to search for comment data.
    */
   getCommentData(html: string): object {
-    const matches = html.match(/<!--\s*\r?\nName:\s*(.+)\r?\nSummary:\s*([\s\S]+?)-->/);
+    const matches = html.match(/<!--\s*\r?\nName:\s*(.+)\r?\nSummary:\s*([\s\S]+?)(\r?\nDepends:\s*([\s\S]+?))?-->/);
 
     if (!matches || matches.length < 3) {
       return null;
@@ -126,7 +126,10 @@ export class UtilsService {
 
     return {
       name: matches[1],
-      summary: matches[2].replace(/\s{2,}/g, ' ').trim()
+      summary: matches[2].replace(/\s{2,}/g, ' ').trim(),
+      depends: (matches.length < 5 || !matches[4]) ?
+        null :
+        matches[4].split(',').map(x => x.trim())
     };
   }
 
@@ -221,6 +224,26 @@ export class UtilsService {
     const uriPathNoFragment = router.url.split('#').shift();
 
     return uriPathNoFragment;
+  }
+
+  /**
+   * Returns a full path from a path relative to a base path.
+   * @param basePath The base path (not including a trailing slash).
+   * @param relativePath The path to resolve.
+   */
+  resolveRelativePath(basePath: string, relativePath: string): string {
+    const resolvedParts = basePath.split('/');
+    const relativeParts = relativePath.split('/');
+
+    for (let n = 0; n < relativeParts.length; n++) {
+      if (relativeParts[n] === '..') {
+        resolvedParts.pop();
+      } else if (relativeParts[n] !== '.') {
+        resolvedParts.push(relativeParts[n]);
+      }
+    }
+
+    return resolvedParts.join('/');
   }
 
   /**

@@ -83,16 +83,25 @@ export class ComponentListComponent implements OnInit, OnDestroy {
    */
   getComponent(id: string): Promise<WebComponent> {
     return new Promise((resolve, reject) => {
-      const path = `assets/ext/html/components/${id}.html`;
+      const basePath = 'assets/ext/html/components';
+      const path = `${basePath}/${id}.html`;
 
       this.getComponentHtml(path).then(html => {
         const commentData = this._utilsService.getCommentData(html);
 
-        resolve({
-          id,
-          name: commentData['name'],
-          summary: commentData['summary'],
-          html: this.stripComponentComments(html)
+        this.embedDependencies(
+          html,
+          commentData['depends'],
+          basePath
+        ).then(htmlWithDependencies => {
+          resolve({
+            id,
+            name: commentData['name'],
+            summary: commentData['summary'],
+            depends: commentData['depends'],
+            html: this.stripComponentComments(html),
+            demoHtml: htmlWithDependencies
+          });
         });
       });
     });
@@ -106,6 +115,39 @@ export class ComponentListComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       fetch(path).then(response => {
         response.text().then(text => resolve(text));
+      });
+    });
+  }
+
+  /**
+   * Embeds content from other files at the beginning of HTML content. The
+   * embedded content is wrapped in a DIV with a HIDDEN attribute.
+   * @param html The HTML importing the dependencies.
+   * @param depends File paths of the dependencies relative to a base path.
+   * @param basePath The base path of the dependencies.
+   */
+  embedDependencies(
+    html: string,
+    depends: string[],
+    basePath: string
+  ): Promise<string> {
+    if (!depends || depends.length === 0) {
+      return Promise.resolve(html);
+    }
+
+    const fullPaths = depends
+      .map(path => this._utilsService.resolveRelativePath(basePath, path));
+
+    return new Promise((resolve) => {
+      const fetches = fullPaths.map(x => fetch(x));
+      const responses = fetches.map(x => x.then(response => response.text()));
+
+      Promise.all(responses).then(texts => {
+        texts.reverse().forEach(text => {
+          html = `<div hidden>${text}</div>${html}`;
+        });
+
+        resolve(html);
       });
     });
   }

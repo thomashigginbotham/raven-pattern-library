@@ -1,10 +1,22 @@
 <!--
 Name: Call-out
 Summary: A simple call-out with a heading and content. This example uses a
-         Link List component for its content.
+         Link List component for its content and has dependencies on an SVG
+         image and an HTML file that includes JavaScript for setting the header
+         text.
+Depends: dependencies/icons.svg,
+         dependencies/header-data.html
 -->
 <div class="callout">
-  <h3 class="callout-heading">A List of Links</h3>
+  <h3 class="callout-heading">
+    <!-- This SVG is referencing a shared resource -->
+    <svg width="24" height="24">
+      <use xlink:href="#svg-icon-chain-link"></use>
+    </svg>
+
+    <!-- This heading text is replaced by a shared resource -->
+    <span class="callout-heading-text">A List of Links</span>
+  </h3>
 
   <div class="callout-content">
     <!-- build:include link-list.html --><!-- /build -->

@@ -84,6 +84,7 @@ export class ComponentListComponent implements OnInit, OnDestroy {
   getComponent(id: string): Promise<WebComponent> {
     return new Promise((resolve, reject) => {
       const basePath = 'assets/ext/html/components';
+      const componentPath = id.split('/').slice(0, -1).join('/');
       const path = `${basePath}/${id}.html`;
 
       this.getComponentHtml(path).then(html => {
@@ -95,7 +96,7 @@ export class ComponentListComponent implements OnInit, OnDestroy {
         this.embedDependencies(
           html,
           depends,
-          basePath
+          `${basePath}/${componentPath}`
         ).then(htmlWithDependencies => {
           resolve({
             id,

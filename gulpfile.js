@@ -197,7 +197,7 @@ gulp.task('html:compile:dist', () => {
  */
 gulp.task('html:copy:dev', () => {
   return gulp
-    .src('.tmp/**/*.html')
+    .src('.tmp/*.html')
     .pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
 });
 
@@ -206,8 +206,34 @@ gulp.task('html:copy:dev', () => {
  */
 gulp.task('html:copy:dist', () => {
   return gulp
-    .src('dist/**/*.html')
+    .src('dist/*.html')
     .pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
+});
+
+/**
+ * Copies component files from dev directory to pattern library assets directory.
+ */
+gulp.task('components:copy:dev', () => {
+  return gulp
+    .src([
+      '.tmp/components/**/*',
+      'html/components/**/*',
+      '!html/components/**/*.html'
+    ])
+    .pipe(gulp.dest('pattern-lib/dist/assets/ext/html/components'));
+});
+
+/**
+ * Copies component files from dist directory to pattern library assets directory.
+ */
+gulp.task('components:copy:dist', () => {
+  return gulp
+    .src([
+      'dist/components/**/*',
+      'html/components/**/*',
+      '!html/components/**/*.html'
+    ])
+    .pipe(gulp.dest('pattern-lib/dist/assets/ext/html/components'));
 });
 
 /**
@@ -403,6 +429,7 @@ gulp.task('html:watch', done => {
     gulp.series(
       'html:compile:dev',
       'html:copy:dev',
+      'components:copy:dev',
       'livereload'
     )
   );
@@ -494,7 +521,7 @@ gulp.task(
       'js:copy:dev',
       'rpl:copy:dev'
     ),
-    gulp.parallel('html:copy:dev', 'scopeStyles'),
+    gulp.parallel('html:copy:dev', 'components:copy:dev', 'scopeStyles'),
     gulp.parallel('fonts:copy:dev', 'images:copy:dev'),
     gulp.parallel(
       'html:watch',
@@ -536,7 +563,10 @@ gulp.task(
       'sass:dist',
       'js:copy:dist'
     ),
-    'html:copy:dist',
+    gulp.parallel(
+      'html:copy:dist',
+      'components:copy:dist'
+    ),
     gulp.parallel(
       'rpl:copy:dist',
       'fonts:copy:dist',

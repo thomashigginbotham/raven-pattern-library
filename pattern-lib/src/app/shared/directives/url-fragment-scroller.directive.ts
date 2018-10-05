@@ -1,5 +1,5 @@
-import { Directive, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Directive, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Directive({
@@ -11,8 +11,11 @@ export class UrlFragmentScrollerDirective implements OnInit, OnDestroy {
 
   private scrollBehavior: string;
   private fragmentSubscription: Subscription;
+  private scrollListener: () => void;
 
   constructor(
+    private renderer: Renderer2,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private elementRef: ElementRef
   ) {
@@ -27,9 +30,17 @@ export class UrlFragmentScrollerDirective implements OnInit, OnDestroy {
     // Scroll to element when URL fragment changes
     this.fragmentSubscription = this.activatedRoute.fragment
       .subscribe((fragment: string) => {
+        if (this.scrollListener) {
+          this.scrollListener();
+        }
+
         setTimeout(() => {
           if (fragment && fragment === this.urlFragmentId) {
             this.scrollToElement();
+
+            setTimeout(() => {
+              this.removeFragmentAfterScroll();
+            }, 1000);
           }
 
           // Use smooth scrolling from now on
@@ -44,6 +55,10 @@ export class UrlFragmentScrollerDirective implements OnInit, OnDestroy {
     if (this.fragmentSubscription) {
       this.fragmentSubscription.unsubscribe();
     }
+
+    if (this.scrollListener) {
+      this.scrollListener();
+    }
   }
 
   /**
@@ -53,6 +68,17 @@ export class UrlFragmentScrollerDirective implements OnInit, OnDestroy {
     this.elementRef.nativeElement.scrollIntoView({
       behavior: this.scrollBehavior,
       block: 'start'
+    });
+  }
+
+  /**
+   * Removes the fragment part of the URL after the user scrolls, then stops
+   * listening for scroll events.
+   */
+  removeFragmentAfterScroll() {
+    this.scrollListener = this.renderer.listen(window, 'scroll', () => {
+      this.router.navigate([], { fragment: '' });
+      this.scrollListener();
     });
   }
 }

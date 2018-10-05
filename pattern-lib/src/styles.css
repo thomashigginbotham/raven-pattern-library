@@ -80,7 +80,7 @@
   --hamburger-space: 4px;
 }
 
-/* General Styles */
+/* General RPL Styles */
 body {
   margin: 0;
   padding: 0;
@@ -143,52 +143,7 @@ figcaption {
   color: var(--color-neutral-45, #777);
 }
 
-table {
-  margin-bottom: var(--page-gutter);
-  border-collapse: collapse;
-}
-
-th {
-  padding: var(--spacer);
-  text-align: left;
-  vertical-align: top;
-  font-weight: var(--font-weight-bold);
-}
-
-td {
-  padding: var(--spacer);
-  border-right: 1px solid var(--color-neutral-80);
-  vertical-align: top;
-}
-
-td:last-child {
-  border-right: 0;
-}
-
-thead th {
-  border-bottom: 1px solid var(--color-neutral-80);
-}
-
-tbody tr:first-child th,
-tbody tr:first-child td {
-  padding-top: calc(var(--spacer) * 2);
-}
-
-/* Main Content */
-.main-content__wrapper {
-  margin: 0 auto;
-  padding: var(--page-gutter) var(--page-gutter) 0;
-  max-width: var(--page-max-width);
-}
-
-@media (min-width: 1024px) {
-  .nav-is-expanded .main-content__wrapper {
-    padding-right: calc(var(--page-min-width) + var(--page-gutter) * 2);
-    max-width: calc(var(--page-max-width) - var(--page-min-width) - var(--page-gutter));
-  }
-}
-
-/* Layout */
+/* Layout Options */
 .rpl-col-auto {
   display: flex;
   flex-wrap: wrap;
@@ -222,4 +177,18 @@ tbody tr:first-child td {
 
 .rpl-note > :last-child {
   margin-bottom: 0;
+}
+
+/* Main Content */
+.main-content__wrapper {
+  margin: 0 auto;
+  padding: var(--page-gutter) var(--page-gutter) 0;
+  max-width: var(--page-max-width);
+}
+
+@media (min-width: 1024px) {
+  .nav-is-expanded .main-content__wrapper {
+    padding-right: calc(var(--page-min-width) + var(--page-gutter) * 2);
+    max-width: calc(var(--page-max-width) - var(--page-min-width) - var(--page-gutter));
+  }
 }

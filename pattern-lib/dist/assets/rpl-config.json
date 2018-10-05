@@ -104,7 +104,7 @@
       "description": "Common page sections that provide branding, navigation, or important information",
       "list": [
         { "title": "Site Header", "uri": "site-header" },
-        { "title": "Site Navigation", "uri": "/variants/site-navigation-about" },
+        { "title": "Site Navigation", "uri": "/site-navigation/about" },
         { "title": "Site Footer", "uri": "site-footer" }
       ]
     }, {

@@ -2,39 +2,54 @@
 'use strict';
 
 const argv = require('yargs').argv;
-const del = require('del');
-const cssom = require('cssom');
-const gulp = require('gulp');
-const concat = require('gulp-concat');
 const connect = require('gulp-connect');
+const cssom = require('cssom');
+const del = require('del');
+const gulp = require('gulp');
+const merge = require('merge-stream');
 const modRewrite = require('connect-modrewrite');
 const open = require('gulp-open');
 const processhtml = require('gulp-processhtml');
+const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
 const transform = require('gulp-transform');
 
+const env = { };
 const config = {
-  port: 9090
+  port: 9090,
+  rplUri: 'pattern-lib',
+  srcPaths: {
+    dir: 'src',
+    htmlDir: 'src/html',
+    sassDir: 'src/styles',
+    jsDir: 'src/scripts',
+    imagesDir: 'src/images',
+    fontsDir: 'src/fonts'
+  },
+  tempPaths: {
+    outputDir: '.tmp',
+    htmlDir: '.tmp/html',
+    cssDir: '.tmp/styles'
+  },
+  distPaths: {
+    outputDir: 'dist',
+    htmlDir: 'dist/html',
+    cssDir: 'dist/styles',
+    jsDir: 'dist/scripts',
+    imagesDir: 'dist/images',
+    fontsDir: 'dist/fonts'
+  },
+  rplPaths: {
+    src: 'rpl-src',
+    assets: 'rpl-assets',
+    customPages: 'rpl-pages'
+  }
 };
 
 /* ------------------------------------
  * Helper Functions
  * ------------------------------------ */
-
-/**
- * Runs processhtml task and saves resulting file.
- * @param opts Options to be passed to processhtml.
- */
-function compileHtml (opts) {
-  const dest = (opts.environment === 'dist') ? 'dist' : '.tmp';
-  const filePattern = (dest === 'dist') ? 'html/*.html' : 'html/**/*.html';
-
-  return gulp.src(filePattern)
-    .pipe(processhtml(opts))
-    .pipe(gulp.dest(dest));
-}
 
 /**
  * Adds a selector prefix to each rule in a string of CSS rules.
@@ -144,250 +159,181 @@ function prefixCssRules(styles, prefixes) {
 }
 
 /* ------------------------------------
- * Helper tasks
+ * Basic Tasks
  * ------------------------------------ */
 
-/**
- * Deletes all files in the dist directory.
- */
-gulp.task('clean:dist', () => {
-  return del('dist/*');
+ /**
+  * Uses development environment paths if paths are unset.
+  */
+gulp.task('environment', (done) => {
+  if (!env.hasOwnProperty('paths')) {
+    env.paths = config.tempPaths;
+  }
+
+  done();
 });
 
 /**
- * Deletes all files in the .tmp directory.
+ * Deletes all files in output directories.
  */
-gulp.task('clean:temp', () => {
-  return del(['.tmp/*', 'pattern-lib/dist/assets/ext/*']);
+gulp.task('clean', gulp.series('environment', () => {
+  return del(`${env.paths.outputDir}/*`);
+}));
+
+/**
+ * Compiles HTML files.
+ */
+gulp.task('html', gulp.series('environment', () => {
+  return gulp.src(`${config.srcPaths.htmlDir}/**/*.html`)
+    .pipe(processhtml({
+      environment: (env.paths.htmlDir === config.tempPaths.htmlDir) ?
+        'dev' :
+        'dist',
+      recursive: true
+    }))
+    .pipe(gulp.dest(env.paths.htmlDir));
+}));
+
+/**
+ * Copies files into dist HTML directory.
+ */
+gulp.task('html:copy', () => {
+  const copyHtml = gulp.src([
+    `${config.distPaths.htmlDir}/**/*`,
+    `!${config.distPaths.htmlDir}/components`,
+    `!${config.distPaths.htmlDir}/components/**/*`
+  ])
+    .pipe(gulp.dest(config.distPaths.outputDir));
+
+  const copyDepends = gulp.src([
+    `${config.srcPaths.htmlDir}/**/*`,
+    `!${config.srcPaths.htmlDir}/**/*.htm*`
+  ])
+    .pipe(gulp.dest(config.distPaths.htmlDir));
+
+  return merge(copyHtml, copyDepends);
 });
 
 /**
- * Deletes CSS in the .tmp directory.
+ * Deletes HTML files from the dist output directory.
  */
-gulp.task('clean:tempCss', () => {
-  return del('.tmp/css/*');
+gulp.task('html:delete', () => {
+  return del([
+    `${config.distPaths.htmlDir}/**/*`,
+    `!${config.distPaths.htmlDir}/components`,
+    `!${config.distPaths.htmlDir}/components/**/*`
+  ]);
 });
 
 /**
- * Compiles HTML files for dev environment.
+ * Copies pattern library files into dist output directory.
  */
-gulp.task('html:compile:dev', () => {
-  const opts = {
-    environment: 'dev',
-    recursive: true
-  };
+gulp.task('rpl:copy', () => {
+  const copyRplSrc = gulp.src(`${config.rplPaths.src}/dist/**/*`)
+    .pipe(gulp.dest(`${config.distPaths.outputDir}/${config.rplUri}`));
 
-  return compileHtml(opts);
+  const copyRplAssets = gulp.src(`${config.rplPaths.assets}/**/*`)
+    .pipe(gulp.dest(`${config.distPaths.outputDir}/${config.rplPaths.assets}`));
+
+  return merge(copyRplSrc, copyRplAssets);
 });
 
 /**
- * Compiles HTML files for production environment.
+ * Transpiles Sass into expanded CSS with source maps.
  */
-gulp.task('html:compile:dist', () => {
-  const opts = {
-    environment: 'dist',
-    recursive: true
-  };
-
-  return compileHtml(opts);
-});
-
-/**
- * Copies compiled HTML from dev directory to pattern library assets directory.
- */
-gulp.task('html:copy:dev', () => {
-  return gulp
-    .src('.tmp/*.html')
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
-});
-
-/**
- * Copies compiled HTML from dist directory to pattern library assets directory.
- */
-gulp.task('html:copy:dist', () => {
-  return gulp
-    .src('dist/*.html')
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/html'));
-});
-
-/**
- * Copies component files from dev directory to pattern library assets directory.
- */
-gulp.task('components:copy:dev', () => {
-  return gulp
-    .src([
-      '.tmp/components/**/*',
-      'html/components/**/*',
-      '!html/components/**/*.html'
-    ])
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/html/components'));
-});
-
-/**
- * Copies component files from dist directory to pattern library assets directory.
- */
-gulp.task('components:copy:dist', () => {
-  return gulp
-    .src([
-      'dist/components/**/*',
-      'html/components/**/*',
-      '!html/components/**/*.html'
-    ])
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/html/components'));
-});
-
-/**
- * Transpiles Sass into CSS and saves into dev directory.
- */
-gulp.task('sass:dev', () => {
-  return gulp.src('scss/**/*.scss')
+gulp.task('sass:expanded', gulp.series('environment', () => {
+  return gulp.src(`${config.srcPaths.sassDir}/**/*.scss`)
     .pipe(sourcemaps.init())
     .pipe(sass({ outputStyle: 'expanded' })
       .on('error', sass.logError))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('.tmp/css'))
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
-});
+    .pipe(gulp.dest(env.paths.cssDir));
+}));
 
 /**
- * Transpiles Sass into CSS and saves into dist directory.
+ * Transpiles Sass into minified CSS with source maps.
  */
-gulp.task('sass:dist', () => {
-  return gulp.src('scss/**/*.scss')
+gulp.task('sass:compressed', gulp.series('environment', () => {
+  return gulp.src(`${config.srcPaths.sassDir}/**/*.scss`)
     .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.init())
     .pipe(sass({ outputStyle: 'compressed' })
       .on('error', sass.logError))
     .pipe(sourcemaps.write('maps', {
       includeContent: false,
-      sourceRoot: '/scss'
+      sourceRoot: config.srcPaths.sassDir
     }))
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/css'))
-    .pipe(gulp.dest('dist/css'));
-});
+    .pipe(gulp.dest(env.paths.cssDir));
+}));
 
 /**
- * Copies Sass variables into pattern library assets.
+ * Copies Sass variables file to dist output directory.
  */
-gulp.task('sass:copy', () => {
-  return gulp
-    .src('scss/modules/_vars.scss')
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/scss/modules'));
+gulp.task('vars:copy', () => {
+  return gulp.src(`${config.srcPaths.sassDir}/modules/**/_vars.scss`)
+    .pipe(gulp.dest(`${config.distPaths.cssDir}/modules`));
 });
 
 /**
  * Adds a prefix to all CSS selectors to prevent outside styles from leaking in.
  */
-gulp.task('scopeStyles', () => {
+gulp.task('scopeStyles', gulp.series('environment', () => {
   return gulp
-    .src('.tmp/css/*.css')
-    .pipe(concat('all.css'))
+    .src(`${env.paths.cssDir}/*.css`)
     .pipe(transform('utf8', content => prefixCssRules(
       content,
-      [
-        '.main-content .rpl-user-styles'
-      ]
+      ['.main-content .rpl-user-styles']
     )))
     .pipe(rename('rpl-scoped-styles.css'))
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/css'));
-});
+    .pipe(gulp.dest(env.paths.cssDir));
+}));
 
 /**
- * Copies JS files to dev directories.
+ * Copies scripts to output directories.
  */
-gulp.task('js:copy:dev', () => {
+gulp.task('scripts', gulp.series('environment', () => {
   return gulp
-    .src('js/**/*.js')
-    .pipe(gulp.dest('.tmp/js'))
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
-});
+    .src(`${config.srcPaths.jsDir}/**/*.js`)
+    .pipe(gulp.dest(env.paths.jsDir));
+}));
 
 /**
- * Copies JS files to production directories.
+ * Copies font files to output directories.
  */
-gulp.task('js:copy:dist', () => {
+gulp.task('fonts', gulp.series('environment', () => {
   return gulp
-    .src('js/**/*.js')
-    .pipe(gulp.dest('dist/js'))
-    .pipe(gulp.dest('pattern-lib/dist/assets/ext/js'));
-});
+    .src(`${config.srcPaths.fontsDir}/**/*`)
+    .pipe(gulp.dest(env.paths.fontsDir));
+}));
 
 /**
- * Copies pattern library source assets to the compiled assets directory.
+ * Copies image files to output directories.
  */
-gulp.task('rpl:copy:dev', () => {
+gulp.task('images', gulp.series('environment', () => {
   return gulp
-    .src('pattern-lib/src/assets/**/*')
-    .pipe(gulp.dest('pattern-lib/dist/assets'));
-});
-
-/**
- * Copies pattern library files to production directory.
- */
-gulp.task('rpl:copy:dist', () => {
-  return gulp
-    .src('pattern-lib/dist/**/*')
-    .pipe(gulp.dest('dist/pattern-lib'));
-});
-
-/**
- * Copies font files to dev directory.
- */
-gulp.task('fonts:copy:dev', () => {
-  return gulp
-    .src('fonts/**/*')
-    .pipe(gulp.dest('.tmp/fonts'));
-});
-
-/**
- * Copies font files to production directory.
- */
-gulp.task('fonts:copy:dist', () => {
-  return gulp
-    .src('fonts/**/*')
-    .pipe(gulp.dest('dist/fonts'));
-});
-
-/**
- * Copies image files to dev directory.
- */
-gulp.task('images:copy:dev', () => {
-  return gulp
-    .src('images/**/*')
-    .pipe(gulp.dest('.tmp/images'));
-});
-
-/**
- * Copies image files to production directory.
- */
-gulp.task('images:copy:dist', () => {
-  return gulp
-    .src('images/**/*')
-    .pipe(gulp.dest('dist/images'));
-});
-
-/**
- * Copies Sass files to production directory.
- */
-gulp.task('sass:copy:dist', () => {
-  return gulp
-    .src('scss/**/*')
-    .pipe(gulp.dest('dist/scss'));
-});
+    .src(`${config.srcPaths.imagesDir}/**/*`)
+    .pipe(gulp.dest(env.paths.imagesDir));
+}));
 
 /**
  * Starts a development web server.
  */
-gulp.task('connect:dev', done => {
+gulp.task('connect', done => {
   connect.server({
-    root: ['.tmp', 'pattern-lib'],
+    root: [
+      config.tempPaths.outputDir,
+      config.srcPaths.dir,
+      config.rplPaths.src,
+      './'
+    ],
     port: config.port,
     middleware: () => {
       return [
         modRewrite([
-          '^/pattern-lib(.*\\..{2,4})$ /dist$1 [L]',
-          '^/pattern-lib(.*)$ /dist/index.html [L]',
-          '^/assets(.*)$ /dist/assets$1 [L]'
+          `^/$ /html/ [L]`,
+          `^/([^/]+\\.html?$) /html/$1 [L]`,
+          `^/${config.rplUri}/(.+\\..{2,4})$ /dist/$1 [L]`,
+          `^/${config.rplUri}(.*)$ /dist/index.html [L]`
         ])
       ];
     },
@@ -398,38 +344,37 @@ gulp.task('connect:dev', done => {
 });
 
 /**
- * Starts a development web server, then opens the pattern library in a browser.
+ * Opens the pattern library in a browser.
  */
-gulp.task('open:dev', gulp.parallel('connect:dev', () => {
+gulp.task('open', gulp.parallel('connect', () => {
   return gulp.src(__filename)
-    .pipe(open({ uri: 'http://localhost:' + config.port + '/pattern-lib' }));
+    .pipe(open({
+      uri: `http://localhost:${config.port}/${config.rplUri}`
+    }));
 }));
 
 /**
- * Reloads open browsers when files change.
+ * Reloads pages when files change.
  */
 gulp.task('livereload', () => {
-  const sources = ['.tmp/**/*.{html,css,js}'];
+  const sources = [
+    `${config.tempPaths.outputDir}/**/*.{htm,html,css,js}`,
+    `${config.srcPaths.dir}/**/*.{js}`
+  ];
 
   return gulp.src(sources)
     .pipe(connect.reload());
 });
 
-/* ------------------------------------
- * Primary tasks
- * ------------------------------------ */
-
 /**
- * Watches HTML files for changes, then compiles them and refreshes the browser
- * if open.
+ * Watches HTML files for changes, then compiles them and refreshes pages.
  */
-gulp.task('html:watch', done => {
+gulp.task('watch:html', done => {
   gulp.watch(
-    'html/**/*.html',
+    `${config.srcPaths.htmlDir}/**/*.html`,
     gulp.series(
-      'html:compile:dev',
-      'html:copy:dev',
-      'components:copy:dev',
+      (done) => { del(`${config.tempPaths.htmlDir}/*`); done(); },
+      'html',
       'livereload'
     )
   );
@@ -438,15 +383,14 @@ gulp.task('html:watch', done => {
 });
 
 /**
- * Watches Sass files for changes, then transpiles to CSS and refreshes the
- * browser if open.
+ * Watches Sass files for changes, then transpiles to CSS and refreshes pages.
  */
-gulp.task('sass:watch', done => {
+gulp.task('watch:sass', done => {
   gulp.watch(
-    'scss/**/*.scss',
+    `${config.srcPaths.sassDir}/**/*.scss`,
     gulp.series(
-      'clean:tempCss',
-      gulp.parallel('sass:dev', 'sass:copy'),
+      (done) => { del(`${config.tempPaths.cssDir}/*`); done(); },
+      'sass:expanded',
       'scopeStyles',
       'livereload'
     )
@@ -456,52 +400,17 @@ gulp.task('sass:watch', done => {
 });
 
 /**
- * Copies JavaScript files to .tmp directory when they change, then refreshes
- * the browser if open.
+ * Refreshes pages when static file assets change.
  */
-gulp.task('js:watch', done => {
+gulp.task('watch:files', done => {
   gulp.watch(
-    'js/**/*.js',
-    gulp.series('js:copy:dev', 'livereload')
-  );
-
-  done();
-});
-
-/**
- * Copies fonts to .tmp directory when they change, then refreshes the browser
- * if open.
- */
-gulp.task('fonts:watch', done => {
-  gulp.watch(
-    'fonts/**/*',
-    gulp.series('fonts:copy:dev', 'livereload')
-  );
-
-  done();
-});
-
-/**
- * Copies images to .tmp directory when they change, then refreshes the browser
- * if open.
- */
-gulp.task('images:watch', done => {
-  gulp.watch(
-    'images/**/*',
-    gulp.series('images:copy:dev', 'livereload')
-  );
-
-  done();
-});
-
-/**
- * Copies pattern lib assets to .tmp directory when they change, then refreshes
- * the browser if open.
- */
-gulp.task('rpl:watch', done => {
-  gulp.watch(
-    'pattern-lib/src/assets/**/*',
-    gulp.series('rpl:copy:dev', 'livereload')
+    [
+      `${config.srcPaths.jsDir}/**/*`,
+      `${config.srcPaths.imagesDir}/**/*`,
+      `${config.srcPaths.fontsDir}/**/*`,
+      `${config.rplPaths.assets}/**/*`
+    ],
+    gulp.series('livereload')
   );
 
   done();
@@ -510,68 +419,58 @@ gulp.task('rpl:watch', done => {
 /**
  * Cleans up temp files, then compiles and watches relevant files for changes.
  */
-gulp.task(
-  'watch',
-  gulp.series(
-    'clean:temp',
-    gulp.parallel(
-      'html:compile:dev',
-      'sass:copy',
-      'sass:dev',
-      'js:copy:dev',
-      'rpl:copy:dev'
-    ),
-    gulp.parallel('html:copy:dev', 'components:copy:dev', 'scopeStyles'),
-    gulp.parallel('fonts:copy:dev', 'images:copy:dev'),
-    gulp.parallel(
-      'html:watch',
-      'sass:watch',
-      'js:watch',
-      'fonts:watch',
-      'images:watch',
-      'rpl:watch'
-    )
+gulp.task('watch', gulp.series(
+  'clean',
+  gulp.parallel(
+    'html',
+    'sass:expanded'
+  ),
+  'scopeStyles',
+  gulp.parallel(
+    'watch:html',
+    'watch:sass',
+    'watch:files'
   )
-);
+));
+
+
+/* ------------------------------------
+ * Primary tasks
+ * ------------------------------------ */
 
 /**
  * Starts a development server and watches for file changes.
  */
 gulp.task('serve', done => {
-  const serverUrl = `http://localhost:${config.port}/pattern-lib`;
-
   if (argv.o) {
-    gulp.series('watch', 'open:dev')();
+    gulp.series('watch', 'open')();
   } else {
-    console.log(`Open ${serverUrl} in your browser.`);
-    gulp.series('watch', 'connect:dev')();
+    gulp.series('watch', 'connect')();
   }
 
   done();
 });
 
+
 /**
- * Cleans up dist environment, then compiles files for production.
+ * Compiles files for production.
  */
-gulp.task(
-  'default',
-  gulp.series(
-    'clean:dist',
+gulp.task('default', gulp.series(
+    (done) => { env.paths = config.distPaths; done(); },
+    'clean',
     gulp.parallel(
-      'html:compile:dist',
-      'sass:copy',
-      'sass:dist',
-      'js:copy:dist'
+      'html',
+      'sass:compressed',
+      'scripts',
+      'images',
+      'fonts',
+      'vars:copy'
     ),
+    'scopeStyles',
     gulp.parallel(
-      'html:copy:dist',
-      'components:copy:dist'
+      'html:copy',
+      'rpl:copy'
     ),
-    gulp.parallel(
-      'rpl:copy:dist',
-      'fonts:copy:dist',
-      'images:copy:dist',
-      'sass:copy:dist'
-    )
+    'html:delete'
   )
 );

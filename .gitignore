@@ -6,8 +6,12 @@
 node_modules
 /.tmp
 /dist
-/css
-/pattern-lib/src/assets/ext
+
+# Development testing files
+/rpl-src/dist/assets/rpl-assets
+/rpl-src/dist/assets/user-assets
+/rpl-src/src/assets/rpl-assets
+/rpl-src/src/assets/user-assets
 
 # IDE - VSCode
 .vscode/*

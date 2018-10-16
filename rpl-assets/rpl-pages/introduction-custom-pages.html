@@ -1,0 +1,50 @@
+<!--
+Name: Introduction/Custom Pages
+Summary: How to add, update, and remove pages.
+-->
+<p>The page you’re reading right now is a custom page. You can update it, move it somewhere else in the menu, or say mean things about it when it’s not looking. Some of those things are useful.</p>
+
+<h3>Quick Links</h3>
+
+<ul>
+  <li><a href="./introduction/custom-pages#update">Update a page</a></li>
+  <li><a href="./introduction/custom-pages#create">Create a new page</a></li>
+  <li><a href="./introduction/custom-pages#remove">Remove a page</a></li>
+  <li><a href="./introduction/custom-pages#add-link">Add a link to the menu</a></li>
+</ul>
+
+<h3 id="update">Update a Page</h3>
+
+<p>All custom pages are found in the <em>rpl-assets/rpl-pages</em> directory. Open the appropriate HTML file and have at it.</p>
+<p>You’ll notice that custom pages have HTML comments at the top. These comments let you set the name and summary that appear at the section above each page.</p>
+
+<div class="rpl-note">
+  <p>If you add a forward slash in the <code>Name</code> part of the page comments, the text preceding the slash will appear in a smaller font above the rest of the text. We use this convention to denote parent/child pages, and we recommend using it for your pages too.</p>
+</div>
+
+<h3 id="create">Create a Page</h3>
+
+<p>Adding a new page is as simple as creating a new HTML file in the <em>rpl-assets/rpl-pages</em> directory. Please note that the name of the file is important.</p>
+<p>Top-level pages — like the <a href="./introduction">Introduction</a> page — can be named anything you like, but child pages must start with their parent page name followed by a hyphen. For example, this page is a child of the Introduction page, and the Introduction page is named <em>introduction.html</em>. So, this page is named <em>introduction-custom-pages.html</em>.</p>
+<p>The easiest way to create a new page is to start with an existing page. Make a copy and save it with a new name. Then you can update the comments at the top and add your HTML content.</p>
+<p>After creating a page, you’ll probably want to <a href="./introduction/custom-pages#add-link">add it to the main navigation</a>.</p>
+
+<h3 id="remove">Remove a Page</h3>
+
+<p>To remove a page, just delete its HTML file from the <em>rpl-assets/rpl-pages</em> directory. Don’t forget to <a href="./introduction/custom-pages#add-link">remove its link from the menu</a> as well.</p>
+
+<h3 id="add-link">Add a Link to the Menu</h3>
+
+<p>You’ve created your page, but it doesn’t do anyone much good if no one knows it exists. For that, you need to add a link to the page in the main navigation.</p>
+<p>The main navigation is managed from the JSON file at <em>rpl-assets/rpl-config.json</em>. Open the file, and look for the <code>navigation</code> key. It contains an array of top-level pages, where each page may contain child pages. Both parent and child pages have properties for setting the page title (the name that appears in the menu) and the URI to the page. The title can be whatever you like, but the URI is based on the name of the HTML file.</p>
+
+<p>For top-level pages, the URI is the name of the HTML file without the <em>.html</em> extension.</p>
+<p>Child pages start with the top-level page URI followed by a forward slash then the filename of the child page without the parent page part or the <em>.html</em> extension.</p>
+
+<div class="rpl-note">
+  <p>Example: A file at <em>my-parent-my-child.html</em> would have a URI of <em>my-parent/my-child</em></p>
+</div>
+
+<hr>
+
+<p><a href="./introduction/ideas">Continue to Ideas</a></p>

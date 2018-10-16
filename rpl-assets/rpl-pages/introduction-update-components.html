@@ -1,0 +1,114 @@
+<!--
+Name: Introduction/Updating Components
+Summary: How to create and update components.
+-->
+<p>So, components are kind of important. It wouldn’t be much of a pattern library without them. Fortunately, we’ve streamlined the process for adding and updating them so making them is a snap.</p>
+
+<h3>Quick Links</h3>
+
+<ul>
+  <li><a href="./introduction/update-components#update">Updating components</a></li>
+  <li><a href="./introduction/update-components#create">Creating new components</a></li>
+  <li><a href="./introduction/update-components#add-to-menu">Adding components to the menu</a></li>
+  <li><a href="./introduction/update-components#add-to-page">Adding components to an HTML page</a></li>
+  <li><a href="./introduction/update-components#advanced">Advanced Usage</a></li>
+</ul>
+
+<h3 id="update">Update a Component</h3>
+
+<p>Your components are found in the <em>src/html/components</em> directory. To make updates, you can simply open the HTML file and make your changes. Bing, bang, boom!</p>
+
+<h3 id="create">Create a Component</h3>
+
+<p>The easiest way to create a new component is to duplicate an existing one from the <em>src/html/components</em> directory and change the file name. The file name can be anything you like, and you can create subdirectories for your components to help organize things better.</p>
+
+<p>Components have HTML comments at the top to allow you to give them a name and a summary. This information will appear above the component when viewed in the pattern library.</p>
+
+<h3 id="add-to-menu">Adding a Component to the Main Menu</h3>
+
+<p>Before a component actually appears in the pattern library, you will need to tell RPL where to place it in the menu. By default, you will see that the components section of the main navigation has a few groups where components are placed (such as Page Structure or Lists). You should know that these groups are customizable, and we expect you to modify them to your own needs. To do this, you will need to modify the <em>rpl-assets/rpl-config.json</em> file.</p>
+
+<p>There is a <code>navigation</code> key in the RPL config JSON file that contains all of the information for the main menu. This is where you will configure the groups available to your components. Give each group a name and a URI. The URI can be anything as long as it begins with <strong>components/</strong>.</p>
+
+<p>Now that you’ve decided on which group to use for your component, you need to add it to that group. In the same JSON file, you should see a <code>components</code> key. It contains an array of component groups, and each group has a <code>list</code> value that controls which components appear there. First, ensure that any changes that you made to the groups in the navigation are reflected here, and then add your component to the list.</p>
+
+<h4>JSON Component Settings</h4>
+
+<table class="rpl-table">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th>uriKey</th>
+      <td>Matches the component group URI value from the navigation without the <strong>components/</strong> part.</td>
+    </tr>
+    <tr>
+      <th>heading</th>
+      <td>Appears at the top of the page when the component group is viewed.</td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td>Appears below the heading at the top of the page.</td>
+    </tr>
+    <tr>
+      <th>list</th>
+      <td>A list of the components to add to the page. Each item in the list has a <code>title</code> (the text to use in the menu) and a <code>uri</code> (the component file path relataive to the <em>src/html</em> directory and without the <em>.html</em> extension.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="add-to-page">Including a Component on a Page or from another Component</h3>
+
+<p>If you had to type out the HTML every time you wanted to use a component, that would be a problem. Fortunately, that’s not the case. To include a component on one of your HTML pages (or from within another component), add a comment in the following format: </p>
+
+<div class="rpl-note"><code>&lt;!-- build:include <em>path/to/component.html</em> --&gt;&lt;!-- /build --&gt;</code></div>
+
+<p>The path to your component is relative to the file where it is being included. For example, if you have a component at <em>src/html/components/parent-component.html</em> and you want to include a component from <em>src/html/components/children/child-component.html</em>, you would use the following:</p>
+
+<div class="rpl-note"><code>&lt;!-- build:include children/child-component.html --&gt;&lt;!-- /build --&gt;</code></div>
+
+<h3 id="advanced">Advanced Usage</h3>
+
+<h4>Component Dependencies</h4>
+
+<p>Sometimes, it’s necessary for multiple components to share a resource that should only be included once on a page. For example, you may have an SVG image where you want to reference parts of it with &lt;use&gt; tags. It wouldn’t make sense to include that SVG in every component as it only needs to appear once per page. So, instead, we can add that SVG as a dependency of those components.</p>
+<p>We start by creating a file for the dependency, such as <em>src/html/components/dependencies/icons.svg</em>. Then, we reference that file from a component by adding it to the HTML comments at the top.</p>
+
+<div class="rpl-note"><pre><code>&lt!--
+Name: Sample Component with Dependencies
+Summary: This component has dependencies on an SVG and an HTML file.
+Depends: dependencies/icons.svg,
+         dependencies/sample.html
+--&gt;</code></pre></div>
+
+<p>Notice that there can be multiple dependencies, separated by commas. See the <a href="components/callouts">Call-out sample component</a> for an example of this concept in action.</p>
+
+
+<div class="rpl-note">
+  <p>Note: Dependencies are hidden when viewed in the pattern library, as they are not part of the component itself, but a shared resource.</p>
+</div>
+
+<h4>Component Backgrounds</h4>
+
+<p>By default, components are placed on a checkerboard background, which is helpful for showing what areas of a component are transparent. But, in some cases, a component may be difficult to see against this background, or maybe it will never be used except against a specific colored background. In these cases, you may specify a background color to use for the component by adding a <strong>Background</strong> value to the HTML comments.</p>
+
+<div class="rpl-note"><pre><code>&lt!--
+Name: Sample Component with Background
+Summary: This component has has a red background when viewed in RPL.
+Background: #f00
+--&gt;</code></pre></div>
+
+<p>Backgrounds are only applied when the component is viewed in RPL. If the component should always have a background, apply it using your style sheets.</p>
+
+<p>Backgrounds also propagate to parent components. If this causes a problem, you can apply the default checkerboard background to the parent component by setting the background value to <strong>revert</strong>.</p>
+
+<p>See the <a href="components/lists">Link List sample component</a> for an example of how to apply a background.</p>
+
+<hr>
+
+<p><a href="./introduction/vendor-assets">Continue to Vendor/Third-party Assets</a></p>

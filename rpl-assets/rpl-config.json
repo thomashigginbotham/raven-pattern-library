@@ -5,6 +5,11 @@
   "scriptUris": [
     "/scripts/main.js"
   ],
+  "styleBreakpoints": {
+    "rpl-sm": 480,
+    "rpl-md": 800,
+    "rpl-lg": 1024
+  },
   "initComponentsScript": "myScripts.initComponents()",
   "destroyComponentsScript": "myScripts.destroyComponents()",
   "navigation": [

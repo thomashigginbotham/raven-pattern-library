@@ -1,10 +1,19 @@
-import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy }
-  from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  AfterViewInit,
+  ViewChildren,
+  QueryList
+} from '@angular/core';
 
 import { WebComponent } from './component.model';
 
 import { Globals } from '../globals';
 import { UtilsService } from '../utils.service';
+import { ComponentItemComponent } from '../component-item/component-item.component';
 
 @Component({
   selector: 'app-component-list',
@@ -13,9 +22,15 @@ import { UtilsService } from '../utils.service';
     './component-list.component.css',
   ]
 })
-export class ComponentListComponent implements OnInit, OnDestroy {
+export class ComponentListComponent implements AfterViewInit, OnDestroy {
   private _list: string;
-  @ViewChild('wrapper') wrapper: ElementRef;
+
+  @ViewChild('wrapper')
+  wrapper: ElementRef;
+
+  @ViewChildren('childComponents')
+  childComponents: QueryList<ComponentItemComponent>
+
   wrapperCssClass: string = 'component-list';
   webComponents: WebComponent[];
 
@@ -47,7 +62,9 @@ export class ComponentListComponent implements OnInit, OnDestroy {
     private _utilsService: UtilsService
   ) { }
 
-  ngOnInit() { }
+  ngAfterViewInit() {
+    this.setBreakpointClassNames();
+  }
 
   ngOnDestroy() {
     // Allow user scripts to run possible clean-up
@@ -77,6 +94,42 @@ export class ComponentListComponent implements OnInit, OnDestroy {
 
       return webComponents;
     });
+  }
+
+  /**
+   * Sets the component breakpoint class names specified by user config.
+   */
+  setBreakpointClassNames() {
+    if (!('ResizeObserver' in window)) {
+      return;
+    }
+
+    this._utilsService.getRplConfig()
+      .then(config => {
+        this.childComponents.changes.subscribe(() => {
+          const breakpoints = config.styleBreakpoints;
+
+          const resizeObserver = new (<any>window).ResizeObserver(entries => {
+            entries.forEach(entry => {
+              const elementWidth = entry.contentRect.width;
+
+              Object.keys(breakpoints).forEach(breakpoint => {
+                const minWidth = breakpoints[breakpoint];
+
+                if (elementWidth >= minWidth) {
+                  entry.target.classList.add(breakpoint);
+                } else {
+                  entry.target.classList.remove(breakpoint);
+                }
+              });
+            });
+          });
+
+          this.childComponents.forEach(child => {
+            resizeObserver.observe(child.componentWrapper.nativeElement);
+          });
+        });
+      });
   }
 
   /**

@@ -12,7 +12,7 @@
         <h4 class="component-item__subheading">Demo</h4>
 
         <div class="component-item__demo-render rpl-user-styles">
-          <app-component-item
+          <app-component-item #childComponents
             [style]="getComponentBackground(webComponent.background) | safeStyle"
             [html]="webComponent.demoHtml | safeHtml"></app-component-item>
         </div>

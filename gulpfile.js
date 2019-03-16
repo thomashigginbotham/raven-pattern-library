@@ -14,6 +14,8 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const transform = require('gulp-transform');
+const compiler = require('webpack');
+const webpack = require('webpack-stream');
 
 const env = { };
 const config = {
@@ -30,7 +32,8 @@ const config = {
   tempPaths: {
     outputDir: '.tmp',
     htmlDir: '.tmp/html',
-    cssDir: '.tmp/styles'
+    cssDir: '.tmp/styles',
+    jsDir: '.tmp/scripts'
   },
   distPaths: {
     outputDir: 'dist',
@@ -289,6 +292,22 @@ gulp.task('scopeStyles', gulp.series('environment', () => {
 }));
 
 /**
+ * Uses Webpack to build JavaScript.
+ */
+gulp.task('scripts:build', gulp.series('environment', () => {
+  const webpackConfig = require('./webpack.config.js');
+
+  webpackConfig.mode = (env.paths.jsDir === config.tempPaths.jsDir) ?
+    'development' :
+    'production';
+
+  return gulp
+    .src(`${config.srcPaths.jsDir}/**/*.js`)
+    .pipe(webpack(webpackConfig, compiler, (err, stats) => { }))
+    .pipe(gulp.dest(env.paths.jsDir));
+}));
+
+/**
  * Copies scripts to output directories.
  */
 gulp.task('scripts', gulp.series('environment', () => {
@@ -400,12 +419,26 @@ gulp.task('watch:sass', done => {
 });
 
 /**
+ * Watches JS files for changes, then bundles them with Webpack.
+ */
+gulp.task('watch:js', done => {
+  gulp.watch(
+    `${config.srcPaths.jsDir}/**/*`,
+    gulp.series(
+      'scripts:build',
+      'livereload'
+    )
+  );
+
+  done();
+});
+
+/**
  * Refreshes pages when static file assets change.
  */
 gulp.task('watch:files', done => {
   gulp.watch(
     [
-      `${config.srcPaths.jsDir}/**/*`,
       `${config.srcPaths.imagesDir}/**/*`,
       `${config.srcPaths.fontsDir}/**/*`,
       `${config.rplPaths.assets}/**/*`
@@ -423,12 +456,14 @@ gulp.task('watch', gulp.series(
   'clean',
   gulp.parallel(
     'html',
-    'sass:expanded'
+    'sass:expanded',
+    'scripts:build'
   ),
   'scopeStyles',
   gulp.parallel(
     'watch:html',
     'watch:sass',
+    'watch:js',
     'watch:files'
   )
 ));
@@ -461,7 +496,7 @@ gulp.task('default', gulp.series(
     gulp.parallel(
       'html',
       'sass:compressed',
-      'scripts',
+      'scripts:build',
       'images',
       'fonts',
       'vars:copy'

@@ -2,26 +2,26 @@
 Name: Introduction/Working with JavaScript
 Summary: How to integrate your JavaScript code.
 -->
-<p>If your JavaScript needs are fairly lightweight, you can just add some JS files to the <em>src/scripts</em> folder, add a &lt;script&gt; tag to your HTML pages, and call it a day. However, most websites today are going to depend on a bit more than that, and you’ll probably want your components to make use of your scripts when viewed in RPL, not just on your HTML pages.</p>
+<p>Out of the box, RPL generates a <em>bundle.js</em> file using any JavaScript files it finds in the <em>/src/scripts</em> directory. <a href="https://webpack.js.org/">Webpack</a> and <a href="https://babeljs.io/">Babel</a> are used behind the scenes, allowing you to focus on writing clean, modular, ES6-compatible JavaScript.</p>
 
 <h3>Quick Links</h3>
 
 <ul>
   <li><a href="./introduction/working-with-js#entrypoint">Configure the script entrypoint</a></li>
-  <li><a href="./introduction/working-with-js#bundle">Bundling scripts</a></li>
+  <li><a href="./introduction/working-with-js#modules">About Modules</a></li>
 </ul>
 
 <h3 id="entrypoint">Script Entrypoint</h3>
 
 <p>If you’ve worked with Node or Webpack, you’re probably familiar with a script entrypoint. It’s a function that kicks off all the scripts that will run on the page. Lucky for you, we went ahead and created one for you. If you look in the <em>src/scripts</em> directory, you’ll see a file called <em>main.js</em>.</p>
 
-<p>The <em>main.js</em> file has an entrypoint function called <code>myScripts.initComponents()</code>. This function is called automatically by RPL every time components are viewed within the pattern library. Outside of the pattern library, the function will be called as long as you include a &lt;script&gt; tag that references the <em>main.js</em> file (we do this for you out of the box).</p>
+<p>The <em>main.js</em> file exports a class with an <code>initComponents()</code> method. This method is called automatically by RPL every time components are viewed within the pattern library. Outside of the pattern library, the method will be called on every page load.</p>
 
 <p>If you don’t like our entrypoint, you can make your own by editing the <code>initComponentsScript</code> value in the <em>rpl-config.json</em> file. If you choose not to use the <em>main.js</em> file at all, make sure to reference your script files by updating the <code>scriptUris</code> array in the JSON file as well.</p>
 
-<h3 id="bundle">Using a Module Bundler</h3>
+<h3 id="modules">Modules</h3>
 
-<p>If you will be including a moderate amount of JavaScript, we advise using a module bundler like <a href="https://webpack.js.org/">Webpack</a>. The setup is beyond the scope of this guide, as it will involve changes to <em>gulpfile.js</em> to work with your specific implementation.</p>
+<p>A module is simply a variable, function, or class that is exported from a JavaScript file so that it can be used in another file. We start you off with a sample module that exports a class with a single method in it (<em>/src/scripts/sample-module.js</em>). Edit or delete the file, and start writing your own modules.</p>
 
 <hr>
 

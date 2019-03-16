@@ -3,15 +3,15 @@
   "logoUri": "/rpl-assets/rpl-logo.svg",
   "styleUris": [],
   "scriptUris": [
-    "/scripts/main.js"
+    "/scripts/bundle.js"
   ],
   "styleBreakpoints": {
     "rpl-sm": 480,
     "rpl-md": 800,
     "rpl-lg": 1024
   },
-  "initComponentsScript": "myScripts.initComponents()",
-  "destroyComponentsScript": "myScripts.destroyComponents()",
+  "initComponentsScript": "Main.initComponents()",
+  "destroyComponentsScript": "Main.destroyComponents()",
   "navigation": [
     {
       "title": "Introduction",

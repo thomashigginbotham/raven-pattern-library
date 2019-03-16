@@ -5,10 +5,13 @@ import { Globals } from './globals';
 @Injectable()
 export class UtilsService {
   private _rplConfig: any;
+  private _promiseCache: any;
 
   constructor(
     private _globals: Globals
-  ) { }
+  ) {
+    this._promiseCache = {};
+  }
 
   /**
    * Adds a selector prefix to a CSSRuleList.
@@ -176,7 +179,11 @@ export class UtilsService {
       return Promise.resolve(this._rplConfig);
     }
 
-    return new Promise((resolve, reject) => {
+    if (this._promiseCache['rplConfig']) {
+      return this._promiseCache['rplConfig'];
+    }
+
+    this._promiseCache['rplConfig'] = new Promise((resolve, reject) => {
       fetch(this._globals.paths.config)
         .then(response => {
           this._rplConfig = response.json();
@@ -185,6 +192,8 @@ export class UtilsService {
         })
         .then(config => resolve(config));
     });
+
+    return this._promiseCache['rplConfig'];
   }
 
   /**

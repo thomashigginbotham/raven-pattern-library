@@ -109,6 +109,43 @@ Background: #f00
 
 <p>See the <a href="components/lists">Link List sample component</a> for an example of how to apply a background.</p>
 
+<h4>Responsive Design and Container Queries</h4>
+
+<p>Almost any website today is going to make use of responsive design. One problem that we still face is that we can only write CSS media queries that are relative to the viewport. However, in many cases, we need media queries to be based on a parent element. This is often referred to as a container query.</p>
+
+<p>RPL displays components with some padding around them and with a sidebar to the right (depending on the viewport width). This means that some components that rely on media queries may not render as expected when viewed in the pattern library. To remedy this, you can tell RPL about your CSS breakpoints in the <em>rpl-config.json</em> file.</p>
+
+<div class="rpl-note"><pre><code>{
+  "styleBreakpoints": {
+    "rpl-sm": 480,
+    "rpl-md": 800,
+    "rpl-lg": 1024
+  }
+}</code></pre></div>
+
+<p>RPL will automatically add a class attribute to the container of each component according to the width of the component. For example, using the configuration above, a component that is 900px wide will be given a class of <strong>rpl-sm rpl-md</strong> since it is larger than 800px but smaller than 1024px.</p>
+
+<p>Here is an example of how you could style a component based on these classes.</p>
+
+<div class="rpl-note"><pre><code>.my-component {
+  display: block;
+}
+
+@media (min-width: 800px) {
+  .page-wrapper,
+  .rpl-md {
+    .my-component {
+      display: flex;
+    }
+  }
+}</code></pre></div>
+
+<p>The component will have a block display on viewports smaller than 800px, but if the component is used on a page outside of RPL (denoted by the <strong>page-wrapper</strong> class) that is 800px wide or more, then a flex display will be used. The flex display will also be used within RPL if the component itself is 800px wide or more (denoted by the <strong>rpl-md</strong> class).</p>
+
+<p>To see an example of this concept in action, take a look at the styles for the sample <a href="/pattern-lib/components/images#thumbnail-grid">Thumbnail Grid</a> component. The number of columns will change based on how much space is available to the component.</p>
+
+<div class="rpl-note">Note: This container query solution only works within RPL. Your actual pages will not be able to make use of the RPL class names. If you are interested in using this solution in your pages as well, see <a href="https://philipwalton.com/articles/responsive-components-a-solution-to-the-container-queries-problem/">Responsive Components: a Solution to the Container Queries Problem</a>.</div>
+
 <hr>
 
 <p><a href="./introduction/vendor-assets">Continue to Vendor/Third-party Assets</a></p>

@@ -12,12 +12,22 @@
     width: 100%;
     height: auto;
   }
+}
 
-  @media (min-width: $page-size-small) {
-    grid-template-columns: repeat(3, 1fr);
+@media (min-width: $page-size-small) {
+  .page-wrapper,
+  .rpl-sm {
+    .thumbnail-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
+}
 
-  @media (min-width: $page-size-medium) {
-    grid-template-columns: repeat(4, 1fr);
+@media (min-width: $page-size-medium) {
+  .page-wrapper,
+  .rpl-md {
+    .thumbnail-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 }

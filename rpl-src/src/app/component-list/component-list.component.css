@@ -15,6 +15,10 @@
   margin-bottom: var(--page-padding, 1.4rem);
 }
 
+.component-item__demo-render {
+  background-color: var(--color-neutral-30, #4d4d4d);
+}
+
 .component-item .component-item__heading,
 .component-item .component-item__summary,
 .component-item .component-item__subheading {

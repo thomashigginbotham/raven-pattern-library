@@ -1,10 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './header.component';
-
-import { UtilsService } from '../utils.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -12,19 +8,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        HeaderComponent
-      ],
-      imports: [
-        RouterModule.forRoot([])
-      ],
-      providers: [
-        {
-          provide: APP_BASE_HREF,
-          useValue: '/'
-        },
-        UtilsService
-      ]
+      declarations: [ HeaderComponent ]
     })
     .compileComponents();
   }));

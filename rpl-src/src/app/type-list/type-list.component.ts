@@ -1,11 +1,4 @@
-import {
-  Component,
-  Output,
-  ViewChild,
-  ElementRef,
-  OnInit
-} from '@angular/core';
-import { UtilsService } from '../utils.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-type-list',
@@ -16,12 +9,11 @@ import { UtilsService } from '../utils.service';
   ]
 })
 export class TypeListComponent implements OnInit {
-  @ViewChild('wrapper') wrapper: ElementRef;
+  @ViewChild('wrapper', { static: false }) wrapper: ElementRef;
   wrapperCssClass: string = 'type-list-wrapper';
 
-  constructor(
-    private _utilsService: UtilsService
-  ) { }
+  constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 }

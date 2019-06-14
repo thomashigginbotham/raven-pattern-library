@@ -1,4 +1,6 @@
-<app-page-header groupName="Pages" heading="{{heading}}"
+<app-page-header
+  groupName="Pages"
+  heading="{{heading}}"
   description="{{description}}"></app-page-header>
 
 <section [ngClass]="{
@@ -9,9 +11,9 @@
   <div class="main-content__wrapper">
     <div class="component-loader__buttons">
       <button class="component-loader__maximize-button"
-        (click)="toggleMaximize()">{{maximizeText}}</button>
+              (click)="toggleMaximize()">{{maximizeText}}</button>
       <button class="component-loader__open-button"
-        (click)="openPage()">Open Page</button>
+              (click)="openPage()">Open Page</button>
     </div>
 
     <div class="iframe-wrapper">

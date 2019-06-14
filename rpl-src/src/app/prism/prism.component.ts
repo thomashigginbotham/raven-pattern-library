@@ -1,12 +1,11 @@
 import {
   Component,
   AfterViewInit,
+  ViewEncapsulation,
   Input,
-  ElementRef,
   ViewChild,
-  ViewEncapsulation
+  ElementRef
 } from '@angular/core';
-
 import * as Prism from 'prismjs';
 
 @Component({
@@ -17,7 +16,10 @@ import * as Prism from 'prismjs';
 })
 export class PrismComponent implements AfterViewInit {
   @Input() language: string;
-  @ViewChild('rawContent') rawContent: ElementRef;
+
+  @ViewChild('rawContent', { static: false })
+  rawContent: ElementRef;
+
   content: string;
 
   constructor(

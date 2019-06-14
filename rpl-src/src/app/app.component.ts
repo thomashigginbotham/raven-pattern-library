@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
@@ -9,9 +9,7 @@ import { UtilsService } from './utils.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [
-    './app.component.css'
-  ]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   navIsExpanded: boolean = false;

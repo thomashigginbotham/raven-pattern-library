@@ -1,26 +1,23 @@
 import {
   Component,
+  AfterViewInit,
   Input,
-  OnInit,
   ViewChild,
-  ElementRef,
-  AfterViewInit
+  ElementRef
 } from '@angular/core';
 
 @Component({
   selector: 'app-component-item',
   templateUrl: './component-item.component.html',
-  styleUrls: [
-    './component-item.component.css',
-  ]
+  styleUrls: ['./component-item.component.css']
 })
-export class ComponentItemComponent implements OnInit, AfterViewInit {
+export class ComponentItemComponent implements AfterViewInit {
   @Input() html: string;
-  @ViewChild('componentWrapper') componentWrapper: ElementRef;
+
+  @ViewChild('componentWrapper', { static: false })
+  componentWrapper: ElementRef;
 
   constructor() { }
-
-  ngOnInit() { }
 
   ngAfterViewInit() {
     const el = this.componentWrapper.nativeElement;

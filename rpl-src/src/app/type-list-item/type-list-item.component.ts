@@ -1,10 +1,10 @@
 import {
   Component,
+  AfterViewChecked,
   Input,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef,
-  AfterViewChecked
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { UtilsService } from '../utils.service';
@@ -12,13 +12,11 @@ import { UtilsService } from '../utils.service';
 @Component({
   selector: 'app-type-list-item',
   templateUrl: './type-list-item.component.html',
-  styleUrls: [
-    './type-list-item.component.css'
-  ]
+  styleUrls: ['./type-list-item.component.css']
 })
 export class TypeListItemComponent implements AfterViewChecked {
   @Input() heading: string;
-  @ViewChild('wrapper') wrapper: ElementRef;
+  @ViewChild('wrapper', { static: false }) wrapper: ElementRef;
   metadata: string;
 
   constructor(

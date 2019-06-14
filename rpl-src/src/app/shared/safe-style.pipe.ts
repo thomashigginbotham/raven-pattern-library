@@ -6,10 +6,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class SafeStylePipe implements PipeTransform {
   constructor(
-    private sanitized: DomSanitizer
+    private _sanitized: DomSanitizer
   ) { }
 
-  transform(value: string): SafeResourceUrl {
-    return this.sanitized.bypassSecurityTrustStyle(value);
+  transform(value: any, args?: any): SafeResourceUrl {
+    return this._sanitized.bypassSecurityTrustStyle(value);
   }
 }

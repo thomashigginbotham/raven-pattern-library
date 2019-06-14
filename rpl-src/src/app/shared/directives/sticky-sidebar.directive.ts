@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+import { Directive, OnInit, ElementRef } from '@angular/core';
 
 declare var StickySidebar: any;
 
@@ -9,9 +9,9 @@ export class StickySidebarDirective implements OnInit {
   el: HTMLElement;
 
   constructor(
-    private elementRef: ElementRef
+    private _elementRef: ElementRef
   ) {
-    this.el = elementRef.nativeElement;
+    this.el = _elementRef.nativeElement;
   }
 
   ngOnInit() {

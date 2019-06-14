@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Globals } from '../globals';
 import { UtilsService } from '../utils.service';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-custom-page',

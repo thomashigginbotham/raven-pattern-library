@@ -1,6 +1,6 @@
-import { Directive, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Directive, OnInit, OnDestroy, Renderer2, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Directive({
   selector: '[urlFragmentId]',

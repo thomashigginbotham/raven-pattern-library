@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import * as ntc from 'ntc';
 
 import { Globals } from '../globals';
 import { Color } from './color.model';
+import { ColorService } from '../color.service';
 
 @Component({
   selector: 'app-color-list',
@@ -16,6 +16,7 @@ export class ColorListComponent implements OnInit {
   neutralColors: Color[];
 
   constructor(
+    private _colorService: ColorService,
     private _globals: Globals
   ) { }
 
@@ -178,7 +179,7 @@ export class ColorListComponent implements OnInit {
     const matches = scssText.match(pattern);
 
     if (!matches) {
-      return null;
+      return [];
     }
 
     const colors: Promise<Color>[] = matches.map(match => {
@@ -189,7 +190,7 @@ export class ColorListComponent implements OnInit {
       }
 
       return new Promise((resolve, reject) => {
-        const colorName = ntc.name(varParts[1].trim())[1];
+        const colorName = this._colorService.getColorName(varParts[1].trim());
 
         const color: Color = {
           name: colorName,

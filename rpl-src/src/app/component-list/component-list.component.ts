@@ -1,31 +1,28 @@
 import {
   Component,
-  Input,
+  AfterViewInit,
+  OnDestroy,
   ViewChild,
   ElementRef,
-  OnDestroy,
-  AfterViewInit,
   ViewChildren,
-  QueryList
+  QueryList,
+  Input
 } from '@angular/core';
 
-import { WebComponent } from './component.model';
-
 import { Globals } from '../globals';
+import { WebComponent } from './component.model';
 import { UtilsService } from '../utils.service';
 import { ComponentItemComponent } from '../component-item/component-item.component';
 
 @Component({
   selector: 'app-component-list',
   templateUrl: './component-list.component.html',
-  styleUrls: [
-    './component-list.component.css',
-  ]
+  styleUrls: ['./component-list.component.css']
 })
 export class ComponentListComponent implements AfterViewInit, OnDestroy {
   private _list: string;
 
-  @ViewChild('wrapper')
+  @ViewChild('wrapper', { static: false })
   wrapper: ElementRef;
 
   @ViewChildren('childComponents')

@@ -1,10 +1,10 @@
 <div #wrapper [class]="wrapperCssClass">
   <div *ngFor="let webComponent of webComponents"
-    [urlFragmentId]="webComponent.id"
-    class="component-item">
+       [urlFragmentId]="webComponent.id"
+       class="component-item">
     <header class="component-item__header">
-      <h3 class="component-item__heading">{{webComponent.name}}</h3>
-      <p class="component-item__summary">{{webComponent.summary}}</p>
+      <h3 class="component-item__heading">{{ webComponent.name }}</h3>
+      <p class="component-item__summary">{{ webComponent.summary }}</p>
     </header>
 
     <div class="component-item__wrapper">
@@ -22,7 +22,7 @@
         <h4 class="component-item__subheading">HTML</h4>
 
         <div class="component-item__html-content">
-          <app-prism language="html">{{webComponent.html}}</app-prism>
+          <app-prism language="html">{{ webComponent.html }}</app-prism>
         </div>
       </div>
     </div>

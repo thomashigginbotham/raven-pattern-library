@@ -1,4 +1,4 @@
-import { Component, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { UtilsService } from '../utils.service';
 
@@ -21,13 +21,13 @@ export class HeaderComponent implements OnInit {
     this._utilsService.getRplConfig().then(config => {
       this.title = config.title;
       this.logoUri = config.logoUri;
-    })
+    });
   }
 
   /**
    * Emits an event to tell the navigation to expand.
    */
   emitExpandNav() {
-      this.onExpandNav.emit(true);
+    this.onExpandNav.emit(true);
   }
 }

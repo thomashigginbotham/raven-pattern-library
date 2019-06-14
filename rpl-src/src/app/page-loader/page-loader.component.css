@@ -17,11 +17,19 @@ iframe {
   top: calc(var(--page-gutter, 2rem) / 4 + 1px);
 }
 
+.component-loader__buttons button {
+  border-width: 1px 1px 0 0;
+  border-style: solid;
+  border-color: var(--color-neutral-80, #ccc);
+}
+
+.component-loader__buttons button:first-child {
+  border-left-width: 1px;
+}
+
 .component-loader__maximize-button,
 .component-loader__open-button {
   height: calc(var(--page-gutter, 2rem) * .75);
-  border: 1px solid var(--color-neutral-80, #ccc);
-  border-bottom-width: 0;
   font-weight: var(--font-weight-bold, 700);
   color: var(--color-black, #111);
   background-color: var(--color-neutral-95, #eee);

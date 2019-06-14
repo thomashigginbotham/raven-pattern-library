@@ -1,27 +1,52 @@
-# RplUp
+# RPL Source
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.2.
+This documentation is for developers who will be updating the RPL source code, written in Angular.
 
-## Development server
+## Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Before working on the source code, you will need to install dependencies using `npm i` from the **rpl-src** directory.
 
-## Code scaffolding
+Additionally, you will need to add some sample pattern library data to work with while developing. The easiest way to do this is to copy the existing sample files.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Create an **assets** directory under **/rpl-src/src**.
+1. Copy the **/rpl-assets** directory to the new **assets** directory.
+1. Create a **user-assets** directory under the new **assets** directory.
+1. Copy the **/src/html** and **/src/styles** directories to the new **user-assets** directory.
+1. Copy the **/.tmp/rpl-scoped-styles.css** file to the new **user-assets/styles** directory.
 
-## Build
+The sample file structure should appear as follows:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+rpl-src
+└ src
+  └ assets
+    └ rpl-assets
+      ├ rpl-images
+      └ rpl-pages
+        rpl-config.json
+        rpl-logo.svg
+        rpl-styles.css
+      user-assets
+      ├ html
+      │ └ components
+      │   └ ...
+      │   form.html
+      │   index.html
+      │   interior.html
+      └ styles
+        ├ modules
+        └ partials
+          main.scss
+          rpl-scoped-styles.css
+```
 
-## Running unit tests
+## Development
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng serve -o` from the **rpl-src** directory to start a server and open RPL in a browser. Images and page previews may be broken due to relative paths that don't match the production values.
 
-## Running end-to-end tests
+## Building
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+When changes are complete:
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. Change to the root directory.
+1. Run `npm run build-rpl` to generate a new **dist** directory under **rpl-src**.

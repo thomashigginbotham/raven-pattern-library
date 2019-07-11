@@ -18,7 +18,7 @@
   "scripts": {
     "build": "gulp",
     "serve": "gulp serve",
-    "build-rpl": "cd rpl-src && ng build --prod --base-href /pattern-lib/"
+    "build-rpl": "cd rpl-src && ng build --prod"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

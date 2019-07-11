@@ -12,7 +12,7 @@ Additionally, you will need to add some sample pattern library data to work with
 1. Copy the **/rpl-assets** directory to the new **assets** directory.
 1. Create a **user-assets** directory under the new **assets** directory.
 1. Copy the **/src/html** and **/src/styles** directories to the new **user-assets** directory.
-1. Copy the **/.tmp/rpl-scoped-styles.css** file to the new **user-assets/styles** directory.
+1. Copy the **/.tmp/styles/rpl-scoped-styles.css** file to the new **user-assets/styles** directory.
 
 The sample file structure should appear as follows:
 

@@ -392,7 +392,7 @@ gulp.task('watch:html', done => {
   gulp.watch(
     `${config.srcPaths.htmlDir}/**/*.html`,
     gulp.series(
-      (done) => { del(`${config.tempPaths.htmlDir}/*`); done(); },
+      (done) => { del(`${config.tempPaths.htmlDir}/*`).then(() => done()); },
       'html',
       'livereload'
     )

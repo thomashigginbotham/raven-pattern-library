@@ -144,6 +144,9 @@ export class ComponentListComponent implements AfterViewInit, OnDestroy {
         const depends = commentData['depends'] ?
           commentData['depends'].split(',').map(x => x.trim()) :
           null;
+        const defaultDims = commentData['defaultDims'] ?
+          commentData['defaultDims'].split(',').map(x => x.trim()) :
+          null;
 
         this.embedDependencies(
           html,
@@ -154,7 +157,8 @@ export class ComponentListComponent implements AfterViewInit, OnDestroy {
             id,
             name: commentData['name'],
             summary: commentData['summary'],
-            depends: commentData['depends'],
+            depends,
+            defaultDims,
             background: commentData['background'],
             html: this.stripComponentComments(html),
             demoHtml: htmlWithDependencies
@@ -177,15 +181,27 @@ export class ComponentListComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Returns a CSS background rule if a style value is provided.
-   * @param backgroundStyle A CSS background style value.
+   * Returns styles to use for the component.
+   * @param component The component with styles to set.
    */
-  getComponentBackground(backgroundStyle: string) {
-    if (backgroundStyle) {
-      return `background: ${backgroundStyle}`;
+  getComponentStyles(component: WebComponent) {
+    const styles = [];
+
+    if (component.defaultDims && component.defaultDims.length) {
+      // Set width
+      styles.push(`width: ${component.defaultDims[0]}`);
+
+      if (component.defaultDims.length === 2) {
+        // Set height
+        styles.push(`height: ${component.defaultDims[1]}`);
+      }
     }
 
-    return '';
+    if (component.background) {
+      styles.push(`background: ${component.background}`);
+    }
+
+    return styles.join(';');
   }
 
   /**

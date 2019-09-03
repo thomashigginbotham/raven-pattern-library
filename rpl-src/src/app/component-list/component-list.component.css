@@ -19,6 +19,10 @@
   background-color: var(--color-neutral-30, #4d4d4d);
 }
 
+.component-item__demo-render app-component-item {
+  margin: 0 auto;
+}
+
 .component-item .component-item__heading,
 .component-item .component-item__summary,
 .component-item .component-item__subheading {

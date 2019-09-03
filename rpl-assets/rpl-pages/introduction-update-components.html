@@ -74,6 +74,19 @@ Summary: How to create and update components.
 
 <h3 id="advanced">Advanced Usage</h3>
 
+<h4>Default Component Width and Height</h4>
+
+<p>Some of your components may be best displayed at a smaller width or height. It can be incovenient to have to scroll past a large component, and that’s why we’ve made it possible to set default dimensions for components. Users can always resize the component using the resize handle if desired.</p>
+<p>Use the <strong>DefaultDims</strong> value in your component comments to set the width and height.</p>
+
+<div class="rpl-note"><pre><code>&lt!--
+  Name: Sample Component with Default Dimensions
+  Summary: This component will display at 25rem × 10rem.
+  DefaultDims: 25rem, 10rem
+--&gt;</code></pre></div>
+
+<p>If you only need to set the width, simply leave off the comma and height value.</p>
+
 <h4>Component Dependencies</h4>
 
 <p>Sometimes, it’s necessary for multiple components to share a resource that should only be included once on a page. For example, you may have an SVG image where you want to reference parts of it with &lt;use&gt; tags. It wouldn’t make sense to include that SVG in every component as it only needs to appear once per page. So, instead, we can add that SVG as a dependency of those components.</p>

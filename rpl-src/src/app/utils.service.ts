@@ -137,6 +137,7 @@ export class UtilsService {
       { key: 'name', value: 'Name' },
       { key: 'summary', value: 'Summary' },
       { key: 'depends', value: 'Depends' },
+      { key: 'defaultDims', value: 'DefaultDims' },
       { key: 'background', value: 'Background' }
     ];
     const regexStopWords = commentKeys.map(commentKey => {

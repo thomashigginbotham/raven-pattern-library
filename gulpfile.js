@@ -33,7 +33,8 @@ const config = {
     outputDir: '.tmp',
     htmlDir: '.tmp/html',
     cssDir: '.tmp/styles',
-    jsDir: '.tmp/scripts'
+    jsDir: '.tmp/scripts',
+    rplCustomPages: '.tmp/rpl-assets/rpl-pages'
   },
   distPaths: {
     outputDir: 'dist',
@@ -41,12 +42,13 @@ const config = {
     cssDir: 'dist/styles',
     jsDir: 'dist/scripts',
     imagesDir: 'dist/images',
-    fontsDir: 'dist/fonts'
+    fontsDir: 'dist/fonts',
+    rplCustomPages: 'dist/rpl-assets/rpl-pages'
   },
   rplPaths: {
     src: 'rpl-src',
     assets: 'rpl-assets',
-    customPages: 'rpl-pages'
+    customPages: 'rpl-assets/rpl-pages'
   }
 };
 
@@ -235,10 +237,21 @@ gulp.task('rpl:copy', () => {
   const copyRplSrc = gulp.src(`${config.rplPaths.src}/dist/**/*`)
     .pipe(gulp.dest(`${config.distPaths.outputDir}/${config.rplUri}`));
 
-  const copyRplAssets = gulp.src(`${config.rplPaths.assets}/**/*`)
-    .pipe(gulp.dest(`${config.distPaths.outputDir}/${config.rplPaths.assets}`));
+  const copyRplAssets = gulp.src([
+    `${config.rplPaths.assets}/**/*`,
+    `!${config.rplPaths.customPages}/**`
+  ]).pipe(gulp.dest(`${config.distPaths.outputDir}/${config.rplPaths.assets}`));
 
-  return merge(copyRplSrc, copyRplAssets);
+  const buildThenCopyRplPages = gulp.src([`${config.rplPaths.customPages}/**/*`])
+    .pipe(processhtml({
+      environment: (env.paths.htmlDir === config.tempPaths.htmlDir) ?
+        'dev' :
+        'dist',
+      recursive: true
+    }))
+    .pipe(gulp.dest(env.paths.rplCustomPages));
+
+  return merge(copyRplSrc, copyRplAssets, buildThenCopyRplPages);
 });
 
 /**

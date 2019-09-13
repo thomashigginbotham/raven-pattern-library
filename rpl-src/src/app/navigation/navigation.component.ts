@@ -92,6 +92,14 @@ export class NavigationComponent implements OnInit {
   }
 
   /**
+   * Closes the navigation and emits an event.
+   */
+  closeNav() {
+    this._navIsExpanded = false;
+    this.updateCssAndEmit();
+  }
+
+  /**
    * Expands or collapse the navigation depending on the window size.
    */
   expandNavByWinSize() {
@@ -107,12 +115,11 @@ export class NavigationComponent implements OnInit {
   }
 
   /**
-   * Collapses the navigation if the viewport is small.
+   * Collapses the navigation if the viewport is small or if asked to close.
    */
-  closeNavIfSmallViewport() {
-    if (!this.isViewportLarge()) {
-      this._navIsExpanded = false;
-      this.updateCssAndEmit();
+  closeNavIf(shouldClose: boolean = false) {
+    if (shouldClose || !this.isViewportLarge()) {
+      setTimeout(() => this.closeNav());
     }
   }
 

@@ -91,13 +91,16 @@
       "children": [
         {
           "title": "Home",
-          "uri": "pages/home"
+          "uri": "pages/home",
+          "closeMenuOnLoad": true
         }, {
           "title": "Interior",
-          "uri": "pages/interior"
+          "uri": "pages/interior",
+          "closeMenuOnLoad": true
         }, {
           "title": "Form",
-          "uri": "pages/form"
+          "uri": "pages/form",
+          "closeMenuOnLoad": true
         }
       ]
     }

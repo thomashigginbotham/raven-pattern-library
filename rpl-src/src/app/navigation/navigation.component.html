@@ -14,19 +14,19 @@
         <ul class="app-nav__links">
           <li *ngFor="let navItem of navData" routerLinkActive="active">
             <a [routerLink]="[navItem.uri]"
-               (click)="closeNavIfSmallViewport()">{{navItem.title}}</a>
+               (click)="closeNavIf(navItem.closeMenuOnLoad)">{{navItem.title}}</a>
 
             <ul *ngIf="navItem.children" class="app-nav__sublinks">
               <li *ngFor="let navChild of navItem.children" routerLinkActive="active">
                 <a [routerLink]="[navChild.uri]"
-                   (click)="closeNavIfSmallViewport()">{{navChild.title}}</a>
+                   (click)="closeNavIf(navChild.closeMenuOnLoad)">{{navChild.title}}</a>
 
                 <ul *ngIf="isComponentLink(navChild) && isActive(navChild.uri)"
                     class="app-nav__component-links">
                   <li *ngFor="let componentData of getComponentList(navChild)">
                     <a [routerLink]="[]"
                        [fragment]="componentData.uri"
-                       (click)="closeNavIfSmallViewport()">{{componentData.title}}</a>
+                       (click)="closeNavIf(navChild.closeMenuOnLoad)">{{componentData.title}}</a>
                   </li>
                 </ul>
               </li>

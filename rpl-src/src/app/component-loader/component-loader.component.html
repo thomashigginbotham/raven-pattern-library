@@ -5,6 +5,7 @@
 
 <section class="main-content component-loader">
   <div class="main-content__wrapper">
+    <p *ngIf="!listValues">Loading…</p>
     <app-component-list [list]="listValues"></app-component-list>
   </div>
 </section>

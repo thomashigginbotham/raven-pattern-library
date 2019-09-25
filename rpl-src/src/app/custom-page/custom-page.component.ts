@@ -19,7 +19,9 @@ export class CustomPageComponent implements OnInit {
     private _utilsService: UtilsService,
     private _activatedRoute: ActivatedRoute,
     private _globals: Globals
-  ) { }
+  ) {
+    this.htmlContent = '<p>Loading…</p>';
+  }
 
   ngOnInit() {
     // Bind content

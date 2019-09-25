@@ -122,6 +122,11 @@ function prefixCssRules(styles, prefixes) {
     if (rule.media || rule.conditionText) {
       let cssText = rule.cssText;
 
+      if (!rule.cssRules) {
+        // No rules present. Return as is.
+        return output + cssText;
+      }
+
       Array.from(rule.cssRules).forEach(rule => {
         const styleRule = rule;
         const newSelectorText = prefixedSelectorText(styleRule.selectorText);

@@ -1,5 +1,10 @@
 /* -- Component List Styles -- */
 
+app-component-item {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
 .component-item {
   margin-bottom: calc(var(--page-gutter, 2rem) * 2);
 }

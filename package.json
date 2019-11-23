@@ -37,6 +37,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-transform": "^3.0.5",
     "merge-stream": "^1.0.1",
+    "node-sass": "^4.13.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-stream": "^5.2.1",

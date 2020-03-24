@@ -20,6 +20,14 @@ app-component-item {
   margin-bottom: var(--page-padding, 1.4rem);
 }
 
+.component-item__variant-wrapper {
+  margin-top: var(--page-padding, 1.4rem);
+}
+
+.component-item__variant-link {
+  margin: 0;
+}
+
 .component-item__demo-render {
   background-color: var(--color-neutral-30, #4d4d4d);
 }

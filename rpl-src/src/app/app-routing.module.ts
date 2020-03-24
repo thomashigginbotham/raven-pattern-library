@@ -21,6 +21,13 @@ const routes: Routes = [
     component: ComponentLoaderComponent,
     data: { title: '{{ componentTitle }} | {{ siteTitle }}' }
   }, {
+    path: 'component-variants/:id',
+    component: ComponentLoaderComponent,
+    data: {
+      title: '{{ componentTitle }} | {{ siteTitle }}',
+      loadVariants: true,
+    }
+  }, {
     path: 'pages/:id',
     component: PageLoaderComponent,
     data: { title: '{{ pageTitle }} | {{ siteTitle }}'}

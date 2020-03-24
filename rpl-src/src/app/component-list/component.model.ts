@@ -7,4 +7,5 @@ export interface WebComponent {
   background: string;
   html: string;
   demoHtml: string;
+  variantsUri: string;
 }

@@ -139,29 +139,43 @@ export class ComponentListComponent implements AfterViewInit, OnDestroy {
       const componentPath = id.split('/').slice(0, -1).join('/');
       const path = `${basePath}/${id}.html`;
 
-      this.getComponentHtml(path).then(html => {
-        const commentData = this._utilsService.getCommentData(html);
-        const depends = commentData['depends'] ?
-          commentData['depends'].split(',').map(x => x.trim()) :
-          null;
-        const defaultDims = commentData['defaultDims'] ?
-          commentData['defaultDims'].split(',').map(x => x.trim()) :
-          null;
+      this._utilsService.getRplConfig().then(config => {
+        // Determine if component has variants
+        const hasVariants = !!config.components.find((componentSection: any) => {
+          const found = componentSection.list
+            .find((listItem: any) => listItem.uri === id);
 
-        this.embedDependencies(
-          html,
-          depends,
-          `${basePath}/${componentPath}`
-        ).then(htmlWithDependencies => {
-          resolve({
-            id,
-            name: commentData['name'],
-            summary: commentData['summary'],
+          return found && found.variants && found.variants.length;
+        });
+
+        // Build component
+        this.getComponentHtml(path).then(html => {
+          const commentData = this._utilsService.getCommentData(html);
+          const depends = commentData['depends'] ?
+            commentData['depends'].split(',').map(x => x.trim()) :
+            null;
+          const defaultDims = commentData['defaultDims'] ?
+            commentData['defaultDims'].split(',').map(x => x.trim()) :
+            null;
+
+          this.embedDependencies(
+            html,
             depends,
-            defaultDims,
-            background: commentData['background'],
-            html: this.stripComponentComments(html),
-            demoHtml: htmlWithDependencies
+            `${basePath}/${componentPath}`
+          ).then(htmlWithDependencies => {
+            resolve({
+              id,
+              name: commentData['name'],
+              summary: commentData['summary'],
+              depends,
+              defaultDims,
+              background: commentData['background'],
+              html: this.stripComponentComments(html),
+              demoHtml: htmlWithDependencies,
+              variantsUri: (hasVariants) ?
+                '/component-variants/' + encodeURIComponent(id) :
+                ''
+            });
           });
         });
       });

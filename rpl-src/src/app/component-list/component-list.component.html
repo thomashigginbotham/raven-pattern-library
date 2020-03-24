@@ -25,6 +25,14 @@
           <app-prism language="html">{{ webComponent.html }}</app-prism>
         </div>
       </div>
+
+      <div *ngIf="webComponent.variantsUri"
+           class="component-item__variant-wrapper">
+        <h4 class="component-item__subheading">Variants</h4>
+        <p class="component-item__variant-link">
+          <a [routerLink]="[webComponent.variantsUri]">See variations of this component</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

@@ -17,7 +17,8 @@ export class UtilsService {
   }
 
   /**
-   * Adds a selector prefix to a CSSRuleList.
+   * Adds a selector prefix to a CSSRuleList. The prefix is not applied to
+   * selectors containing :root.
    * @param styles The styles to prefix.
    * @param prefix A CSS selector to prefix every style rule.
    */
@@ -28,15 +29,19 @@ export class UtilsService {
         return selectorText.split(',')
           .reduce((prev, selector) => {
             const trimmedPrev = prev.trim();
-            const trimmedSelector = selector
-              .trim()
-              .replace(/^html$|^body$/, '');
+            const trimmedSelector = selector.trim();
+            const strippedBody = trimmedSelector.replace(/^html$|^body$/, '');
+            const prefixedSelector = `${prefix} ${strippedBody}`;
 
             if (!trimmedPrev) {
-              return `${prefix} ${trimmedSelector}`.trim();
+              return (trimmedSelector.includes(':root'))
+                ? trimmedSelector
+                : prefixedSelector.trim();
             }
 
-            return `${trimmedPrev}, ${prefix} ${trimmedSelector}`.trim();
+            return (trimmedSelector.includes(':root'))
+              ? `${trimmedPrev}, ${trimmedSelector}`.trim()
+              : `${trimmedPrev}, ${prefixedSelector}`.trim();
           } , '');
       };
 

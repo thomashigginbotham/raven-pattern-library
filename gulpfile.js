@@ -94,18 +94,21 @@ function prefixCssRules(styles, prefixes) {
       return selectorText.split(',')
         .reduce((prev, selector) => {
           const trimmedPrev = prev.trim();
-          const trimmedSelector = selector
-            .trim()
-            .replace(/^html$|^body$/, '');
+          const trimmedSelector = selector.trim();
+          const strippedBody = trimmedSelector.replace(/^html$|^body$/, '');
           const prefixedSelectors = prefixes.map(prefix => {
-            return `${prefix} ${trimmedSelector}`.trim();
+            return `${prefix} ${strippedBody}`.trim();
           });
 
           if (!trimmedPrev) {
-            return prefixedSelectors.join(',');
+            return (trimmedSelector.includes(':root'))
+            ? trimmedSelector
+            : prefixedSelectors.join(',');
           }
 
-          return `${trimmedPrev}, ` + prefixedSelectors.join(',');
+          return  (trimmedSelector.includes(':root'))
+          ? `${trimmedPrev}, ${trimmedSelector}`.trim()
+          : `${trimmedPrev}, ` + prefixedSelectors.join(',');
         }, '');
     };
 

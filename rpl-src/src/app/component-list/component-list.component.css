@@ -16,7 +16,8 @@ app-component-item {
   background-color: var(--bg-color-component, #eee);
 }
 
-.component-item__demo-wrapper {
+.component-item__demo-wrapper,
+.component-item__options-wrapper {
   margin-bottom: var(--page-padding, 1.4rem);
 }
 
@@ -34,6 +35,11 @@ app-component-item {
 
 .component-item__demo-render app-component-item {
   margin: 0 auto;
+}
+
+.component-item__options {
+  padding: 1rem;
+  border: 1px solid var(--color-divider, #ccc);
 }
 
 .component-item .component-item__heading,

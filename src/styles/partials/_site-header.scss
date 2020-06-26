@@ -19,3 +19,12 @@
     color: $color-neutral-100;
   }
 }
+
+.site-header--centered {
+  text-align: center;
+}
+
+.site-header--large {
+  padding: $page-gutter * 2 $page-gutter;
+}
+

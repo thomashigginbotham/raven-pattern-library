@@ -170,6 +170,7 @@ export class ComponentListComponent implements AfterViewInit, OnDestroy {
               depends,
               defaultDims,
               background: commentData['background'],
+              options: commentData['options'],
               html: this.stripComponentComments(html),
               demoHtml: htmlWithDependencies,
               variantsUri: (hasVariants) ?

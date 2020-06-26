@@ -5,6 +5,7 @@ export interface WebComponent {
   depends: string[];
   defaultDims: number[];
   background: string;
+  options: object[];
   html: string;
   demoHtml: string;
   variantsUri: string;

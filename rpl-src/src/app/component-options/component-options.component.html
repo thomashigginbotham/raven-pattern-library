@@ -1,0 +1,11 @@
+<div class="component-options">
+  <ul class="component-options__list">
+    <li *ngFor="let option of options">
+      <label>
+        <input type="checkbox"
+          [checked]="option.selected"
+          (change)="updateOption(option, $event)"> {{ option.name }}
+      </label>
+    </li>
+  </ul>
+</div>

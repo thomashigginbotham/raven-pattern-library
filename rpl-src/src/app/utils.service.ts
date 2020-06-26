@@ -143,7 +143,8 @@ export class UtilsService {
       { key: 'summary', value: 'Summary' },
       { key: 'depends', value: 'Depends' },
       { key: 'defaultDims', value: 'DefaultDims' },
-      { key: 'background', value: 'Background' }
+      { key: 'background', value: 'Background' },
+      { key: 'options', value: 'Options' }
     ];
     const regexStopWords = commentKeys.map(commentKey => {
       return `(${commentKey.value}:)`;
@@ -156,10 +157,14 @@ export class UtilsService {
       const definition = commentMatches[0].match(regex);
 
       if (definition) {
-        const keyValue = definition[0].split(':');
-        const value = keyValue[1].trim().replace(/\s{2,}/g, ' ');
+        const keyValue = definition[0].substring(definition[0].indexOf(':') + 1);
+        const value = (commentKey.key !== 'options') ?
+          keyValue.trim().replace(/\s{2,}/g, ' ') :
+          keyValue.trim();
 
-        commentData[commentKey.key] = value;
+        commentData[commentKey.key] = (commentKey.key !== 'options') ?
+          value :
+          JSON.parse(value);
       } else {
         commentData[commentKey.key] = null;
       }

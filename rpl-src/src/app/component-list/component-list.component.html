@@ -13,8 +13,20 @@
 
         <div class="component-item__demo-render rpl-user-styles">
           <app-component-item #childComponents
+            [componentId]="webComponent.id"
             [style]="getComponentStyles(webComponent) | safeStyle"
             [html]="webComponent.demoHtml | safeHtml"></app-component-item>
+        </div>
+      </div>
+
+      <div *ngIf="webComponent.options && webComponent.options.length"
+        class="component-item__options-wrapper">
+        <h4 class="component-item__subheading">Options</h4>
+
+        <div class="component-item__options">
+          <app-component-options
+            [componentId]="webComponent.id"
+            [options]="webComponent.options"></app-component-options>
         </div>
       </div>
 

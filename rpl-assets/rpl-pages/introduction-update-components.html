@@ -159,6 +159,46 @@ Background: #f00
 
 <div class="rpl-note">Note: This container query solution only works within RPL. Your actual pages will not be able to make use of the RPL class names. If you are interested in using this solution in your pages as well, see <a href="https://philipwalton.com/articles/responsive-components-a-solution-to-the-container-queries-problem/">Responsive Components: a Solution to the Container Queries Problem</a>.</div>
 
+<h4>Component Option Toggles</h4>
+
+<p>Components may have various options that can be applied, which is often done by adding an HTML class to the root element of the component. RPL makes it possible to toggle these classes on and off to see exactly how the component will be affected. An example can be seen with the <a href="/pattern-lib/components/page-structure#site-header">default Site Header component</a>.</p>
+<p>To include these option toggles in your own components, you will need to add an <strong>Options</strong> value to the component's HTML comments.</p>
+
+<div class="rpl-note"><pre><code>&lt;!--
+Name: Sample Component with Options
+Summary: A component with alignment options.
+Options: [
+  { "name": "Align Center", "value": "sample--centered", "attr": "class" },
+  { "name": "Align Top", "value": "sample--top", "attr": "class" }
+]
+--&gt;</code></pre></div>
+
+<table class="rpl-table">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th>name</th>
+      <td>A friendly name for the option.</td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td>The class that will be applied to the component's root element.</td>
+    </tr>
+    <tr>
+      <th>attr</th>
+      <td>The attribute to be updated (only "class" is currentlyl supported).</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="rpl-note">Note: The <strong>Options</strong> value is a JSON array and must conform to the JSON structure, including requirements for double quotes around keys. If the component does not render, make sure your JSON is valid.</div>
+
 <hr>
 
 <p><a href="./introduction/vendor-assets">Continue to Vendor/Third-party Assets</a></p>

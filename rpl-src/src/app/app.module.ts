@@ -25,6 +25,7 @@ import { SafeStylePipe } from './shared/safe-style.pipe';
 import { UrlFragmentScrollerDirective } from './shared/directives/url-fragment-scroller.directive';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { SafeUriPipe } from './shared/safe-uri.pipe';
+import { ComponentOptionsComponent } from './component-options/component-options.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SafeUriPipe } from './shared/safe-uri.pipe';
     SafeStylePipe,
     UrlFragmentScrollerDirective,
     PageLoaderComponent,
-    SafeUriPipe
+    SafeUriPipe,
+    ComponentOptionsComponent
   ],
   imports: [
     BrowserModule,

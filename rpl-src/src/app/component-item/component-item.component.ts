@@ -5,6 +5,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
+import { ComponentService } from '../component.service';
 
 @Component({
   selector: 'app-component-item',
@@ -12,22 +13,62 @@ import {
   styleUrls: ['./component-item.component.css']
 })
 export class ComponentItemComponent implements AfterViewInit {
+  @Input() componentId: string;
   @Input() html: string;
 
   @ViewChild('componentWrapper', { static: false })
   componentWrapper: ElementRef;
 
-  constructor() { }
+  constructor(
+    private _componentService: ComponentService
+  ) { }
 
   ngAfterViewInit() {
+    this.addAttrListener();
+    this.attachScripts();
+  }
+
+  /**
+   * Adds communication with service for attribute changes.
+   */
+  addAttrListener() {
+    const el = this.componentWrapper.nativeElement;
+    const componentEl = el.firstElementChild as HTMLElement;
+
+    // Send initial attributes
+    this._componentService.sendMessage({
+      id: this.componentId,
+      content: { type: 'info', attr: 'class', value: componentEl.classList }
+    });
+
+    // Listen for change requests
+    this._componentService.messages.subscribe(message => {
+      if (message.id !== this.componentId || message.content.type !== 'update') {
+        return;
+      }
+
+      if (message.content.attr === 'class') {
+        if (message.content.selected) {
+          componentEl.classList.add(message.content.value);
+        } else {
+          componentEl.classList.remove(message.content.value);
+        }
+      }
+    });
+  }
+
+  /**
+   * Finds script tags in the component's HTML and runs them by attaching them
+   * to the body element.
+   */
+  attachScripts() {
     const el = this.componentWrapper.nativeElement;
     const scripts = el.querySelectorAll('script');
 
-    // Evaluate any script tags found in the HTML
     if (scripts) {
       const bodyEl = document.querySelector('body');
 
-      scripts.forEach(script => {
+      scripts.forEach((script: HTMLScriptElement) => {
         const newScript = document.createElement('script');
         const src = script.getAttribute('src');
 

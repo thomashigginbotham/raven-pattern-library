@@ -371,7 +371,7 @@ gulp.task('connect', done => {
       return [
         modRewrite([
           `^/$ /html/ [L]`,
-          `^/([^/]+\\.html?$) /html/$1 [L]`,
+          `^/((?!html|rpl).+\\.html?$) /html/$1 [L]`,
           `^/${config.rplUri}/(.+\\..{2,4})$ /dist/$1 [L]`,
           `^/${config.rplUri}(.*)$ /dist/index.html [L]`
         ])

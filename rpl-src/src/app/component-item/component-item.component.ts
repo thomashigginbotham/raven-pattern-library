@@ -32,8 +32,9 @@ export class ComponentItemComponent implements AfterViewInit {
    * Adds communication with service for attribute changes.
    */
   addAttrListener() {
-    const el = this.componentWrapper.nativeElement;
-    const componentEl = el.firstElementChild as HTMLElement;
+    const el = this.componentWrapper.nativeElement as HTMLElement;
+    const componentEl = Array.from(el.children)
+      .find(x => !x.hasAttribute('hidden'));
 
     // Send initial attributes
     this._componentService.sendMessage({

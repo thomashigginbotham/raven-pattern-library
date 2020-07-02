@@ -132,7 +132,7 @@ export class UtilsService {
    * @param html The HTML to search for comment data.
    */
   getCommentData(html: string): object {
-    const commentMatches = html.match(/^\s*<!--\s*\r?\nName:[\s\S]+-->/);
+    const commentMatches = html.match(/^\s*<!--\s*\r?\nName:[\s\S]+?-->/);
 
     if (!commentMatches || commentMatches.length === 0) {
       return null;

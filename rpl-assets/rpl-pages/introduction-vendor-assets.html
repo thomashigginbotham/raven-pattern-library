@@ -16,12 +16,13 @@ Summary: Adding third-party styles and scripts.
 
 <p>By far, the easiest way to incorporate third-party assets into your codebase is to simply copy their files into the appropriate directories in RPL.</p>
 <p>For style sheets, this is simple. Add those files to a directory, like <em>src/styles/vendor</em>, and make sure to import the new file from <em>src/styles/main.scss</em>. If the style sheeet isn’t a Sass file, just rename it with the <em>.scss</em> extension. CSS is valid Sass, so there’s no need for any changes.</p>
-<p>For JavaScript files, add them to your <em>src/scripts</em> directory, then reference them in your HTML pages. For the JS to work on individual components within the pattern library, you’ll need to tell RPL about these files. Open the JSON configuration file at <em>src/rpl-assets/rpl-config.json</em>. You should see a <code>scriptUris</code> key that accepts an array of JS URIs. Add the location of your script(s) to the array, and you’ll be good to go.</p>
+<p>For JavaScript files, you can either convert them to TypeScript and add them to your <em>src/scripts</em> directory, or you can tell RPL about them by opening the JSON configuration file at <em>src/rpl-assets/rpl-config.json</em>. You should see a <code>scriptUris</code> key that accepts an array of JS URIs. Add the location of your script(s) to the array, and you’ll be good to go. Note that your HTML files will need to include additional &lt;script&gt; tags to reference the JS files you add.</p>
 
 <h3 id="cdn">Using a CDN</h3>
 
-<p>To use a content delivery network, the process is similar to copying the files directly. For JavaScript files, the process is the same: update the <em>rpl-config.json</em> file to include the URL to your script on the CDN. This will make the pattern library aware of the script so that it will be available to individual components. Your HTML pages will also require &lt;script&gt; tags that reference the CDN.</p>
+<p>To use a content delivery network, the process is similar to copying the files directly.</p>
 <p>For style sheets from a CDN, you will need to update the <code>styleUris</code> array in <em>rpl-config.json</em> so that RPL knows about the styles you want to use. You will need to include a &lt;link&gt; tag that references those style sheets in your HTML pages as well.</p>
+<p>For JavaScript files, update the <em>rpl-config.json</em> file to include the URL to your script on the CDN. This will make the pattern library aware of the script so that it will be available to individual components. Your HTML pages will also require &lt;script&gt; tags that reference the CDN.</p>
 
 <h3 id="npm">Using NPM</h3>
 

@@ -14,6 +14,7 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const transform = require('gulp-transform');
+const ts = require('gulp-typescript');
 const compiler = require('webpack');
 const webpack = require('webpack-stream');
 
@@ -34,6 +35,7 @@ const config = {
     htmlDir: '.tmp/html',
     cssDir: '.tmp/styles',
     jsDir: '.tmp/scripts',
+    tsDistDir: '.tmp/ts/dist',
     rplCustomPages: '.tmp/rpl-assets/rpl-pages'
   },
   distPaths: {
@@ -315,7 +317,16 @@ gulp.task('scopeStyles', gulp.series('environment', () => {
 /**
  * Uses Webpack to build JavaScript.
  */
-gulp.task('scripts:build', gulp.series('environment', () => {
+gulp.task('scripts:build', gulp.series('environment', () => {  
+  const tsProject = ts.createProject('tsconfig.json');
+  
+  return gulp
+    .src(`${config.srcPaths.jsDir}/**/*.ts`)
+    .pipe(sourcemaps.init())
+    .pipe(tsProject()).js
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(config.tempPaths.tsDistDir));
+}, () => {
   const webpackConfig = require('./webpack.config.js');
 
   webpackConfig.mode = (env.paths.jsDir === config.tempPaths.jsDir) ?
@@ -323,8 +334,8 @@ gulp.task('scripts:build', gulp.series('environment', () => {
     'production';
 
   return gulp
-    .src(`${config.srcPaths.jsDir}/**/*.js`)
-    .pipe(webpack(webpackConfig, compiler, (err, stats) => { }))
+    .src(config.tempPaths.tsDistDir)
+    .pipe(webpack(webpackConfig, compiler, () => { }))
     .pipe(gulp.dest(env.paths.jsDir));
 }));
 

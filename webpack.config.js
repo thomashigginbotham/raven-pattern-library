@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/scripts/main.js',
+  entry: './.tmp/ts/dist/main.js',
   output: {
     library: 'Main',
     libraryExport: 'default',

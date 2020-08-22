@@ -1,0 +1,8 @@
+{
+  "files": ["src/scripts/main.ts"],
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "ESNext",
+    "moduleResolution": "node"
+  }
+}

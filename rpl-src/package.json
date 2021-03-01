@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "css-element-queries": "^1.1.1",
-    "prismjs": "^1.15.0",
+    "prismjs": "^1.23.0",
     "rxjs": "~6.4.0",
     "sticky-sidebar": "^3.3.1",
     "tslib": "^1.9.0",

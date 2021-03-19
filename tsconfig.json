@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "target": "ESNext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowJs": true
   }
 }

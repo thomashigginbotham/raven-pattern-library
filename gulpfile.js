@@ -317,13 +317,13 @@ gulp.task('scopeStyles', gulp.series('environment', () => {
 /**
  * Uses Webpack to build JavaScript.
  */
-gulp.task('scripts:build', gulp.series('environment', () => {  
+gulp.task('scripts:build', gulp.series('environment', () => {
   const tsProject = ts.createProject('tsconfig.json');
-  
+
   return gulp
-    .src(`${config.srcPaths.jsDir}/**/*.ts`)
+    .src(`${config.srcPaths.jsDir}/**/*.+(ts|js)`)
     .pipe(sourcemaps.init())
-    .pipe(tsProject()).js
+    .pipe(tsProject())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(config.tempPaths.tsDistDir));
 }, () => {

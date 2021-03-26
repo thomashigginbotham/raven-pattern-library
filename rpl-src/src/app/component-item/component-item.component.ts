@@ -36,11 +36,25 @@ export class ComponentItemComponent implements AfterViewInit {
     const componentEl = Array.from(el.children)
       .find(x => !x.hasAttribute('hidden'));
 
-    // Send initial attributes
+    // Send initial class attributes
     this._componentService.sendMessage({
       id: this.componentId,
       content: { type: 'info', attr: 'class', value: componentEl.classList }
     });
+
+    // Send other initial attributes
+    if (componentEl.hasAttributes()) {
+      Array.from(componentEl.attributes).forEach((attr) => {
+        if (attr.name === 'class') {
+          return;
+        }
+
+        this._componentService.sendMessage({
+          id: this.componentId,
+          content: { type: 'info', attr: attr.name, value: attr.value }
+        });
+      });
+    }
 
     // Listen for change requests
     this._componentService.messages.subscribe(message => {
@@ -53,6 +67,12 @@ export class ComponentItemComponent implements AfterViewInit {
           componentEl.classList.add(message.content.value);
         } else {
           componentEl.classList.remove(message.content.value);
+        }
+      } else {
+        if (message.content.selected) {
+          componentEl.setAttribute(message.content.attr, message.content.value);
+        } else {
+          componentEl.removeAttribute(message.content.attr);
         }
       }
     });

@@ -26,12 +26,17 @@ export class ComponentOptionsComponent implements OnInit {
       }
 
       this.options.forEach(option => {
-        if (option.attr === 'class') {
+        if (message.content.attr === 'class' && option.attr === 'class') {
           if (message.content.value.contains(option.value)) {
             option.selected = true;
           } else {
             option.selected = false;
           }
+        } else if (message.content.attr === option.attr) {
+          // Option is an attribute to toggle on
+          option.selected = message.content.value === option.value ||
+            message.content.attr === message.content.value ||
+            message.content.value === '';
         }
       });
     });
@@ -44,7 +49,7 @@ export class ComponentOptionsComponent implements OnInit {
       id: this.componentId,
       content: {
         type: 'update',
-        attr: 'class',
+        attr: option.attr,
         value: option.value,
         selected: option.selected
       }

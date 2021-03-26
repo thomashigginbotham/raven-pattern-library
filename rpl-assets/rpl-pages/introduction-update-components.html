@@ -159,7 +159,7 @@ Background: #f00
 
 <h4>Component Option Toggles</h4>
 
-<p>Components may have various options that can be applied, which is often done by adding an HTML class to the root element of the component. RPL makes it possible to toggle these classes on and off to see exactly how the component will be affected. An example can be seen with the <a href="/pattern-lib/components/page-structure#site-header">default Site Header component</a>.</p>
+<p>Components may have various options that can be applied, which is often done by adding an HTML class or other attribute to the root element of the component. RPL makes it possible to toggle these classes/attributes on and off to see exactly how the component will be affected. An example can be seen with the <a href="/pattern-lib/components/page-structure#site-header">default Site Header component</a>.</p>
 <p>To include these option toggles in your own components, you will need to add an <strong>Options</strong> value to the component's HTML comments.</p>
 
 <div class="rpl-note"><pre><code>&lt;!--
@@ -167,7 +167,8 @@ Name: Sample Component with Options
 Summary: A component with alignment options.
 Options: [
   { "name": "Align Center", "value": "sample--centered", "attr": "class" },
-  { "name": "Align Top", "value": "sample--top", "attr": "class" }
+  { "name": "Align Top", "value": "sample--top", "attr": "class" },
+  { "name": "Include Tooltip", "value": "Sample tooltip", "attr": "title" }
 ]
 --&gt;</code></pre></div>
 
@@ -186,11 +187,11 @@ Options: [
     </tr>
     <tr>
       <th>value</th>
-      <td>The class that will be applied to the component's root element.</td>
+      <td>The class name or attribute value that will be applied to the component's root element. Leave empty for boolean attributes (e.g. <code>hidden</code>).</code></td>
     </tr>
     <tr>
       <th>attr</th>
-      <td>The attribute to be updated (only "class" is currently supported).</td>
+      <td>The attribute to be updated.</td>
     </tr>
   </tbody>
 </table>

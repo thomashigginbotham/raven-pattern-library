@@ -47,8 +47,22 @@ export class ComponentListComponent implements AfterViewInit, OnDestroy {
     this.bindComponents()
       .then(components => {
         if (components && components.length) {
+          // Run user scripts after components are ready
+          const runWhenComponentsReady = (func: Function) => {
+            const els = document.getElementsByTagName(
+              'app-component-item'
+            );
+
+            if (els.length !== components.length) {
+              setTimeout(() => runWhenComponentsReady(func), 100);
+              return false;
+            }
+
+            func();
+          };
+
           setTimeout(() => {
-            this.runUserScripts();
+            runWhenComponentsReady(() => this.runUserScripts());
           }, 0);
         }
       });
